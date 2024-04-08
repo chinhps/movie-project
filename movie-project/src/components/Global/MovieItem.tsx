@@ -53,6 +53,7 @@ function MovieRate({
       py={1}
       px={4}
       gap={1}
+      fontSize="14px"
       alignItems="center"
       bg="var(--bg-section)"
       userSelect="none"
