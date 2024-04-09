@@ -47,11 +47,25 @@ export default function Navbar() {
 
 function Search() {
   return (
-    <InputGroup size="md" overflow="hidden" rounded="md">
-      <Input type="text" rounded={0} fontSize="14px" placeholder="Nhập tên bộ phim..." w="500px" />
-      <InputRightElement>
-        <IconButton rounded={0} aria-label="search" icon={<FiSearch />} />
-      </InputRightElement>
-    </InputGroup>
+    <Box position="relative" rounded="md" overflow="hidden">
+      <Input
+        py="10px"
+        px="20px"
+        type="text"
+        fontSize="14px"
+        placeholder="Nhập tên bộ phim..."
+        w="500px"
+      />
+      <IconButton
+        right={0}
+        top={0}
+        bottom={0}
+        rounded={0}
+        position="absolute"
+        height="auto"
+        aria-label="search"
+        icon={<FiSearch />}
+      />
+    </Box>
   );
 }

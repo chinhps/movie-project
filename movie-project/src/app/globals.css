@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 :root {
   --text-main: #edf2f4;
@@ -8,6 +8,7 @@
   --bg-section: #d90429;
   --bg-header: #ef233c;
   --bg-main: #edf2f4;
+  --bg-footer: #111111;
 
   /* Movie */
   --gradient-movie: linear-gradient(#11111100, #111111c1);
@@ -20,6 +21,6 @@ body {
   background-color: var(--bg-main) !important;
 }
 
-p {
-  /* line-height: normal; */
+html {
+  line-height: normal !important;
 }

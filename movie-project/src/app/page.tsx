@@ -22,7 +22,7 @@ export default function Home() {
         >
           <Heading
             as="h1"
-            fontSize="25px"
+            fontSize="18px"
             w="fit-content"
             color="var(--text-main)"
           >
