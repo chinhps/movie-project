@@ -9,6 +9,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   FiBookmark,
   FiLogIn,
@@ -23,12 +24,14 @@ export default function Navbar() {
       <Container size="md">
         <Flex justifyContent="space-between" alignItems="center">
           <Box>
-            <Image
-              src="/images/logo.png"
-              alt="logo website"
-              width={120}
-              height={100}
-            />
+            <Link href="/">
+              <Image
+                src="/images/logo.png"
+                alt="logo website"
+                width={120}
+                height={100}
+              />
+            </Link>
           </Box>
           <Box>
             <Search />
@@ -63,6 +66,7 @@ function Search() {
         rounded={0}
         position="absolute"
         height="auto"
+        width="45px"
         aria-label="search"
         icon={<FiSearch />}
       />

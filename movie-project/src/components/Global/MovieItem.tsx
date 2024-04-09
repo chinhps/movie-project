@@ -3,40 +3,45 @@ import Image from "next/image";
 import React from "react";
 import { FiStar } from "react-icons/fi";
 import MovieBookmarkItem from "./MovieBookmarkItem";
+import Link from "next/link";
 
 export default function MovieItem() {
   return (
     <Box rounded="5px" overflow="hidden">
-      <Box position="relative" height="280px" overflow="hidden">
+      <Box position="relative" height="260px" overflow="hidden">
         <Box position="absolute" right={3} top={0}>
           <MovieBookmarkItem />
         </Box>
-        <Image
-          src="/images/movie.jpg"
-          alt="movie item"
-          width={300}
-          height={300}
-        />
-        <Box
-          bg="var(--gradient-movie)"
-          position="absolute"
-          inset={0}
-          top="50%"
-        />
-        <Flex
-          justify="space-between"
-          position="absolute"
-          bottom={3}
-          left={3}
-          right={3}
-        >
-          <MovieRate>20/25</MovieRate>
-          <MovieRate icon={<FiStar />}>4.5</MovieRate>
-        </Flex>
+        <Link href="/movie-detail/345354">
+          <Image
+            src="/images/movie.jpg"
+            alt="movie item"
+            width={300}
+            height={300}
+          />
+          <Box
+            bg="var(--gradient-movie)"
+            position="absolute"
+            inset={0}
+            top="50%"
+          />
+          <Flex
+            justify="space-between"
+            position="absolute"
+            bottom={3}
+            left={3}
+            right={3}
+          >
+            <MovieRate>20/25</MovieRate>
+            <MovieRate icon={<FiStar />}>4.5</MovieRate>
+          </Flex>
+        </Link>
       </Box>
-      <Center bg="var(--bg-section)" py="7px">
-        <Text color="var(--text-main)">Re: Monster</Text>
-      </Center>
+      <Link href="/movie-detail/345354">
+        <Center bg="var(--bg-section)" py="7px">
+          <Text color="var(--text-main)" fontSize="14px">Re: Monster</Text>
+        </Center>
+      </Link>
     </Box>
   );
 }

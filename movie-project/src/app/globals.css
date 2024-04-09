@@ -9,6 +9,8 @@
   --bg-header: #ef233c;
   --bg-main: #edf2f4;
   --bg-footer: #111111;
+  --bg-white: #ffffff;
+  --bg-gray: #6c6c6c;
 
   /* Movie */
   --gradient-movie: linear-gradient(#11111100, #111111c1);
