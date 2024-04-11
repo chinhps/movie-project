@@ -104,7 +104,9 @@ export default function Navbar() {
                     icon={<FiBookmark />}
                   />
                 </Link>
-                <IconButton aria-label="login" icon={<FiLogIn />} />
+                <Link href="/user-register">
+                  <IconButton aria-label="login" icon={<FiLogIn />} />
+                </Link>
               </HStack>
             </Flex>
           </Container>
