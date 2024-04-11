@@ -10,7 +10,7 @@
   --bg-main: #edf2f4;
   --bg-footer: #111111;
   --bg-white: #ffffff;
-  --bg-gray: #6c6c6c;
+  --bg-gray: #5c5c5c;
 
   /* Movie */
   --gradient-movie: linear-gradient(#11111100, #111111c1);
@@ -24,5 +24,7 @@ body {
 }
 
 html {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
   line-height: normal !important;
 }

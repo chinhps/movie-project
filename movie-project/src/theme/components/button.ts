@@ -7,7 +7,7 @@ const episode = defineStyle({
     rounded: "md",
     px: 4,
     py: 2,
-    minW: "50px",
+    minW: "61px",
     _hover: {
         background: 'var(--bg-main)',
         color: 'var(--bg-navbar)',
@@ -26,8 +26,6 @@ const customIconButton = defineStyle({
 const mainButton = defineStyle({
     background: 'var(--bg-section)',
     color: 'var(--text-main)',
-    width: "100%",
-    padding: "20px 0",
     _hover: {
         background: 'var(--bg-gray)',
         color: 'var(--bg-navbar)',
@@ -37,8 +35,6 @@ const mainButton = defineStyle({
 const secondButton = defineStyle({
     background: 'var(--bg-navbar)',
     color: 'var(--text-main)',
-    width: "100%",
-    padding: "23px 0",
     _hover: {
         background: 'var(--bg-gray)',
         color: 'var(--bg-navbar)',

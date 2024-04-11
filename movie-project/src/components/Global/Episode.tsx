@@ -1,4 +1,4 @@
-import { Box, Button, Center } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 export interface IEpisodeProps {
   text: string | number;

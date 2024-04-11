@@ -20,7 +20,7 @@ export default function RootLayout({
       <body>
         <ChakraUIProviders>
           <Navbar />
-          <Container size="md">{children}</Container>
+          <Container size="md" mt="6rem">{children}</Container>
           <Footer />
         </ChakraUIProviders>
       </body>

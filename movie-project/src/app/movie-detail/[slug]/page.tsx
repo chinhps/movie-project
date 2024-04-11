@@ -4,6 +4,7 @@ import TagCustom from "@/components/Global/TagCustom";
 import {
   Box,
   Button,
+  Divider,
   Flex,
   Grid,
   GridItem,
@@ -11,6 +12,7 @@ import {
   Heading,
   IconButton,
   Input,
+  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -30,8 +32,8 @@ export default function MovieDetailPage({
   params: { slug: string };
 }) {
   return (
-    <>
-      <Grid templateColumns="repeat(4,1fr)" gap={5}>
+    <Stack gap={3}>
+      <Grid templateColumns="repeat(4,1fr)" gap={5} bg="white" rounded={5} p={5}>
         <GridItem colSpan={1}>
           <Box rounded="md" overflow="hidden">
             <Image
@@ -46,11 +48,18 @@ export default function MovieDetailPage({
               as={Link}
               href="/movie-watch/svsvwdvds"
               variant="mainButton"
+              w="100%"
+              padding="23px 0"
               leftIcon={<FiFilm />}
             >
               XEM NGAY
             </Button>
-            <Button variant="secondButton" leftIcon={<FiHeart />}>
+            <Button
+              variant="secondButton"
+              w="100%"
+              padding="23px 0"
+              leftIcon={<FiHeart />}
+            >
               YÊU THÍCH
             </Button>
           </VStack>
@@ -95,7 +104,7 @@ export default function MovieDetailPage({
           </VStack>
           <VStack align="start" mt={2}>
             <Text as="b">Danh sách tập (100 tập)</Text>
-            <HStack wrap="wrap" maxH="150px" overflowY="scroll">
+            <HStack wrap="wrap" maxH="150px" overflowY="auto">
               {new Array(99).fill(0).map((_, index) => (
                 <Episode text={index + 1} key={index} />
               ))}
@@ -103,7 +112,7 @@ export default function MovieDetailPage({
           </VStack>
         </GridItem>
       </Grid>
-      <VStack spacing={3} align="start">
+      <VStack spacing={3} align="start" bg="white" rounded={5} p={5}>
         <Heading as="h2" fontSize="23px">
           Nội dung phim
         </Heading>
@@ -121,10 +130,9 @@ export default function MovieDetailPage({
           vero natus doloremque!z
         </Text>
       </VStack>
-      <VStack spacing={3} align="start" mt={5}>
-        <Heading as="h2" fontSize="23px">
-          Bình luận (1000)
-        </Heading>
+      <Divider my={2} />
+      <VStack spacing={3} align="start">
+        <Text as="b">Bình luận (1000)</Text>
         <Flex
           w="100%"
           rounded="xl"
@@ -158,7 +166,7 @@ export default function MovieDetailPage({
           </HStack>
         </Flex>
       </VStack>
-      <VStack>
+      <VStack bg="white" rounded={5} p={5}>
         <Comment />
         <Comment />
         <Comment />
@@ -167,6 +175,6 @@ export default function MovieDetailPage({
           Xem thêm bình luận...
         </Text>
       </VStack>
-    </>
+    </Stack>
   );
 }

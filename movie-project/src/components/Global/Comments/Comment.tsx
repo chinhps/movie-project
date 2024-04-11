@@ -1,4 +1,4 @@
-import { Divider, HStack, Stack, Text, VStack } from "@chakra-ui/react";
+import { Divider, Flex, HStack, Stack, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import TagCustom from "../TagCustom";
 
@@ -6,7 +6,7 @@ export default function Comment() {
   return (
     <VStack align="start">
       <CommentMain />
-      <Stack direction="row" align="startz" px={10}>
+      <Stack direction="row" align="startz" px={6}>
         <Divider
           height="auto"
           orientation="vertical"
@@ -25,11 +25,11 @@ export default function Comment() {
 
 function CommentMain() {
   return (
-    <HStack spacing={3} align="start" mt={5}>
-      <HStack w="auto" h="100%" rounded="xl" overflow="hidden">
-        <Image src="/images/avatar.png" alt="avatar" width={80} height={80} />
-      </HStack>
-      <VStack align="normal" gap={1}>
+    <HStack spacing={2} mt={2}>
+      <Flex height="auto" rounded="xl" overflow="hidden">
+        <Image src="/images/avatar.png" alt="avatar" width={60} height={60} />
+      </Flex>
+      <VStack align="normal" gap={0}>
         <HStack spacing={0}>
           <Text as="b" mr={2} fontSize="17px">
             Hoang Pham

@@ -13,12 +13,14 @@ export default function MovieItem() {
           <MovieBookmarkItem />
         </Box>
         <Link href="/movie-detail/345354">
-          <Image
-            src="/images/movie.jpg"
-            alt="movie item"
-            width={300}
-            height={300}
-          />
+          <Box userSelect="none">
+            <Image
+              src="/images/movie.jpg"
+              alt="movie item"
+              width={300}
+              height={300}
+            />
+          </Box>
           <Box
             bg="var(--gradient-movie)"
             position="absolute"
@@ -39,7 +41,9 @@ export default function MovieItem() {
       </Box>
       <Link href="/movie-detail/345354">
         <Center bg="var(--bg-section)" py="7px">
-          <Text color="var(--text-main)" fontSize="14px">Re: Monster</Text>
+          <Text color="var(--text-main)" fontSize="14px">
+            Re: Monster
+          </Text>
         </Center>
       </Link>
     </Box>
