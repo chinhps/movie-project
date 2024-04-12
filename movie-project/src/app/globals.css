@@ -11,9 +11,11 @@
   --bg-footer: #111111;
   --bg-white: #ffffff;
   --bg-gray: #5c5c5c;
-
+  --bg-tag: #3182ce;
+  
   /* Movie */
   --gradient-movie: linear-gradient(#11111100, #111111c1);
+  --bg-title: #0000002c;
 
   /* Banner */
   --banner-description: #2b2d427e;
