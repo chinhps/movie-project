@@ -120,7 +120,7 @@ export function MovieItemV2({ watched }: { watched?: string }) {
         maxW="330px"
         w="full"
         bg="white"
-        boxShadow="md"
+        boxShadow="sm"
         rounded="lg"
         pos="relative"
         zIndex={1}
@@ -139,12 +139,12 @@ export function MovieItemV2({ watched }: { watched?: string }) {
             top: 0,
             left: 0,
             backgroundImage: `url(/images/movie.jpg)`,
-            filter: "blur(10px)",
+            filter: "blur(3px)",
             zIndex: -1,
           }}
           _groupHover={{
             _after: {
-              filter: "blur(20px)",
+              filter: "blur(10px)",
             },
           }}
         >
