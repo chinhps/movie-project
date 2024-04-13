@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("banner_image")->nullable();
             $table->string("movie_image");
             $table->text("description")->nullable();
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
         });
     }
