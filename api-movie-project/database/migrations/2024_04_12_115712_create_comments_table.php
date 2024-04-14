@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign("movie_id")->references("id")->on("movies");
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users");
-            $table->text("description");
+            $table->text("message");
             $table->enum("status", ["on", "off"]);
             $table->timestamps();
         });
