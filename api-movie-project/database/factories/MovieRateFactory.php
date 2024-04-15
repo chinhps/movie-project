@@ -17,7 +17,7 @@ class MovieRateFactory extends Factory
     public function definition(): array
     {
         return [
-            "rate" => fake()->randomFloat(null, 1, 5)
+            "rate" => rand(1, 5)
         ];
     }
 }

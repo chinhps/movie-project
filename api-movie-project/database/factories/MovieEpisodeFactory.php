@@ -18,7 +18,8 @@ class MovieEpisodeFactory extends Factory
     {
         return [
             "episode_name" => fake()->name(),
-            "status" => fake()->randomElement(['on', 'off'])
+            "status" => fake()->randomElement(['on', 'off']),
+            "slug" => fake()->unique()->slug(5)
         ];
     }
 }

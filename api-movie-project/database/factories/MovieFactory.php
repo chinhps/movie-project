@@ -25,7 +25,8 @@ class MovieFactory extends Factory
             "banner_image" => fake()->imageUrl(300, 700),
             "movie_image" => fake()->imageUrl(1200, 700),
             "description" => fake()->text(100),
-            "views" => fake()->randomFloat(null, 1000, 999999),
+            "views" => rand(1000, 999999),
+            "episodes_counter" => rand(12, 130),
             "parent_id" => null
         ];
     }
