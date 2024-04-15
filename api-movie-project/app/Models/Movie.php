@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Movie extends Model
 {
@@ -35,6 +36,11 @@ class Movie extends Model
     public function movieEpisodes(): HasMany
     {
         return $this->hasMany(MovieEpisode::class, "movie_id");
+    }
+
+    public function movieEpisodeLaster(): HasOne
+    {
+        return $this->hasOne(MovieEpisode::class, "movie_id")->latest('id');
     }
 
     public function movieHistories(): HasMany
