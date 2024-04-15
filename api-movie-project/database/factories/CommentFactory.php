@@ -17,8 +17,8 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            "description",
-            "status"
+            "message" => fake()->text(20),
+            "status" => fake()->randomElement(['on', 'off'])
         ];
     }
 }

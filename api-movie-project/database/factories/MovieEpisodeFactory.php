@@ -17,8 +17,8 @@ class MovieEpisodeFactory extends Factory
     public function definition(): array
     {
         return [
-            "episode_name",
-            "status"
+            "episode_name" => fake()->name(),
+            "status" => fake()->randomElement(['on', 'off'])
         ];
     }
 }

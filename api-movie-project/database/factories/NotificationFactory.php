@@ -17,8 +17,8 @@ class NotificationFactory extends Factory
     public function definition(): array
     {
         return [
-            "message",
-            "link"
+            "message" => fake()->text(20),
+            "link" => ""
         ];
     }
 }

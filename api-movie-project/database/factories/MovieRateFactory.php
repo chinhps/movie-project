@@ -17,7 +17,7 @@ class MovieRateFactory extends Factory
     public function definition(): array
     {
         return [
-            "rate"
+            "rate" => fake()->random_int(1, 5)
         ];
     }
 }

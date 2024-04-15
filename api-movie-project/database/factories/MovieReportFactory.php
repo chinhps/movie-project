@@ -17,8 +17,8 @@ class MovieReportFactory extends Factory
     public function definition(): array
     {
         return [
-            "description",
-            "status"
+            "description" => fake()->text(50),
+            "status" => fake()->randomElement(['pedding', 'success', 'spam'])
         ];
     }
 }
