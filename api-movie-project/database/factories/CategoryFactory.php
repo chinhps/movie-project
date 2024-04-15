@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MovieRate>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
  */
-class MovieRateFactory extends Factory
+class CategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class MovieRateFactory extends Factory
     public function definition(): array
     {
         return [
-            "rate" => fake()->randomFloat(null, 1, 5)
+            "name" => fake()->name(),
+            "slug" => fake()->slug()
         ];
     }
 }
