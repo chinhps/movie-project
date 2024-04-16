@@ -24,6 +24,6 @@ class CategoryRepository implements CategoryInterface
                 ->withAvg("movieRate", "rate");
         }])
 
-            ->first();
+            ->firstOrFail();
     }
 }

@@ -30,7 +30,9 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helper/QueryRepository.php"
+            "app/Helper/QueryRepository.php",
+            "app/Helper/Crypto.php",
+            "app/Helper/Function.php"
         ]
     },
     "autoload-dev": {

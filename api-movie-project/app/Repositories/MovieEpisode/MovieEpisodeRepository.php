@@ -26,4 +26,15 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
             }])
             ->paginate($limit);
     }
+
+    public function getBySlug($slug, array $filter = [])
+    {
+        $query = $this->model
+            ->where('slug', $slug)
+            ->where($filter)
+            ->with(['movieSources' => function ($query) {
+                $query->where("status", "on");
+            }]);
+        return $query->firstOrFail();
+    }
 }

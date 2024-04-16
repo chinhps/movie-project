@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Movie\CommentController;
+use App\Http\Controllers\Movie\EpisodeController;
 use App\Http\Controllers\Movie\MovieController;
+use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\LogoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +21,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+# AUTH
+Route::prefix('auth')->group(function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+});
+
+Route::middleware(['decryptToken:sanctum'])->prefix('user')->group(function () {
+    # Get infor current user
+    Route::get('/infor', [AuthController::class, 'getCurrentInfo']);
+    Route::post('change-password', [AuthController::class, 'changePassword']);
+    Route::get("notification", []);
+    # Logout
+    Route::prefix('logout')->group(function () {
+        # Logout current device
+        Route::post('/',  [LogoutController::class, 'logout']);
+        # Logout all device
+        Route::post('/all',  [LogoutController::class, 'logoutAll']);
+    });
+    Route::get('notification', [NotificationController::class, 'list']);
 });
 
 Route::prefix("movies")->group(function () {
@@ -27,10 +48,17 @@ Route::prefix("movies")->group(function () {
     Route::get("ranking", [MovieController::class, 'moviesRanking']);
 
     Route::get("detail/{slug}", [MovieController::class, 'movieDetail']);
+
+    Route::prefix("episode")->group(function () {
+        Route::get("{slug}", [EpisodeController::class, 'episodeWatch']);
+    });
 });
 
 Route::prefix("comments")->group(function () {
     Route::get("movie/{slug}", [CommentController::class, 'commentMovie']);
+    Route::middleware(['decryptToken:sanctum'])->group(function () {
+        Route::post("movie/{slug}", [CommentController::class, 'addCommentMovie']);
+    });
 });
 
 Route::prefix("categories")->group(function () {

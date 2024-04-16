@@ -29,6 +29,6 @@ class MovieRepository implements MovieInterface
             ->where("slug", $slug)
             ->with('movieEpisodeLaster')
             ->withAvg("movieRate", "rate");
-        return $query->first();
+        return $query->firstOrFail();
     }
 }
