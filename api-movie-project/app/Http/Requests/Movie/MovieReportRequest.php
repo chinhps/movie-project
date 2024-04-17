@@ -23,6 +23,7 @@ class MovieReportRequest extends BaseRequest
     {
         return [
             "message" => "bail|required|max:350",
+            "slug" => "required|exists:movies,slug"
         ];
     }
 
@@ -31,6 +32,7 @@ class MovieReportRequest extends BaseRequest
         return [
             "message.required" => 'Bạn cần phải nhập gì đó',
             "message.min" => 'Bạn nhắn hơi dài quá rồi :(',
+            "slug.*" => "Lỗi liên quan đến slug"
         ];
     }
 }

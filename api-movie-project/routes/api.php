@@ -56,14 +56,15 @@ Route::prefix("movies")->group(function () {
     });
 
     Route::middleware(['decryptToken:sanctum'])->group(function () {
-        Route::post("report/{slug}", [ReportController::class, 'createReport']);
+        Route::post("report", [ReportController::class, 'createReport']);
+        Route::post("bookmark", [ReportController::class, 'createReport']);
     });
 });
 
 Route::prefix("comments")->group(function () {
     Route::get("movie/{slug}", [CommentController::class, 'commentMovie']);
     Route::middleware(['decryptToken:sanctum'])->group(function () {
-        Route::post("movie/{slug}", [CommentController::class, 'addCommentMovie']);
+        Route::post("movie", [CommentController::class, 'addCommentMovie']);
     });
 });
 

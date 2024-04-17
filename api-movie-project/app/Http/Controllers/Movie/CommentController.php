@@ -24,12 +24,12 @@ class CommentController extends Controller
         return $this->commentRepository->listBySlug($slug);
     }
 
-    public function addCommentMovie(CommentRequest $request, $slug)
+    public function addCommentMovie(CommentRequest $request)
     {
         $validated = $request->validated();
 
         $user = Auth::user();
-        $movie = $this->movieRepository->getBySlug($slug);
+        $movie = $this->movieRepository->getBySlug($validated['slug']);
 
         $this->commentRepository->updateOrInsert(null, [
             "message" => $validated['message'],

@@ -19,11 +19,11 @@ class ReportController extends Controller
     ) {
     }
 
-    public function createReport(MovieReportRequest $request, $slug)
+    public function createReport(MovieReportRequest $request)
     {
         $validated = $request->validated();
         $user = Auth::user();
-        $movie = $this->movieRepository->getBySlug($slug);
+        $movie = $this->movieRepository->getBySlug($validated['slug']);
 
         return $this->reportRepository->updateOrInsert(null, [
             "description" => $validated["message"],
