@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Information\InforController;
 use App\Http\Controllers\Movie\CommentController;
 use App\Http\Controllers\Movie\EpisodeController;
 use App\Http\Controllers\Movie\MovieController;
+use App\Http\Controllers\Movie\ReportController;
 use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\LogoutController;
@@ -52,6 +54,10 @@ Route::prefix("movies")->group(function () {
     Route::prefix("episode")->group(function () {
         Route::get("{slug}", [EpisodeController::class, 'episodeWatch']);
     });
+
+    Route::middleware(['decryptToken:sanctum'])->group(function () {
+        Route::post("report/{slug}", [ReportController::class, 'createReport']);
+    });
 });
 
 Route::prefix("comments")->group(function () {
@@ -65,3 +71,5 @@ Route::prefix("categories")->group(function () {
     Route::get("/", [CategoryController::class, 'list']);
     Route::get("{slug}", [CategoryController::class, 'detail']);
 });
+
+Route::get('informations', [InforController::class, 'list']);

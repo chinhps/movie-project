@@ -18,7 +18,7 @@ class MovieReportFactory extends Factory
     {
         return [
             "description" => fake()->text(50),
-            "status" => fake()->randomElement(['pedding', 'success', 'spam'])
+            "status" => fake()->randomElement(['pending', 'success', 'spam'])
         ];
     }
 }
