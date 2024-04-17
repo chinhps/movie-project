@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Bookmark\BookmarkInterface;
+use App\Repositories\Bookmark\BookmarkRepository;
 use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Comment\CommentInterface;
@@ -32,6 +34,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(NotificationInterface::class, NotificationRepository::class);
         $this->app->bind(InformationInterface::class, InformationRepository::class);
         $this->app->bind(ReportInterface::class, ReportRepository::class);
-
+        $this->app->bind(BookmarkInterface::class, BookmarkRepository::class);
     }
 }

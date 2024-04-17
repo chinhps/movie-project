@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Information\InforController;
+use App\Http\Controllers\Movie\BookmarkController;
 use App\Http\Controllers\Movie\CommentController;
 use App\Http\Controllers\Movie\EpisodeController;
 use App\Http\Controllers\Movie\MovieController;
@@ -56,8 +57,14 @@ Route::prefix("movies")->group(function () {
     });
 
     Route::middleware(['decryptToken:sanctum'])->group(function () {
+        # report movie
         Route::post("report", [ReportController::class, 'createReport']);
-        Route::post("bookmark", [ReportController::class, 'createReport']);
+        # bookmark for user
+        Route::prefix("bookmarks")->group(function () {
+            Route::get("/", [BookmarkController::class, 'list']);
+            Route::post("/", [BookmarkController::class, 'add']);
+            Route::delete("/", [BookmarkController::class, 'remove']);
+        });
     });
 });
 
