@@ -6,6 +6,7 @@ use App\Http\Controllers\Movie\BookmarkController;
 use App\Http\Controllers\Movie\CommentController;
 use App\Http\Controllers\Movie\EpisodeController;
 use App\Http\Controllers\Movie\MovieController;
+use App\Http\Controllers\Movie\MovieHistoryController;
 use App\Http\Controllers\Movie\ReportController;
 use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\User\AuthController;
@@ -57,6 +58,8 @@ Route::prefix("movies")->group(function () {
     });
 
     Route::middleware(['decryptToken:sanctum'])->group(function () {
+        # history watch
+        Route::get("histories", [MovieHistoryController::class, 'list']);
         # report movie
         Route::post("report", [ReportController::class, 'createReport']);
         # bookmark for user

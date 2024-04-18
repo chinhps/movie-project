@@ -14,6 +14,8 @@ use App\Repositories\Movie\MovieInterface;
 use App\Repositories\Movie\MovieRepository;
 use App\Repositories\MovieEpisode\MovieEpisodeInterface;
 use App\Repositories\MovieEpisode\MovieEpisodeRepository;
+use App\Repositories\MovieHistory\MovieHistoryInterface;
+use App\Repositories\MovieHistory\MovieHistoryRepository;
 use App\Repositories\Notification\NotificationInterface;
 use App\Repositories\Notification\NotificationRepository;
 use App\Repositories\Report\ReportInterface;
@@ -35,5 +37,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(InformationInterface::class, InformationRepository::class);
         $this->app->bind(ReportInterface::class, ReportRepository::class);
         $this->app->bind(BookmarkInterface::class, BookmarkRepository::class);
+        $this->app->bind(MovieHistoryInterface::class, MovieHistoryRepository::class);
     }
 }
