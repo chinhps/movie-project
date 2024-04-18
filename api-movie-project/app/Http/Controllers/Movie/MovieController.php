@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Movie;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Movie\MovieLatestResource;
+use App\Http\Resources\Movie\MovieResource;
 use App\Repositories\Movie\MovieInterface;
 use App\Repositories\MovieEpisode\MovieEpisodeInterface;
 use Illuminate\Http\Request;
@@ -19,23 +21,27 @@ class MovieController extends Controller
 
     public function movies()
     {
-        return $this->movieRepository->list(["sort"], 25);
+        $movies = $this->movieRepository->list(["sort"], 25);
+        return MovieResource::collection($movies);
     }
 
     public function moviesLatest()
     {
-        return $this->movieEpisodeRepository->moviesLatest();
+        $movies = $this->movieEpisodeRepository->moviesLatest();
+        return MovieLatestResource::collection($movies);
     }
 
     public function moviesRanking()
     {
-        return $this->movieRepository->list([
+        $movies = $this->movieRepository->list([
             "sort" => [["views", "desc"]]
-        ]);
+        ],10);
+        return MovieResource::collection($movies);
     }
 
     public function movieDetail($slug)
     {
-        return $this->movieRepository->getBySlug($slug);
+        $movie = $this->movieRepository->getBySlug($slug);
+        return new MovieResource($movie);
     }
 }

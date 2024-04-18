@@ -85,7 +85,5 @@ class DefaultSeeder extends Seeder
                 "movie_id" => $movies->random()->id
             ]);
         });
-
-        echo "chinh dep trai";
     }
 }
