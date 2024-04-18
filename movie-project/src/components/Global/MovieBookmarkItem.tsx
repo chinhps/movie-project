@@ -1,10 +1,12 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
+import { Box, BoxProps } from "@chakra-ui/react";
 import { useState } from "react";
 import { FiBookmark } from "react-icons/fi";
 
-export default function MovieBookmarkItem() {
+interface IMovieBookmark extends BoxProps {}
+
+export default function MovieBookmarkItem({ ...props }: IMovieBookmark) {
   const [active, setActive] = useState(false);
   return (
     <Box
@@ -15,6 +17,7 @@ export default function MovieBookmarkItem() {
       bg={active ? "var(--bg-section)" : "var(--bg-main)"}
       color={active ? "var(--bg-main)" : "var(--bg-section)"}
       onClick={() => setActive((prev) => !prev)}
+      {...props}
     >
       <FiBookmark />
     </Box>

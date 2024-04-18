@@ -13,22 +13,18 @@ import React from "react";
 import { FiPlay, FiStar } from "react-icons/fi";
 import MovieBookmarkItem from "./MovieBookmarkItem";
 import Link from "next/link";
+import { IMovieResponse } from "@/types/response/movies.type";
 
-export default function MovieItem() {
+export default function MovieItem({ movie }: { movie: IMovieResponse }) {
   return (
     <Box rounded="5px" overflow="hidden">
       <Box position="relative" height="260px" overflow="hidden">
         <Box position="absolute" right={3} top={0}>
           <MovieBookmarkItem />
         </Box>
-        <Link href="/movie-detail/345354">
+        <Link href={"/movie-detail/" + movie.slug}>
           <Box userSelect="none">
-            <Image
-              src="/images/movie.jpg"
-              alt="movie item"
-              width={300}
-              height={300}
-            />
+            <Image src={movie.movie_image} alt="movie item" fill={true} />
           </Box>
           <Box
             bg="var(--gradient-movie)"
@@ -43,15 +39,17 @@ export default function MovieItem() {
             left={3}
             right={3}
           >
-            <MovieRate>20/25</MovieRate>
-            <MovieRate icon={<FiStar />}>4.5</MovieRate>
+            <MovieRate>{`${movie.movie_episode_laster?.episode_name}/${movie.episodes_counter}`}</MovieRate>
+            <MovieRate icon={<FiStar />}>
+              {movie.movie_rate_avg_rate ?? "N/A"}
+            </MovieRate>
           </Flex>
         </Link>
       </Box>
-      <Link href="/movie-detail/345354">
+      <Link href={"/movie-detail/" + movie.slug}>
         <Center bg="var(--bg-section)" py="7px">
-          <Text color="var(--text-main)" fontSize="14px">
-            Re: Monster
+          <Text color="var(--text-main)" fontSize="14px" noOfLines={1}>
+            {movie.movie_name}
           </Text>
         </Center>
       </Link>
@@ -59,59 +57,56 @@ export default function MovieItem() {
   );
 }
 
-export function MovieItemV3() {
+export function MovieItemV3({ movie }: { movie: IMovieResponse }) {
   return (
     <Box rounded="xl" position="relative" height="320px" overflow="hidden">
       <Box position="absolute" right={3} top={0}>
         <MovieBookmarkItem />
       </Box>
-      <Link href="/movie-detail/345354">
+      <Link href={"/movie-detail/" + movie.slug}>
         <Box userSelect="none" boxShadow="md">
-          <Image
-            src="/images/movie.jpg"
-            alt="movie item"
-            width={300}
-            height={300}
-          />
-        </Box>
-
-        <Box
-          position="absolute"
-          bottom={2}
-          right={2}
-          left={2}
-          bg="transparent"
-          backdropFilter="blur(30px)"
-          px={4}
-          py={3}
-          rounded="xl"
-          color="var(--text-main)"
-        >
-          <HStack justifyContent="space-between">
-            <Box>
-              <Heading fontSize="16px">Re: Monster</Heading>
-              <Stack direction="row" align="center" spacing={2} fontSize="13px">
-                <Text>20/25</Text>
-                <HStack>
-                  <FiStar />
-                  <Text>4.5</Text>
-                </HStack>
-              </Stack>
-            </Box>
-            <IconButton
-              bg="var(--bg-title)"
-              aria-label="play"
-              icon={<FiPlay />}
-              rounded="full"
-            />
-          </HStack>
+          <Image src={movie.movie_image} alt="movie item" fill={true} />
         </Box>
       </Link>
+      <Box
+        position="absolute"
+        bottom={2}
+        right={2}
+        left={2}
+        bg="var(--banner-description)"
+        // backdropFilter="blur(20px)"
+        px={4}
+        py={3}
+        rounded="xl"
+        color="var(--text-main)"
+      >
+        <HStack justifyContent="space-between">
+          <Link href={"/movie-detail/" + movie.slug}>
+            <Heading fontSize="16px" noOfLines={1}>
+              {movie.movie_name}
+            </Heading>
+            <Stack direction="row" align="center" spacing={2} fontSize="13px">
+              <Text>{`${movie.movie_episode_laster?.episode_name}/${movie.episodes_counter}`}</Text>
+              <HStack spacing={1}>
+                <FiStar />
+                <Text>{movie.movie_rate_avg_rate ?? "N/A"}</Text>
+              </HStack>
+            </Stack>
+          </Link>
+          <MovieBookmarkItem rounded="full" />
+        </HStack>
+      </Box>
     </Box>
   );
 }
 
-export function MovieItemV2({ watched }: { watched?: string }) {
+export function MovieItemV2({
+  watched,
+  movie,
+}: {
+  watched?: string;
+  movie: IMovieResponse;
+}) {
   return (
     <Center py={3}>
       <Box
@@ -127,7 +122,7 @@ export function MovieItemV2({ watched }: { watched?: string }) {
         px={3}
       >
         <Box
-          rounded="lg"
+          rounded="xl"
           mt={-5}
           position="relative"
           _after={{
@@ -138,8 +133,8 @@ export function MovieItemV2({ watched }: { watched?: string }) {
             pos: "absolute",
             top: 0,
             left: 0,
-            backgroundImage: `url(/images/movie.jpg)`,
-            filter: "blur(3px)",
+            backgroundImage: `url(${movie.movie_image})`,
+            filter: "blur(4px)",
             zIndex: -1,
           }}
           _groupHover={{
@@ -148,30 +143,34 @@ export function MovieItemV2({ watched }: { watched?: string }) {
             },
           }}
         >
-          <Box position="absolute" right={3} top={0}>
+          <Box position="absolute" right={3} top={0} zIndex={5}>
             <MovieBookmarkItem />
           </Box>
-          <Link href="/movie-detail/345354">
-            <Box rounded="md" overflow="hidden" height="240px">
-              <Image height={200} width={282} src="/images/movie.jpg" alt="#" />
+          <Link href={"/movie-detail/" + movie.slug}>
+            <Box height="240px">
+              <Image fill={true} src={movie.movie_image} alt="#" />
             </Box>
           </Link>
         </Box>
         <Stack pb={3} pt={5} align="center">
           <Stack direction="row" align="center" spacing={5}>
-            <Text fontSize="15px">20/25</Text>
-            <HStack>
+            <Text fontSize="15px">{`${movie.movie_episode_laster?.episode_name}/${movie.episodes_counter}`}</Text>
+            <HStack spacing={1}>
               <FiStar />
-              <Text color="gray.600">4.5</Text>
+              <Text color="gray.600">{movie.movie_rate_avg_rate ?? "N/A"}</Text>
             </HStack>
           </Stack>
-          <Link href="/movie-detail/345354">
-            <Heading fontSize="18px" fontWeight={800}>
-              Re: Monster
+          <Link href={"/movie-detail/" + movie.slug}>
+            <Heading fontSize="16px" fontWeight={800} noOfLines={1}>
+              {movie.movie_name}
             </Heading>
           </Link>
 
-          {watched && <Text fontSize="13px" color="var(--bg-gray)">{watched}</Text>}
+          {watched && (
+            <Text fontSize="13px" color="var(--bg-gray)">
+              {watched}
+            </Text>
+          )}
         </Stack>
       </Box>
     </Center>

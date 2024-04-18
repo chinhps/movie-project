@@ -13,9 +13,13 @@ const initialFetch: IInitialFetch = {
     paramsSerializer: (params: object) => JSON.stringify(params),
 }
 
+interface Option extends RequestInit {
+    params?: { [key: string]: string }
+}
+
 const fetchC = {
-    get: async (url: string, params?: { [key: string]: string }, init?: RequestInit) => {
-        const queryString = params ? new URLSearchParams(params).toString() : "";
+    get: async (url: string, init?: Option) => {
+        const queryString = init?.params ? new URLSearchParams(init.params).toString() : "";
         const data = await fetch(initialFetch.BaseURL + url + queryString, {
             headers: {
                 ...initialFetch.headers

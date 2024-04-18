@@ -1,3 +1,4 @@
+import moviesApi from "@/apis/movie";
 import Banner from "@/components/Global/Banner";
 import Header from "@/components/Global/Header";
 import MovieItem, {
@@ -5,10 +6,13 @@ import MovieItem, {
   MovieItemV3,
 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
-import { Box, Heading } from "@chakra-ui/react";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const moviesLatest = await moviesApi.latest();
+  const moviesRanking = await moviesApi.rankings();
+  const moviesList = await moviesApi.rankings();
+
   return (
     <>
       <Banner />
@@ -16,20 +20,20 @@ export default function Home() {
         ANIME MỚI CẬP NHẬT
       </Header>
       <HomeLayout mt={5}>
-        {new Array(15).fill(0).map((_, index) => (
-          <MovieItemV2 key={index} />
+        {moviesLatest.data.map((movie, index) => (
+          <MovieItemV2 key={index} movie={movie} />
         ))}
       </HomeLayout>
       <Header>BẢNG XẾP HẠNG</Header>
       <HomeLayout>
-        {new Array(5).fill(0).map((_, index) => (
-          <MovieItemV3 key={index} />
+        {moviesRanking.data.map((movie, index) => (
+          <MovieItemV3 key={index} movie={movie} />
         ))}
       </HomeLayout>
       <Header>TẤT CẢ PHIM</Header>
       <HomeLayout>
-        {new Array(10).fill(0).map((_, index) => (
-          <MovieItem key={index} />
+        {moviesList.data.map((movie, index) => (
+          <MovieItem key={index} movie={movie} />
         ))}
       </HomeLayout>
     </>
