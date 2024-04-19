@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Category\CategoryResource;
 use App\Repositories\Category\CategoryInterface;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class CategoryController extends Controller
 
     public function list()
     {
-        return $this->categoryRepository->list();
+        return CategoryResource::collection($this->categoryRepository->list());
     }
 
     public function detail($slug)
