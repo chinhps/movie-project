@@ -1,5 +1,5 @@
 import Footer from "@/components/Layouts/Footer";
-import Navbar from "@/components/Layouts/Navbar";
+import Navbar from "@/components/Layouts/Navbar/Navbar";
 import { Container } from "@chakra-ui/react";
 import "@/app/globals.css";
 

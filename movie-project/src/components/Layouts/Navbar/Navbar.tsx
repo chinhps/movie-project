@@ -1,14 +1,13 @@
-"use client";
-
-import { useClickOutside } from "@/hooks/useClickOutside";
+import categoryApi from "@/apis/category";
 import {
   Box,
-  Button,
   Container,
   Flex,
   HStack,
   IconButton,
   Input,
+  List,
+  ListItem,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -20,27 +19,24 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import {
   FiBell,
   FiBookmark,
-  FiChevronDown,
-  FiChevronUp,
   FiLogIn,
   FiRotateCw,
   FiSearch,
 } from "react-icons/fi";
+import NavbarCategory from "./NavbarCategory";
+import "./navbar.scss";
 
-export default function Navbar() {
-  const [isOpenCategory, setIsOpenCategory] = useState(false);
-
-  let handleCloseCategory = useClickOutside(() => {
-    setIsOpenCategory(false);
-  });
+export default async function Navbar() {
+  const categories = await categoryApi.list();
 
   return (
     <>
       <Box position="fixed" top={0} right={0} left={0} zIndex={5}>
+        <input type="checkbox" id="dropbox" defaultChecked={false} hidden />
+
         <Box bg="var(--bg-navbar)" py={3}>
           <Container size="md">
             <Flex justifyContent="space-between" alignItems="center">
@@ -69,18 +65,7 @@ export default function Navbar() {
                   height="auto"
                   spacing={0}
                 >
-                  <Button
-                    variant="ghost"
-                    fontSize="14px"
-                    rightIcon={
-                      isOpenCategory ? <FiChevronUp /> : <FiChevronDown />
-                    }
-                    color="var(--bg-gray)"
-                    ref={handleCloseCategory.domButtonNodeRef}
-                    onClick={() => setIsOpenCategory((prev) => !prev)}
-                  >
-                    Thể loại
-                  </Button>
+                  <NavbarCategory />
                   <IconButton
                     rounded={0}
                     height="100%"
@@ -111,38 +96,33 @@ export default function Navbar() {
             </Flex>
           </Container>
         </Box>
-        {isOpenCategory && (
-          <Container
-            size="md"
-            position="relative"
-            ref={handleCloseCategory.domNodeRef}
+        <Container id="dropdown-menu" size="md" position="relative">
+          <SimpleGrid
+            as={List}
+            boxShadow="0px 25px 80px 0px rgba(0,0,0,0.3)"
+            borderTop="solid"
+            borderColor="var(--bg-section)"
+            borderTopWidth="2px"
+            roundedBottom={5}
+            position="absolute"
+            textAlign="center"
+            overflow="hidden"
+            columns={5}
+            zIndex={10}
+            bg="white"
+            left={4}
+            right={4}
+            gap="1px"
           >
-            <SimpleGrid
-              boxShadow="0px 25px 80px 0px rgba(0,0,0,0.3)"
-              borderTop="solid"
-              borderColor="var(--bg-section)"
-              borderTopWidth="2px"
-              roundedBottom={5}
-              position="absolute"
-              textAlign="center"
-              overflow="hidden"
-              columns={5}
-              zIndex={10}
-              bg="white"
-              left={4}
-              right={4}
-              gap="1px"
-            >
-              <CategoryItem text="Anime" />
-              <CategoryItem text="Hành động" />
-              <CategoryItem text="Hài hước" />
-              <CategoryItem text="Tình cảm" />
-              <CategoryItem text="Harem" />
-              <CategoryItem text="Bí ẩn" />
-              <CategoryItem text="Bi kịch" />
-            </SimpleGrid>
-          </Container>
-        )}
+            {categories.data.map((category) => (
+              <CategoryItem
+                key={category.id}
+                text={category.name}
+                href={"/category/" + category.slug}
+              />
+            ))}
+          </SimpleGrid>
+        </Container>
       </Box>
     </>
   );
@@ -164,18 +144,18 @@ function Notification() {
   );
 }
 
-function CategoryItem({ text }: { text: string }) {
+function CategoryItem({ text, href }: { text: string; href: string }) {
   return (
-    <Link href="/">
-      <Box
-        py={4}
-        _hover={{
-          backgroundColor: "var(--bg-navbar)",
-          color: "var(--text-main)",
-        }}
-      >
+    <ListItem
+      as="li"
+      _hover={{
+        backgroundColor: "var(--bg-navbar)",
+        color: "var(--text-main)",
+      }}
+    >
+      <Box as={Link} href={href} display="block" py={4}>
         {text}
       </Box>
-    </Link>
+    </ListItem>
   );
 }

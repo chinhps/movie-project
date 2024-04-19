@@ -8,8 +8,8 @@ export interface IEpisodeProps {
 
 export default function Episode(props: IEpisodeProps) {
   return (
-    <Link href={props?.href ?? "#"}>
-      <Button variant="episode">{props.text}</Button>
-    </Link>
+    <Button as={Link} href={props?.href ?? "#"} variant="episode">
+      {props.text}
+    </Button>
   );
 }
