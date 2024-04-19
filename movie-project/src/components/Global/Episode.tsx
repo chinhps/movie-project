@@ -1,4 +1,5 @@
 import { Button } from "@chakra-ui/react";
+import Link from "next/link";
 
 export interface IEpisodeProps {
   text: string | number;
@@ -7,8 +8,8 @@ export interface IEpisodeProps {
 
 export default function Episode(props: IEpisodeProps) {
   return (
-    <Button variant="episode">
-      {props.text}
-    </Button>
+    <Link href={props?.href ?? "#"}>
+      <Button variant="episode">{props.text}</Button>
+    </Link>
   );
 }

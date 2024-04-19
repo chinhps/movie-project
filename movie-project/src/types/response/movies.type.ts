@@ -12,10 +12,32 @@ export interface IMovieResponse {
     episodes_counter: number,
     movie_episodes_count: number,
     movie_rate_avg_rate: null | number,
-    movie_episode_laster?: IEpisode
+    movie_episode_laster?: IEpisode,
+    movie_episodes?: Array<IEpisode>,
+    categories?: Array<Category>,
+    movie_rate_count?: number
+}
+
+export interface IEpisodeResponse {
+    movie: IMovieResponse,
+    id: number,
+    episode_name: string,
+    created_at: string,
+    slug: string,
+    movie_sources: Array<IEpisodeSource>
+}
+
+export interface IEpisodeSource {
+    server_name: string,
+    source_link: string
 }
 
 interface IEpisode {
     episode_name: string,
     slug: string,
+}
+
+interface Category {
+    name: string,
+    slug: string
 }

@@ -1,3 +1,4 @@
+import moviesApi from "@/apis/movie";
 import Comment from "@/components/Global/Comments/Comment";
 import Episode from "@/components/Global/Episode";
 import {
@@ -21,8 +22,15 @@ import {
   FiMeh,
   FiStar,
 } from "react-icons/fi";
+import Cinema from "./Cinema";
 
-export default function MovieWatchPage() {
+export default async function MovieWatchPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const episodeDetail = await moviesApi.watch(params.slug);
+
   return (
     <>
       <Stack spacing={2}>
@@ -35,49 +43,27 @@ export default function MovieWatchPage() {
         >
           <Stack>
             <Heading as="h1" fontSize="20px">
-              <Link href="/movie-detail/wefew">
-                Tsuki ga Michibiku Isekai Douchuu 2nd Season
+              <Link href={"/movie-detail/" + episodeDetail.data.movie.slug}>
+                {episodeDetail.data.movie.movie_name}
               </Link>
             </Heading>
-            <Text>Đang xem tập 1</Text>
+            <Text>Đang xem tập {episodeDetail.data.episode_name}</Text>
           </Stack>
           <Stack align="end" fontSize="15px">
             <Text>Đăng 2 ngày trước</Text>
             <Text>Báo cáo</Text>
           </Stack>
         </HStack>
-        <AspectRatio rounded={10} overflow="hidden" ratio={16 / 9} bg="black">
-          <iframe
-            src="https://animehay.blog/pow.php?id=61989"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen={true}
-          ></iframe>
-        </AspectRatio>
-
-        <HStack justifyContent="space-between" mt={1}>
-          <HStack>
-            <Button variant="secondButton">HY</Button>
-            <Button>POW</Button>
-            <Button variant="secondButton">TOK</Button>
-          </HStack>
-          <Text fontSize="13px">
-            Lưu lại hoặc nhớ link thông báo: BRANDNAME.com để có thể truy cập
-            web khi nhà mạng chặn!
-          </Text>
-          <HStack>
-            <Button variant="secondButton" rightIcon={<FiEyeOff />}>
-              Remove Ads
-            </Button>
-            <Button rightIcon={<FiChevronsRight />}>Tiếp theo</Button>
-          </HStack>
-        </HStack>
-
+        <Cinema movieSource={episodeDetail.data.movie_sources} />
         <VStack align="start" mt={2} bg="white" rounded={5} p={5}>
           <Text as="b">Danh sách tập</Text>
           <HStack wrap="wrap" maxH="240px" overflowY="auto">
-            {new Array(99).fill(0).map((_, index) => (
-              <Episode text={index + 1} key={index} />
+            {episodeDetail.data.movie.movie_episodes?.map((episode, index) => (
+              <Episode
+                key={index}
+                text={episode.episode_name}
+                href={"/movie-watch/" + episode.slug}
+              />
             ))}
           </HStack>
         </VStack>

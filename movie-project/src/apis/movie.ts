@@ -1,6 +1,6 @@
 import fetchC from "@/libs/fetchC";
-import { IBaseResponse } from "@/types/base.type";
-import { IMovieResponse } from "@/types/response/movies.type";
+import { IBaseResponse, IBaseResponseDetail } from "@/types/base.type";
+import { IEpisodeResponse, IMovieResponse } from "@/types/response/movies.type";
 
 const moviesApi = {
     latest: async () => {
@@ -23,7 +23,21 @@ const moviesApi = {
             cache: "no-store"
         });
         return res;
-    }
+    },
+    detail: async (slug: string) => {
+        const url = "/movies/detail/" + slug;
+        const res: IBaseResponseDetail<IMovieResponse> = await fetchC.get(url, {
+            cache: "no-store"
+        });
+        return res;
+    },
+    watch: async (slug: string) => {
+        const url = "/movies/episode/" + slug;
+        const res: IBaseResponseDetail<IEpisodeResponse> = await fetchC.get(url, {
+            cache: "no-store"
+        });
+        return res;
+    },
 }
 
 export default moviesApi;

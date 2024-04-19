@@ -1,3 +1,4 @@
+import moviesApi from "@/apis/movie";
 import Comment from "@/components/Global/Comments/Comment";
 import Episode from "@/components/Global/Episode";
 import TagCustom from "@/components/Global/TagCustom";
@@ -26,18 +27,26 @@ import {
   FiStar,
 } from "react-icons/fi";
 
-export default function MovieDetailPage({
+export default async function MovieDetailPage({
   params,
 }: {
   params: { slug: string };
 }) {
+  const movieDetail = await moviesApi.detail(params.slug);
+
   return (
     <Stack gap={3}>
-      <Grid templateColumns="repeat(4,1fr)" gap={5} bg="white" rounded={5} p={5}>
+      <Grid
+        templateColumns="repeat(4,1fr)"
+        gap={5}
+        bg="white"
+        rounded={5}
+        p={5}
+      >
         <GridItem colSpan={1}>
           <Box rounded="md" overflow="hidden">
             <Image
-              src="/images/movie.jpg"
+              src={movieDetail.data.movie_image}
               alt="movie avatar"
               width={400}
               height={700}
@@ -46,7 +55,9 @@ export default function MovieDetailPage({
           <VStack spacing={2} mt={2}>
             <Button
               as={Link}
-              href="/movie-watch/svsvwdvds"
+              href={
+                "/movie-watch/" + movieDetail.data.movie_episodes?.at(-1)?.slug
+              }
               variant="mainButton"
               w="100%"
               padding="23px 0"
@@ -60,53 +71,75 @@ export default function MovieDetailPage({
               padding="23px 0"
               leftIcon={<FiHeart />}
             >
-              YÊU THÍCH
+              BOOKMARK
+            </Button>
+            <Button
+              variant="secondButton"
+              w="100%"
+              padding="23px 0"
+              leftIcon={<FiHeart />}
+            >
+              ĐÁNH GIÁ
             </Button>
           </VStack>
         </GridItem>
         <GridItem as={Flex} flexDirection="column" gap={3} colSpan={3}>
           <Heading as="h1" fontSize="30px">
-            Thần Ấn Vương Tọa
+            {movieDetail.data.movie_name}
           </Heading>
           <VStack spacing={4} align="start">
             <Flex gap={4}>
-              <Text as="b">Tên khác</Text> Throne Of Seal (2022)
+              <Text as="b">Tên khác</Text> {movieDetail.data.movie_name}
             </Flex>
             <Flex gap={4}>
-              <Text as="b">Thể loại</Text>{" "}
+              <Text as="b" flex="none">
+                Thể loại
+              </Text>{" "}
               <Flex flexWrap="wrap">
-                {new Array(10).fill(0).map((vl, index) => (
-                  <TagCustom key={index} text="Fantasy" />
+                {movieDetail.data.categories?.map((category, index) => (
+                  <TagCustom key={index} text={category.name} />
                 ))}
               </Flex>
             </Flex>
             <Flex gap={4}>
-              <Text as="b">Trạng thái</Text> Đã hoàn thành
+              <Text as="b">Trạng thái</Text>{" "}
+              {movieDetail.data.episodes_counter <=
+              movieDetail.data.movie_episodes_count
+                ? "Đã hoàn thành"
+                : "Đang thực hiện"}
             </Flex>
             <Flex gap={4}>
-              <Text as="b">Điểm</Text> 9.5 || 12.000 Đánh giá
+              <Text as="b">Điểm</Text> {movieDetail.data.movie_rate_avg_rate} ||{" "}
+              {movieDetail.data.movie_rate_count} Đánh giá
             </Flex>
             <Flex gap={4}>
-              <Text as="b">Phát hành</Text> Q1 2020
+              <Text as="b">Phát hành</Text> {movieDetail.data.release}
             </Flex>
             <Flex gap={4}>
-              <Text as="b">Thời lượng</Text> 150 Tập
+              <Text as="b">Thời lượng</Text> {movieDetail.data.episodes_counter}{" "}
+              Tập
             </Flex>
           </VStack>
 
-          <VStack align="start" mt={2}>
+          {/* <VStack align="start" mt={2}>
             <Text as="b">Phim liên kết</Text>
             <HStack>
               <Episode text="Huhu haha meem" />
               <Episode text="123" />
               <Episode text="123" />
             </HStack>
-          </VStack>
+          </VStack> */}
           <VStack align="start" mt={2}>
-            <Text as="b">Danh sách tập (100 tập)</Text>
+            <Text as="b">
+              Danh sách tập ({movieDetail.data.movie_episodes?.length} tập)
+            </Text>
             <HStack wrap="wrap" maxH="150px" overflowY="auto">
-              {new Array(99).fill(0).map((_, index) => (
-                <Episode text={index + 1} key={index} />
+              {movieDetail.data.movie_episodes?.map((episode, index) => (
+                <Episode
+                  text={episode.episode_name}
+                  key={index}
+                  href={"/movie-watch/" + episode.slug}
+                />
               ))}
             </HStack>
           </VStack>
@@ -114,21 +147,9 @@ export default function MovieDetailPage({
       </Grid>
       <VStack spacing={3} align="start" bg="white" rounded={5} p={5}>
         <Heading as="h2" fontSize="23px">
-          Nội dung phim
+          Thông tin phim
         </Heading>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat
-          eius aperiam voluptates quaerat autem tempora exercitationem possimus
-          consequuntur aliquid vero quae ea, nihil, sit repellendus facilis
-          nostrum reiciendis? Quis, aliquid. Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Omnis odio, aperiam, quae nulla natus
-          totam porro quis expedita a ut doloremque harum voluptatibus
-          architecto non consequuntur, qui consequatur necessitatibus quas.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi
-          vero, tempora veritatis repellat facere cupiditate qui vitae minus
-          corrupti optio ea accusamus consectetur voluptas! Ipsa aliquid quos
-          vero natus doloremque!z
-        </Text>
+        <Text>{movieDetail.data.description}</Text>
       </VStack>
       <Divider my={2} />
       <VStack spacing={3} align="start">
