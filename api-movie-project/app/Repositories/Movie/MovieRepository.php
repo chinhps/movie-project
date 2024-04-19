@@ -23,11 +23,23 @@ class MovieRepository implements MovieInterface
         return $query->paginate($limit);
     }
 
+    public function getFullBySlug(string $slug)
+    {
+        $query = $this->model
+            ->where("slug", $slug)
+            ->with(['movieEpisodeLaster', 'categories', 'movieEpisodes' => function ($query) {
+                $query->where('status', 'on');
+            }])
+            ->withCount('movieRate')
+            ->withAvg("movieRate", "rate");
+        return $query->firstOrFail();
+    }
+
     public function getBySlug(string $slug)
     {
         $query = $this->model
             ->where("slug", $slug)
-            ->with('movieEpisodeLaster')
+            ->with(['movieEpisodeLaster'])
             ->withAvg("movieRate", "rate");
         return $query->firstOrFail();
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Movie;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Episode\EpisodeDetailResource;
 use App\Repositories\MovieEpisode\MovieEpisodeInterface;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,6 @@ class EpisodeController extends Controller
 
     public function episodeWatch($slug)
     {
-        return $this->movieEpisodeRepository->getBySlug($slug);
+        return new EpisodeDetailResource($this->movieEpisodeRepository->getBySlug($slug));
     }
 }

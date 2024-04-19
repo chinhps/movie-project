@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Movie;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Movie\MovieDetailResource;
 use App\Http\Resources\Movie\MovieLatestResource;
 use App\Http\Resources\Movie\MovieResource;
 use App\Repositories\Movie\MovieInterface;
@@ -41,7 +42,7 @@ class MovieController extends Controller
 
     public function movieDetail($slug)
     {
-        $movie = $this->movieRepository->getBySlug($slug);
-        return new MovieResource($movie);
+        $movie = $this->movieRepository->getFullBySlug($slug);
+        return new MovieDetailResource($movie);
     }
 }

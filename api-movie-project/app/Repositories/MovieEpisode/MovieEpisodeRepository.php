@@ -21,7 +21,7 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
             ->orderBy('latest_episode_date', 'desc')
             ->with(['movie' => function ($query) {
                 $query->with('movieEpisodeLaster')
-                    ->withCount('movieEpisodes')
+                    ->withCount(['movieEpisodes'])
                     ->withAvg("movieRate", "rate");
             }])
             ->paginate($limit);
@@ -34,6 +34,12 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
             ->where($filter)
             ->with(['movieSources' => function ($query) {
                 $query->where("status", "on");
+            }, 'movie' => function ($query) {
+                $query->with(['movieEpisodeLaster', 'movieEpisodes' => function ($query) {
+                    $query->where('status', 'on');
+                }])
+                    ->withCount('movieEpisodes')
+                    ->withAvg("movieRate", "rate");
             }]);
         return $query->firstOrFail();
     }
