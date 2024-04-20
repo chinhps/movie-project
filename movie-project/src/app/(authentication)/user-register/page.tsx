@@ -1,68 +1,60 @@
-import { Box, Button, Heading, Input, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Checkbox,
+  Heading,
+  Input,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function UserRegisterPage() {
   return (
     <>
       <Stack
-        bg={"gray.50"}
+        bg="var(--bg-auth-from)"
         rounded={"xl"}
         p={{ base: 4, sm: 6, md: 8 }}
-        spacing={{ base: 8 }}
+        spacing={5}
         maxW={{ lg: "lg" }}
+        shadow="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;"
       >
-        <Stack spacing={4}>
-          <Heading color="gray.800" fontSize="3xl">
+        <Stack spacing={4} my="2rem">
+          <Heading color="gray.800" fontSize="3xl" textAlign="center">
             ĐĂNG KÝ NGAY
           </Heading>
-          <Text color="gray.500" fontSize="md">
-            Bạn có thể lưu trữ phim, chia sẻ, nhắn tin với tài khoản của mình
+          <Text color="gray.500" fontSize="md" textAlign="center" px={2}>
+            Bạn có thể lưu trữ phim, chia sẻ, nhắn tin với bạn bè
           </Text>
         </Stack>
-        <Box as="form">
-          <Stack spacing={4}>
+        <Stack spacing={5}>
+          <Stack spacing={3}>
+            <Input variant="auth" placeholder="Tài khoản" />
+            <Input variant="auth" type="password" placeholder="Mật khẩu" />
             <Input
-              placeholder="Firstname"
-              bg={"gray.100"}
-              border={0}
-              color={"gray.500"}
-              _placeholder={{
-                color: "gray.500",
-              }}
-            />
-            <Input
-              placeholder="firstname@lastname.io"
-              bg={"gray.100"}
-              border={0}
-              color={"gray.500"}
-              _placeholder={{
-                color: "gray.500",
-              }}
-            />
-            <Input
-              placeholder="+1 (___) __-___-___"
-              bg={"gray.100"}
-              border={0}
-              color={"gray.500"}
-              _placeholder={{
-                color: "gray.500",
-              }}
+              variant="auth"
+              type="password"
+              placeholder="Xác nhận mật khẩu"
             />
           </Stack>
-          <Button
-            fontFamily={"heading"}
-            mt={8}
-            w={"full"}
-            bgGradient="linear(to-r, red.400,pink.400)"
-            color={"white"}
-            _hover={{
-              bgGradient: "linear(to-r, red.400,pink.400)",
-              boxShadow: "xl",
-            }}
+          <Checkbox
+            ml="0.5rem"
+            size="md"
+            colorScheme="green"
+            defaultChecked
+            color="gray.600"
           >
+            Chấp nhập với Điều khoản & Dịch vụ
+          </Checkbox>
+          <Button variant="mainButton" w="100%" py="1.5rem">
             ĐĂNG KÝ NGAY
           </Button>
-        </Box>
-        form
+        </Stack>
+        <Center color="gray.600" fontSize="15px">
+          <Link href="/user-login">Bạn đã có tài khoản? Đăng nhập ngay</Link>
+        </Center>
       </Stack>
     </>
   );
