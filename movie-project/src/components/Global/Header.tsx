@@ -1,13 +1,13 @@
-import { Box, HStack, Heading } from "@chakra-ui/react";
+import { Box, HStack, Heading, StackProps } from "@chakra-ui/react";
 
-export interface IHeaderProps {
+export interface IHeaderProps extends StackProps {
   children: React.ReactNode;
-  rightLink?: React.ReactElement;
+  rightLink?: React.ReactNode | null;
 }
 
-export default function Header(props: IHeaderProps) {
+export default function Header({ rightLink, ...props }: IHeaderProps) {
   return (
-    <HStack mt={6} mb={3} justifyContent="space-between">
+    <HStack {...props} justifyContent="space-between">
       <Box
         clipPath="polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%)"
         bg="var(--bg-section)"
@@ -21,11 +21,12 @@ export default function Header(props: IHeaderProps) {
           fontSize="18px"
           w="fit-content"
           color="var(--text-main)"
+          textTransform="uppercase"
         >
           {props.children}
         </Heading>
       </Box>
-      {props?.rightLink}
+      {rightLink}
     </HStack>
   );
 }

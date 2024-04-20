@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <>
       <Banner />
-      <Header rightLink={<Link href="/sdfsd">Xem tất cả</Link>}>
+      <Header mb={3} mt={5} rightLink={<Link href="/sdfsd">Xem tất cả</Link>}>
         ANIME MỚI CẬP NHẬT
       </Header>
       <HomeLayout mt={5}>
@@ -24,13 +24,17 @@ export default async function Home() {
           <MovieItemV2 key={index} movie={movie} />
         ))}
       </HomeLayout>
-      <Header>BẢNG XẾP HẠNG</Header>
+      <Header mb={3} mt={5}>
+        BẢNG XẾP HẠNG
+      </Header>
       <HomeLayout>
         {moviesRanking.data.map((movie, index) => (
           <MovieItemV3 key={index} movie={movie} />
         ))}
       </HomeLayout>
-      <Header>TẤT CẢ PHIM</Header>
+      <Header mb={3} mt={5} rightLink={<Link href="/movies">Xem tất cả</Link>}>
+        TẤT CẢ PHIM
+      </Header>
       <HomeLayout>
         {moviesList.data.map((movie, index) => (
           <MovieItem key={index} movie={movie} />

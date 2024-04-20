@@ -38,6 +38,13 @@ const moviesApi = {
         });
         return res;
     },
+    listByCategory: async (slug: string) => {
+        const url = "/movies/category/" + slug;
+        const res: IBaseResponse<IMovieResponse> = await fetchC.get(url, {
+            cache: "no-store"
+        });
+        return res;
+    },
 }
 
 export default moviesApi;

@@ -10,7 +10,7 @@
   --bg-main: #edf2f4;
   --bg-footer: #111111;
   --bg-white: #ffffff;
-  --bg-gray: #5c5c5c;
+  --bg-gray: #757474;
   --bg-tag: #3182ce;
   
   /* Movie */
@@ -19,6 +19,9 @@
 
   /* Banner */
   --banner-description: #2b2d427e;
+
+  /* Auth */
+  --bg-auth-from: #ffffff;
 }
 
 body {

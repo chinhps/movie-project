@@ -26,7 +26,7 @@ import {
   FiRotateCw,
   FiSearch,
 } from "react-icons/fi";
-import NavbarCategory from "./NavbarCategory";
+import NavbarCategory, { CategoryItem } from "./NavbarCategory";
 import "./navbar.scss";
 
 export default async function Navbar() {
@@ -56,6 +56,8 @@ export default async function Navbar() {
                   fontSize="14px"
                   placeholder="Nhập tên bộ phim..."
                   w="500px"
+                  bg="white"
+                  _placeholder={{ color: "var(--bg-gray)", fontWeight: "400" }}
                 />
                 <HStack
                   right={0}
@@ -141,21 +143,5 @@ function Notification() {
         <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
       </PopoverContent>
     </Popover>
-  );
-}
-
-function CategoryItem({ text, href }: { text: string; href: string }) {
-  return (
-    <ListItem
-      as="li"
-      _hover={{
-        backgroundColor: "var(--bg-navbar)",
-        color: "var(--text-main)",
-      }}
-    >
-      <Box as={Link} href={href} display="block" py={4}>
-        {text}
-      </Box>
-    </ListItem>
   );
 }
