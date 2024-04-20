@@ -17,13 +17,8 @@ class CategoryRepository implements CategoryInterface
         return $this->model->get();
     }
 
-    public function detail($slug)
+    public function getBySlug($slug)
     {
-        return $this->model->where('slug', $slug)->with(['movies' => function ($query) {
-            $query->with('movieEpisodeLaster')
-                ->withAvg("movieRate", "rate");
-        }])
-
-            ->firstOrFail();
+        return $this->model->where('slug', $slug)->firstOrFail();
     }
 }

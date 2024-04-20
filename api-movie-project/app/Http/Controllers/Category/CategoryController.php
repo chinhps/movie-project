@@ -22,6 +22,6 @@ class CategoryController extends Controller
 
     public function detail($slug)
     {
-        return $this->categoryRepository->detail($slug);;
+        return new CategoryResource($this->categoryRepository->getBySlug($slug));
     }
 }

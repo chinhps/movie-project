@@ -52,6 +52,7 @@ Route::prefix("movies")->group(function () {
     Route::get("ranking", [MovieController::class, 'moviesRanking']);
 
     Route::get("detail/{slug}", [MovieController::class, 'movieDetail']);
+    Route::get("category/{slug}", [MovieController::class, 'movieByCategory']);
 
     Route::prefix("episode")->group(function () {
         Route::get("{slug}", [EpisodeController::class, 'episodeWatch']);

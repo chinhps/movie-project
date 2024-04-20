@@ -14,21 +14,26 @@ class MovieDetailResource extends MovieResource
      */
     public function toArray(Request $request): array
     {
+        return $this->resource($this);
+    }
+
+    public function resource($data): array
+    {
         return [
-            ...$this->custom($this),
-            "movie_episodes" => $this->movieEpisodes->map(function ($episode) {
+            ...$this->custom($data),
+            "movie_episodes" => $data->movieEpisodes?->map(function ($episode) {
                 return [
                     "episode_name" => $episode->episode_name,
                     "slug" => $episode->slug
                 ];
             }),
-            "categories" => $this->categories->map(function ($category) {
+            "categories" => $data->categories?->map(function ($category) {
                 return [
                     "name" => $category->name,
                     "slug" => $category->slug
                 ];
             }),
-            "movie_rate_count" => $this->movie_rate_count
+            "movie_rate_count" => $data->movie_rate_count
         ];
     }
 }

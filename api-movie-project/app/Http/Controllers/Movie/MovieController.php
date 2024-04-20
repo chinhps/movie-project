@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Movie\MovieDetailResource;
 use App\Http\Resources\Movie\MovieLatestResource;
 use App\Http\Resources\Movie\MovieResource;
+use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Movie\MovieInterface;
 use App\Repositories\MovieEpisode\MovieEpisodeInterface;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class MovieController extends Controller
     public function __construct(
         private MovieInterface $movieRepository,
         private MovieEpisodeInterface $movieEpisodeRepository,
-
+        private CategoryInterface $categoryRepository
     ) {
     }
 
@@ -36,7 +37,7 @@ class MovieController extends Controller
     {
         $movies = $this->movieRepository->list([
             "sort" => [["views", "desc"]]
-        ],10);
+        ], 10);
         return MovieResource::collection($movies);
     }
 
@@ -44,5 +45,11 @@ class MovieController extends Controller
     {
         $movie = $this->movieRepository->getFullBySlug($slug);
         return new MovieDetailResource($movie);
+    }
+
+    public function movieByCategory($slugCategory)
+    {
+        $movies = $this->movieRepository->list(["category_slug" => $slugCategory], 25);
+        return MovieResource::collection($movies);
     }
 }
