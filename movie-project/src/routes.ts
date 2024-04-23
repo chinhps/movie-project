@@ -15,4 +15,5 @@ export const apiAuthPrefix = "/api/auth";
 /*
 * Url after user login
 */
-export const DEFAULT_URL_LOGIN_REDIRECT = "/user"
+export const DEFAULT_URL_LOGIN_REDIRECT = "/user";
+export const ADMIN_URL_LOGIN_REDIRECT = "/admin"

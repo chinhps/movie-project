@@ -35,8 +35,8 @@ export default function UserLoginPage() {
     startTransition(() => {
       login(values).then((data) =>
         toast({
-          description: data.message,
-          status: data.type as "success" | "error",
+          description: data?.message,
+          status: data?.type as "success" | "error",
         })
       );
     });

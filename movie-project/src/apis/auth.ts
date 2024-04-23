@@ -1,10 +1,11 @@
 import fetchC from "@/libs/fetchC";
-import { IBaseResponse, IResponseWithMessage } from "@/types/base.type";
+import { IBaseResponseDetail } from "@/types/base.type";
+import { IResponseAuth } from "@/types/response/auth.type";
 
 const authApi = {
     login: async (username: string, password: string) => {
         const url = "/auth/login";
-        const res: IResponseWithMessage = await fetchC.post(url, {
+        const res: IBaseResponseDetail<IResponseAuth> = await fetchC.post(url, {
             username, password
         }, {
             cache: "no-store"

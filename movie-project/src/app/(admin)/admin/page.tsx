@@ -1,3 +1,6 @@
-export default function AdminPage() {
-  return <div>admin page</div>;
+import { auth } from "@/auth";
+
+export default async function AdminPage() {
+  const session = await auth();
+  return <div>{JSON.stringify(session)}</div>;
 }
