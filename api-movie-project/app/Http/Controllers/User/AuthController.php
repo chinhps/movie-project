@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\{BaseResponse, Controller};
 use App\Http\Requests\User\{ChangePasswordRequest, UserLoginRequest, UserRegisterRequest};
+use App\Models\User;
 use App\Repositories\User\UserInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,13 +21,18 @@ class AuthController extends Controller
     public function getCurrentInfo(Request $request)
     {
         $user = $request->user();
-        return BaseResponse::data([
+        return BaseResponse::data($this->user($user));
+    }
+
+    private function user(User $user)
+    {
+        return [
             "providerId" => $user->provider_id,
             "name" => $user->name,
             "username" => $user->username,
             "level" => $user->level,
             "created_at" => $user->created_at,
-        ]);
+        ];
     }
 
     private function generateProviderId()
@@ -58,7 +64,12 @@ class AuthController extends Controller
             ]);
 
             DB::commit();
-            return BaseResponse::token(token: generateToken($user), msg: "Tạo tài thành công! Đang chuyển hướng...", status: 200);
+            return BaseResponse::data([
+                "token" => generateToken($user),
+                "msg" => "Tạo tài thành công! Đang chuyển hướng...",
+                "user" => $this->user($user),
+                "status" => 200
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return BaseResponse::msg("Tạo tài khoản thất bại! Liên hệ admin để được hỗ trợ", 500);
@@ -79,7 +90,12 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        return BaseResponse::token(token: generateToken($user), msg: "Đăng nhập thành công!", status: 200);
+        return BaseResponse::data([
+            "token" => generateToken($user),
+            "msg" => "Đăng nhập thành công! Đang chuyển hướng...",
+            "user" => $this->user($user),
+            "status" => 200
+        ]);
     }
 
     public function changePassword(ChangePasswordRequest $request)
