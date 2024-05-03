@@ -11,7 +11,7 @@ export interface IEpisodeProps {
   episode: IEpisodeHistory;
 }
 
-interface IEpisodeHistory {
+export interface IEpisodeHistory {
   movieId?: number;
   slug?: string;
 }

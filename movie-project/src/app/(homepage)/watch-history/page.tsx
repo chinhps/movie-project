@@ -1,16 +1,21 @@
 "use client";
 
+import { IEpisodeHistory } from "@/components/Global/Episode";
 import Header from "@/components/Global/Header";
 import { MovieItemV2 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
+const localHistories: Array<IEpisodeHistory> = JSON.parse(
+  localStorage?.getItem("movie-history") ?? "[]"
+);
+
 export default function WatchHistoryPage() {
   const { data: session, update, status } = useSession();
   useEffect(() => {
     console.log(session);
-  },[session]);
+  }, [session]);
 
   return (
     <>

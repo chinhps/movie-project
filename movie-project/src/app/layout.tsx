@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ChakraUIProviders } from "@/providers/Chakra";
 import { SessionProvider } from "next-auth/react";
+import TanstackProvider from "@/providers/Tanstack";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SessionProvider>
-          <ChakraUIProviders>{children}</ChakraUIProviders>
+          <TanstackProvider>
+            <ChakraUIProviders>{children}</ChakraUIProviders>
+          </TanstackProvider>
         </SessionProvider>
       </body>
     </html>
