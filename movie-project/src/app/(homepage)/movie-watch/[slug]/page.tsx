@@ -62,7 +62,11 @@ export default async function MovieWatchPage({
               <Episode
                 key={index}
                 text={episode.episode_name}
-                href={"/movie-watch/" + episode.slug}
+                episode={{
+                  movieId: episodeDetail.data.movie.id,
+                  slug: episode.slug,
+                }}
+                // slug={episode.slug}
               />
             ))}
           </HStack>

@@ -136,9 +136,10 @@ export default async function MovieDetailPage({
             <HStack wrap="wrap" maxH="150px" overflowY="auto">
               {movieDetail.data.movie_episodes?.map((episode, index) => (
                 <Episode
-                  text={episode.episode_name}
                   key={index}
-                  href={"/movie-watch/" + episode.slug}
+                  text={episode.episode_name}
+                  episode={{ movieId: movieDetail.data.id, slug: episode.slug }}
+                  // slug={episode.slug}
                 />
               ))}
             </HStack>
@@ -168,6 +169,7 @@ export default async function MovieDetailPage({
             height="55%"
             placeholder="Viết gì đó tại đây..."
             bg="var(--bg-white)"
+            variant="pill"
           />
           <HStack
             justifyContent="space-between"
