@@ -16,6 +16,8 @@
   /* Movie */
   --gradient-movie: linear-gradient(#11111100, #111111c1);
   --bg-title: #0000002c;
+  --bg-episode-watched: #dfdfdf;
+
 
   /* Banner */
   --banner-description: #2b2d427e;

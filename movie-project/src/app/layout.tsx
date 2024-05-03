@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ChakraUIProviders } from "@/providers/Chakra";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ChakraUIProviders>{children}</ChakraUIProviders>
+        <SessionProvider>
+          <ChakraUIProviders>{children}</ChakraUIProviders>
+        </SessionProvider>
       </body>
     </html>
   );

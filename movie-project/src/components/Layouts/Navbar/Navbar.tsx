@@ -7,7 +7,6 @@ import {
   IconButton,
   Input,
   List,
-  ListItem,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -28,9 +27,12 @@ import {
 } from "react-icons/fi";
 import NavbarCategory, { CategoryItem } from "./NavbarCategory";
 import "./navbar.scss";
+import NavbarUser from "./NavbarUser";
+import { auth } from "@/auth";
 
 export default async function Navbar() {
   const categories = await categoryApi.list();
+  const session = await auth();
 
   return (
     <>
@@ -91,9 +93,16 @@ export default async function Navbar() {
                     icon={<FiBookmark />}
                   />
                 </Link>
-                <Link href="/user-register">
-                  <IconButton aria-label="login" icon={<FiLogIn />} />
-                </Link>
+                {session ? (
+                  <NavbarUser
+                    name={session?.user.name}
+                    level={session?.user.level}
+                  />
+                ) : (
+                  <Link href="/user-register">
+                    <IconButton aria-label="login" icon={<FiLogIn />} />
+                  </Link>
+                )}
               </HStack>
             </Flex>
           </Container>

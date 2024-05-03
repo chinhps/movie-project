@@ -11,7 +11,7 @@ const authApi = {
             cache: "no-store"
         });
         return res;
-    }
+    },
 }
 
 export default authApi;

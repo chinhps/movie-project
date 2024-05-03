@@ -13,7 +13,7 @@ export const useClickOutside = (handler: () => void, enable: boolean) => {
         domButtonNodeRef.current &&
         !domButtonNodeRef.current.contains(event.target as Node)
       ) {
-        console.log(4343534534, event.target, domNodeRef, domButtonNodeRef);
+        // console.log(4343534534, event.target, domNodeRef, domButtonNodeRef);
         handler();
       }
     };

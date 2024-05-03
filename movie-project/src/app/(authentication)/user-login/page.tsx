@@ -18,7 +18,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useTransition } from "react";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 export default function UserLoginPage() {
@@ -33,12 +33,14 @@ export default function UserLoginPage() {
   });
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
-      login(values).then((data) =>
-        toast({
-          description: data?.message,
-          status: data?.type as "success" | "error",
-        })
-      );
+      login(values).then((data) => {
+        if (data) {
+          toast({
+            description: data?.message,
+            status: data?.type as "success" | "error",
+          });
+        }
+      });
     });
   };
 
@@ -87,7 +89,7 @@ export default function UserLoginPage() {
               colorScheme="green"
               defaultChecked
               color="gray.600"
-              {...register("remember")}
+              // {...register("remember")}
             >
               Ghi nhớ mật khẩu
             </Checkbox>

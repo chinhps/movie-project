@@ -1,9 +1,10 @@
 "use server";
 
 import { signIn } from '@/auth';
-import { ADMIN_URL_LOGIN_REDIRECT } from '@/routes';
+import { DEFAULT_URL_LOGIN_REDIRECT } from '@/routes';
 import { LoginSchema } from '@/schemas';
 import { AuthError } from 'next-auth';
+import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
@@ -12,23 +13,24 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     if (!validatedFields.success) {
         return { message: 'error', type: 'error' }
     }
-    console.log('login.ts', validatedFields);
     const { username, password } = validatedFields.data;
     try {
         await signIn("credentials", {
             username,
             password,
-            redirectTo: ADMIN_URL_LOGIN_REDIRECT
+            redirect: false
         });
-    } catch (e) {
-        if (e instanceof AuthError) {
-            switch (e.type) {
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
                 case "CredentialsSignin":
                     return { message: 'invalid credential', type: 'error' };
                 default:
                     return { message: 'something wrong', type: 'error' };
             }
         }
-        throw e;
+        throw error;
+    } finally {
+        redirect(DEFAULT_URL_LOGIN_REDIRECT);
     }
 }
