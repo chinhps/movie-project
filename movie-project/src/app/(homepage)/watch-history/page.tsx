@@ -1,21 +1,27 @@
 "use client";
 
-import { IEpisodeHistory } from "@/components/Global/Episode";
+import moviesApi from "@/apis/movie";
 import Header from "@/components/Global/Header";
 import { MovieItemV2 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
-const localHistories: Array<IEpisodeHistory> = JSON.parse(
-  localStorage?.getItem("movie-history") ?? "[]"
-);
-
 export default function WatchHistoryPage() {
-  const { data: session, update, status } = useSession();
+  const { data: session } = useSession();
+
   useEffect(() => {
     console.log(session);
   }, [session]);
+
+  const historyQuery = useQuery({
+    queryKey: ["watch-history"],
+    queryFn: () => moviesApi.historyClient(JSON.parse(
+      localStorage.getItem("movie-history") ?? "[]"
+    )),
+    retry: false,
+  });
 
   return (
     <>

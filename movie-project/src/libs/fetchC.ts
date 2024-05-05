@@ -5,7 +5,7 @@ interface IInitialFetch {
 }
 
 const initialFetch: IInitialFetch = {
-    BaseURL: "http://localhost:8081/api",
+    BaseURL: "http://localhost:8081/public/api",
     headers: {
         "X-Requested-With": "XMLHttpRequest",
         "content-type": "application/json",
@@ -15,12 +15,13 @@ const initialFetch: IInitialFetch = {
 
 interface Option extends RequestInit {
     params?: { [key: string]: string }
+    BaseURL?: string
 }
 
 const fetchC = {
     get: async (url: string, init?: Option) => {
         const queryString = init?.params ? new URLSearchParams(init.params).toString() : "";
-        const data = await fetch(initialFetch.BaseURL + url + queryString, {
+        const data = await fetch((init?.BaseURL ?? initialFetch.BaseURL) + url + queryString, {
             headers: {
                 ...initialFetch.headers
             },

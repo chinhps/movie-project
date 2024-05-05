@@ -58,6 +58,9 @@ Route::prefix("movies")->group(function () {
         Route::get("{slug}", [EpisodeController::class, 'episodeWatch']);
     });
 
+    # history watch at client
+    Route::get("histories-client", [MovieHistoryController::class, 'listClient']);
+
     Route::middleware(['decryptToken:sanctum'])->group(function () {
         # history watch
         Route::get("histories", [MovieHistoryController::class, 'list']);

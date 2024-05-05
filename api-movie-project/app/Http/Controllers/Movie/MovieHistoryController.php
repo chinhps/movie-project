@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Movie;
 
+use App\Http\Controllers\BaseResponse;
 use App\Http\Controllers\Controller;
 use App\Repositories\MovieHistory\MovieHistoryInterface;
 use Illuminate\Http\Request;
@@ -19,5 +20,10 @@ class MovieHistoryController extends Controller
     {
         $user = Auth::user();
         return $this->movieHistoryRepository->list($user);
+    }
+
+    public function listClient()
+    {
+        return BaseResponse::msg("helo");
     }
 }
