@@ -14,11 +14,11 @@ class CommentRepository implements CommentInterface
     ) {
     }
 
-    public function listBySlug($slug)
+    public function listBySlug($slug, float $limit = 15)
     {
         return $this->model->whereHas('movie', function ($query) use ($slug) {
             $query->where('slug', $slug);
-        })->paginate(15);
+        })->with('user')->orderBy('id','desc')->paginate($limit);
     }
 
     public function updateOrInsert(float|null $id, array $params, User $user, Movie $movie)

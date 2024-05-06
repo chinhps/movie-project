@@ -1,48 +1,49 @@
-import { Divider, Flex, HStack, Stack, Text, VStack } from "@chakra-ui/react";
+import { Box, Divider, Flex, HStack, Stack, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import TagCustom from "../TagCustom";
 
-export default function Comment() {
+interface IComment {
+  name: string;
+  level: number;
+  message: string;
+}
+
+export default function Comment(props: IComment) {
   return (
-    <VStack align="start">
-      <CommentMain />
+    <VStack align="start" w="100%">
+      <CommentMain {...props} />
       <Stack direction="row" align="startz" px={6}>
-        <Divider
+        {/* <Divider
           height="auto"
           orientation="vertical"
           borderColor="var(--bg-navbar)"
           borderLeftWidth="1px"
-        />
-        <VStack ml={5}>
+        /> */}
+        {/* <VStack ml={5}>
           <CommentMain />
           <CommentMain />
           <CommentMain />
-        </VStack>
+        </VStack> */}
       </Stack>
     </VStack>
   );
 }
 
-function CommentMain() {
+function CommentMain({ name, level, message }: IComment) {
   return (
-    <HStack spacing={2} mt={2}>
-      <Flex height="auto" rounded="xl" overflow="hidden">
+    <HStack spacing={2} mt={1} width="100%">
+      <Box rounded="xl" overflow="hidden">
         <Image src="/images/avatar.png" alt="avatar" width={60} height={60} />
-      </Flex>
-      <VStack align="normal" gap={0}>
+      </Box>
+      <VStack align="normal" gap={0} width="100%">
         <HStack spacing={0}>
-          <Text as="b" mr={2} fontSize="17px">
-            Hoang Pham
+          <Text as="b" mr={2} fontSize="15px">
+            {name}
           </Text>
-          <TagCustom text="Lv: 30" />
-          <TagCustom text="Hội viên" />
+          <TagCustom text={"Lv: " + level} />
+          {/* <TagCustom text="Hội viên" /> */}
         </HStack>
-        <Text fontSize="14px">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem
-          inventore odio, hic, quia impedit dolore asperiores non consequuntur
-          sed totam unde, illum iure fuga nisi sapiente saepe pariatur
-          praesentium id?
-        </Text>
+        <Text fontSize="14px">{message}</Text>
       </VStack>
     </HStack>
   );

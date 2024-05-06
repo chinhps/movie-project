@@ -22,7 +22,7 @@ class CommentRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "message" => "bail|required|max:350",
+            "message" => "required|max:450",
             "slug" => "required|exists:movies,slug"
         ];
     }

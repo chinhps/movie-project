@@ -16,7 +16,7 @@ export interface IEpisodeHistory {
   slug?: string;
 }
 
-const saveEpisode = (episode: IEpisodeHistory) => {
+export const saveEpisode = (episode: IEpisodeHistory) => {
   const localHistories: Array<IEpisodeHistory> = JSON.parse(
     localStorage.getItem("movie-history") ?? "[]"
   );

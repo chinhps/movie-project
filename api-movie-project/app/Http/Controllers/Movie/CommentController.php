@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Movie;
 use App\Http\Controllers\BaseResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Comment\CommentRequest;
+use App\Http\Resources\Comment\CommentResource;
 use App\Repositories\Comment\CommentInterface;
 use App\Repositories\Movie\MovieInterface;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class CommentController extends Controller
 
     public function commentMovie($slug)
     {
-        return $this->commentRepository->listBySlug($slug);
+        return CommentResource::collection($this->commentRepository->listBySlug($slug, 10));
     }
 
     public function addCommentMovie(CommentRequest $request)

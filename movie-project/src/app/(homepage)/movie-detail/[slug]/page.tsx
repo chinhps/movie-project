@@ -26,6 +26,8 @@ import {
   FiMeh,
   FiStar,
 } from "react-icons/fi";
+import Comments from "./Comments";
+import WatchNow from "./WatchNow";
 
 export default async function MovieDetailPage({
   params,
@@ -53,18 +55,11 @@ export default async function MovieDetailPage({
             />
           </Box>
           <VStack spacing={2} mt={2}>
-            <Button
-              as={Link}
-              href={
-                "/movie-watch/" + movieDetail.data.movie_episodes?.at(-1)?.slug
-              }
-              variant="mainButton"
-              w="100%"
-              padding="23px 0"
-              leftIcon={<FiFilm />}
+            <WatchNow
+              slug={movieDetail.data.movie_episodes?.at(-1)?.slug ?? ""}
             >
               XEM NGAY
-            </Button>
+            </WatchNow>
             <Button
               variant="secondButton"
               w="100%"
@@ -152,52 +147,8 @@ export default async function MovieDetailPage({
         </Heading>
         <Text>{movieDetail.data.description}</Text>
       </VStack>
-      <Divider my={2} />
-      <VStack spacing={3} align="start">
-        <Text as="b">Bình luận (1000)</Text>
-        <Flex
-          w="100%"
-          rounded="xl"
-          overflow="hidden"
-          height="130px"
-          position="relative"
-          bg="var(--bg-white)"
-        >
-          <Input
-            py={5}
-            px={5}
-            height="55%"
-            placeholder="Viết gì đó tại đây..."
-            bg="var(--bg-white)"
-            variant="pill"
-          />
-          <HStack
-            justifyContent="space-between"
-            position="absolute"
-            bottom={3}
-            left={3}
-            right={3}
-          >
-            <HStack>
-              <IconButton aria-label="send star" icon={<FiStar />} />
-              <IconButton aria-label="sticker" icon={<FiMeh />} />
-            </HStack>
-            <IconButton
-              aria-label="send comment"
-              icon={<FiCornerDownRight />}
-            />
-          </HStack>
-        </Flex>
-      </VStack>
-      <VStack bg="white" rounded={5} p={5}>
-        <Comment />
-        <Comment />
-        <Comment />
-
-        <Text mx="auto" fontSize="14px" mt={5} color="var(--bg-section)">
-          Xem thêm bình luận...
-        </Text>
-      </VStack>
+      <Divider mt={2} color="gray.100" />
+      <Comments slug={movieDetail.data.slug} />
     </Stack>
   );
 }

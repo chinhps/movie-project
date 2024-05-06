@@ -20,7 +20,7 @@ interface Option extends RequestInit {
 
 const fetchC = {
     get: async (url: string, init?: Option) => {
-        const queryString = init?.params ? new URLSearchParams(init.params).toString() : "";
+        const queryString = "?" + (init?.params ? new URLSearchParams(init?.params).toString() : "");
         const data = await fetch((init?.BaseURL ?? initialFetch.BaseURL) + url + queryString, {
             headers: {
                 ...initialFetch.headers

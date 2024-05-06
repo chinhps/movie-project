@@ -23,6 +23,7 @@ import {
   FiStar,
 } from "react-icons/fi";
 import Cinema from "./Cinema";
+import Comments from "../../movie-detail/[slug]/Comments";
 
 export default async function MovieWatchPage({
   params,
@@ -38,7 +39,8 @@ export default async function MovieWatchPage({
           justifyContent="space-between"
           rounded={10}
           bg="var(--bg-navbar)"
-          p={5}
+          px={6}
+          py={4}
           color="var(--text-main)"
         >
           <Stack>
@@ -71,60 +73,9 @@ export default async function MovieWatchPage({
             ))}
           </HStack>
         </VStack>
-        <CommentWatch />
+        <Divider mt={2} color="gray.100" />
+        <Comments slug={episodeDetail.data.movie.slug} />
       </Stack>
-    </>
-  );
-}
-
-function CommentWatch() {
-  return (
-    <>
-      <Divider my={2} />
-      <VStack spacing={3} align="start">
-        <Text as="b">Bình luận (1000)</Text>
-        <Flex
-          w="100%"
-          rounded="xl"
-          overflow="hidden"
-          height="130px"
-          position="relative"
-          bg="var(--bg-white)"
-        >
-          <Input
-            py={5}
-            px={5}
-            height="55%"
-            placeholder="Viết gì đó tại đây..."
-            bg="var(--bg-white)"
-          />
-          <HStack
-            justifyContent="space-between"
-            position="absolute"
-            bottom={3}
-            left={3}
-            right={3}
-          >
-            <HStack>
-              <IconButton aria-label="send star" icon={<FiStar />} />
-              <IconButton aria-label="sticker" icon={<FiMeh />} />
-            </HStack>
-            <IconButton
-              aria-label="send comment"
-              icon={<FiCornerDownRight />}
-            />
-          </HStack>
-        </Flex>
-      </VStack>
-      <VStack bg="white" rounded={5} p={5}>
-        <Comment />
-        <Comment />
-        <Comment />
-
-        <Text mx="auto" fontSize="14px" mt={5} color="var(--bg-section)">
-          Xem thêm bình luận...
-        </Text>
-      </VStack>
     </>
   );
 }
