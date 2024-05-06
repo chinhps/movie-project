@@ -90,7 +90,7 @@ export default async function MovieDetailPage({
               <Text as="b" flex="none">
                 Thể loại
               </Text>{" "}
-              <Flex flexWrap="wrap">
+              <Flex flexWrap="wrap" gap={1}>
                 {movieDetail.data.categories?.map((category, index) => (
                   <TagCustom key={index} text={category.name} />
                 ))}
