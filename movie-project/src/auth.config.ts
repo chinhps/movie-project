@@ -1,17 +1,24 @@
-import type { NextAuthConfig } from "next-auth";
+import { CredentialsSignin, type NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import authApi from "./apis/auth";
 import { LoginSchema } from "./schemas";
+class CustomAuthorizeError extends CredentialsSignin {
+    code = "custom"
+}
 
 export default {
     providers: [
         Credentials({
-            authorize: async (credentials) => {
+            authorize: async (credentials, request) => {
                 const validatedFields = LoginSchema.safeParse(credentials)
                 if (validatedFields.success) {
                     const { username, password } = validatedFields.data;
-                    const user = await authApi.login(username, password);
-                    return { ...user.data.user, token: user.data.token };
+                    try {
+                        const user = await authApi.login(username, password);
+                        return { ...user.data.user, token: user.data.token };
+                    } catch (e) {
+                        throw new CustomAuthorizeError("oat the fucking shit");
+                    }
                 }
                 return null;
             }
@@ -31,7 +38,7 @@ export default {
             return token;
         },
         session: async ({ session, token }) => {
-            if (token) {
+            if (token && session.user) {
                 session.user = {
                     ...session.user,
                     level: token.level as number,
