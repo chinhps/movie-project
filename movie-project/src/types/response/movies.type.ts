@@ -15,7 +15,14 @@ export interface IMovieResponse {
     movie_episode_laster?: IEpisode,
     movie_episodes?: Array<IEpisode>,
     categories?: Array<Category>,
-    movie_rate_count?: number
+    movie_rate_count?: number,
+    created_at?: string
+}
+
+export interface IMovieHistory {
+    episode_name: string,
+    id: number
+    movie: IMovieResponse
 }
 
 export interface IEpisodeResponse {

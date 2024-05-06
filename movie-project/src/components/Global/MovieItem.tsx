@@ -177,6 +177,40 @@ export function MovieItemV2({
   );
 }
 
+MovieItemV2.skeleton = () => {
+  return (
+    <Center py={3}>
+      <Box
+        role="group"
+        p={2}
+        maxW="330px"
+        w="full"
+        bg="gray.200"
+        boxShadow="sm"
+        rounded="lg"
+        pos="relative"
+        zIndex={1}
+      >
+        <Box
+          rounded="xl"
+          mt={-5}
+          position="relative"
+          bg="gray.300"
+          height="240px"
+        ></Box>
+        <Stack pb={3} pt={5} align="center">
+          <Stack direction="row" align="center" spacing={5}>
+            <Box width="70px" height="15px" bg="gray.300" />
+            <Box width="35px" height="15px" bg="gray.300" />
+          </Stack>
+          <Box width="150px" height="20px" bg="gray.300" />
+          <Box width="100px" height="13px" bg="gray.300" />
+        </Stack>
+      </Box>
+    </Center>
+  );
+};
+
 function MovieRate({
   children,
   icon,

@@ -18,8 +18,9 @@ class MovieHistoryRepository implements MovieHistoryInterface
         return $this->model
             ->where('user_id', $user->id)
             ->with(['movie' => function ($query) {
-                $query->withAvg("movieRate", "rate");
-            }, 'movie.movieEpisodeLaster'])
+                $query->with('movieEpisodeLaster')
+                    ->withAvg("movieRate", "rate");
+            }])
             ->paginate($limit);
     }
 

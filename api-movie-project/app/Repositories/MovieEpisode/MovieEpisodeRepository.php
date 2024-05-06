@@ -43,4 +43,13 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
             }]);
         return $query->firstOrFail();
     }
+
+    public function getListHistory(array $array, float $limit = 15)
+    {
+        $query = $this->model->whereIn('slug', $array)->with(['movie' => function ($query) {
+            $query->with('movieEpisodeLaster')
+                ->withAvg("movieRate", "rate");
+        }])->paginate($limit);
+        return $query;
+    }
 }

@@ -15,21 +15,48 @@ export default function WatchHistoryPage() {
     console.log(session);
   }, [session]);
 
-  const historyQuery = useQuery({
-    queryKey: ["watch-history"],
-    queryFn: () => moviesApi.historyClient(JSON.parse(
-      localStorage.getItem("movie-history") ?? "[]"
-    )),
+  const historyClientQuery = useQuery({
+    queryKey: ["watch-history-client"],
+    queryFn: () =>
+      moviesApi.historyClient(
+        JSON.parse(localStorage.getItem("movie-history") ?? "[]")
+      ),
     retry: false,
+    enabled: !!localStorage.getItem("movie-history"),
+  });
+
+  const historyQuery = useQuery({
+    queryKey: ["watch-history-account"],
+    queryFn: () => moviesApi.historyAccount(session?.user.token ?? ""),
+    retry: false,
+    enabled: !!session,
   });
 
   return (
     <>
-      <Header>LỊCH SỬ PHIM ĐÃ XEM</Header>
+      <Header>LỊCH SỬ Ở TRÌNH DUYỆT</Header>
       <HomeLayout mt={5}>
-        {/* {new Array(15).fill(0).map((_, index) => (
-          <MovieItemV2 key={index} watched="Đã xem tập 18" />
-        ))} */}
+        {historyClientQuery.isLoading &&
+          new Array(10)
+            .fill(0)
+            .map((_, index) => <MovieItemV2.skeleton key={index} />)}
+        {historyClientQuery.data?.data.map((movie, index) => (
+          <MovieItemV2
+            key={index}
+            movie={movie.movie}
+            watched={"Đã xem " + movie.episode_name}
+          />
+        ))}
+      </HomeLayout>
+      <Header>LỊCH SỬ TÀI KHOẢN</Header>
+      <HomeLayout mt={5}>
+        {historyQuery.isLoading &&
+          new Array(10)
+            .fill(0)
+            .map((_, index) => <MovieItemV2.skeleton key={index} />)}
+        {historyQuery.data?.data.map((movie, index) => (
+          <MovieItemV2 key={index} movie={movie} watched={"Đã xem"} />
+        ))}
       </HomeLayout>
     </>
   );

@@ -59,11 +59,11 @@ Route::prefix("movies")->group(function () {
     });
 
     # history watch at client
-    Route::get("histories-client", [MovieHistoryController::class, 'listClient']);
+    Route::post("histories-client", [MovieHistoryController::class, 'listClient']);
 
     Route::middleware(['decryptToken:sanctum'])->group(function () {
         # history watch
-        Route::get("histories", [MovieHistoryController::class, 'list']);
+        Route::get("histories-account", [MovieHistoryController::class, 'listAccount']);
         # report movie
         Route::post("report", [ReportController::class, 'createReport']);
         # bookmark for user

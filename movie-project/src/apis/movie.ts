@@ -1,7 +1,7 @@
 import { IEpisodeHistory } from "@/components/Global/Episode";
 import fetchC from "@/libs/fetchC";
 import { IBaseResponse, IBaseResponseDetail } from "@/types/base.type";
-import { IEpisodeResponse, IMovieResponse } from "@/types/response/movies.type";
+import { IEpisodeResponse, IMovieHistory, IMovieResponse } from "@/types/response/movies.type";
 
 const moviesApi = {
     latest: async () => {
@@ -48,8 +48,15 @@ const moviesApi = {
     },
     historyClient: async (data: Array<IEpisodeHistory>) => {
         const url = "/movies/histories-client/";
-        const res: IBaseResponse<IMovieResponse> = await fetchC.get(url,  {
-            cache: "no-store",
+        const res: IBaseResponse<IMovieHistory> = await fetchC.post(url, { data });
+        return res;
+    },
+    historyAccount: async (token: string) => {
+        const url = "/movies/histories-account/";
+        const res: IBaseResponse<IMovieResponse> = await fetchC.get(url, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
         });
         return res;
     }
