@@ -5,7 +5,7 @@ interface IInitialFetch {
 }
 
 const initialFetch: IInitialFetch = {
-    BaseURL: "http://localhost:8081/public/api",
+    BaseURL: "http://localhost:8000/api",
     headers: {
         "X-Requested-With": "XMLHttpRequest",
         "content-type": "application/json",
