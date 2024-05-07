@@ -18,7 +18,8 @@ class NotificationFactory extends Factory
     {
         return [
             "message" => fake()->text(20),
-            "link" => ""
+            "link" => "",
+            "title" => fake()->text(10),
         ];
     }
 }

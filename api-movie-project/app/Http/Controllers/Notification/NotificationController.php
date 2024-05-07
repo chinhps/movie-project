@@ -18,6 +18,6 @@ class NotificationController extends Controller
     public function list(Request $request)
     {
         $user = $request->user();
-        return NotificationResource::collection($this->notificationRepository->list($user, 15));
+        return ($this->notificationRepository->list($user, 15)) ;
     }
 }

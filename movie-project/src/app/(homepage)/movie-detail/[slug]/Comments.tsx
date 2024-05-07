@@ -45,7 +45,10 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
     queryFn: ({ pageParam }: { pageParam: number }) =>
       commentApi.commentsMovie({ slug, page: pageParam }),
     initialPageParam: 1,
-    getNextPageParam: (lastPage) => (lastPage.paginate?.current_page ?? 1) + 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.paginate?.current_page === lastPage.paginate?.last_page
+        ? undefined
+        : (lastPage.paginate?.current_page ?? 1) + 1,
     retry: false,
   });
 
@@ -75,6 +78,7 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
     commentAddMutation.mutate(values.message);
   };
+  console.log("hasNextPage", commentsQuery.hasNextPage);
 
   return (
     <>

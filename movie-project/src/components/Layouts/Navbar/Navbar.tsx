@@ -29,6 +29,7 @@ import NavbarCategory, { CategoryItem } from "./NavbarCategory";
 import "./navbar.scss";
 import NavbarUser from "./NavbarUser";
 import { auth } from "@/auth";
+import NotificationNav from "./NotificationNav";
 
 export default async function Navbar() {
   const categories = await categoryApi.list();
@@ -80,7 +81,7 @@ export default async function Navbar() {
                 </HStack>
               </Box>
               <HStack>
-                <Notification />
+                <NotificationNav token={session?.user.token} />
                 <Link href="/watch-history">
                   <IconButton
                     aria-label="history watch"
@@ -136,21 +137,5 @@ export default async function Navbar() {
         </Container>
       </Box>
     </>
-  );
-}
-
-function Notification() {
-  return (
-    <Popover>
-      <PopoverTrigger>
-        <IconButton aria-label="Notification" icon={<FiBell />} />
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader>Thông báo!</PopoverHeader>
-        <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
-      </PopoverContent>
-    </Popover>
   );
 }
