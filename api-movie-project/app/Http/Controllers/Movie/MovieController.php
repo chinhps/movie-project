@@ -10,6 +10,7 @@ use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Movie\MovieInterface;
 use App\Repositories\MovieEpisode\MovieEpisodeInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {
@@ -43,8 +44,9 @@ class MovieController extends Controller
 
     public function movieDetail($slug)
     {
-        $movie = $this->movieRepository->getFullBySlug($slug);
-        return new MovieDetailResource($movie);
+        $user = Auth::user();
+        $movie = $this->movieRepository->getFullBySlug($slug, $user);
+        return new MovieDetailResource($movie, $user);
     }
 
     public function movieByCategory($slugCategory)

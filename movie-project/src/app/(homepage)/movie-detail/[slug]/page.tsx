@@ -1,5 +1,4 @@
 import moviesApi from "@/apis/movie";
-import Comment from "@/components/Global/Comments/Comment";
 import Episode from "@/components/Global/Episode";
 import TagCustom from "@/components/Global/TagCustom";
 import {
@@ -11,31 +10,25 @@ import {
   GridItem,
   HStack,
   Heading,
-  IconButton,
-  Input,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import Link from "next/link";
-import {
-  FiCornerDownRight,
-  FiFilm,
-  FiHeart,
-  FiMeh,
-  FiStar,
-} from "react-icons/fi";
+import { FiHeart } from "react-icons/fi";
 import Comments from "./Comments";
 import WatchNow from "./WatchNow";
+import BookmarkButton from "./BookmarkButton";
+import { auth } from "@/auth";
 
 export default async function MovieDetailPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const movieDetail = await moviesApi.detail(params.slug);
-
+  const session = await auth();
+  const movieDetail = await moviesApi.detail(params.slug, session?.user.token);  
+  
   return (
     <Stack gap={3}>
       <Grid
@@ -60,14 +53,13 @@ export default async function MovieDetailPage({
             >
               XEM NGAY
             </WatchNow>
-            <Button
-              variant="secondButton"
-              w="100%"
-              padding="23px 0"
-              leftIcon={<FiHeart />}
+            <BookmarkButton
+              defaultValue={movieDetail.data.bookmark}
+              slug={movieDetail.data.slug}
+              token={session?.user.token ?? ""}
             >
               BOOKMARK
-            </Button>
+            </BookmarkButton>
             <Button
               variant="secondButton"
               w="100%"

@@ -52,4 +52,9 @@ class Movie extends Model
     {
         return $this->hasMany(MovieReport::class, "movie_id");
     }
+
+    public function bookmark(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, "bookmarks", "movie_id", "user_id");
+    }
 }

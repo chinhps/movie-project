@@ -62,6 +62,8 @@ Route::prefix("movies")->group(function () {
     Route::post("histories-client", [MovieHistoryController::class, 'listClient']);
 
     Route::middleware(['decryptToken:sanctum'])->group(function () {
+        # detail for user
+        Route::get("detail-user/{slug}", [MovieController::class, 'movieDetail']);
         # history watch
         Route::get("histories-account", [MovieHistoryController::class, 'listAccount']);
         # report movie
@@ -69,8 +71,8 @@ Route::prefix("movies")->group(function () {
         # bookmark for user
         Route::prefix("bookmarks")->group(function () {
             Route::get("/", [BookmarkController::class, 'list']);
-            Route::post("/", [BookmarkController::class, 'add']);
-            Route::delete("/", [BookmarkController::class, 'remove']);
+            Route::put("/", [BookmarkController::class, 'toggle']);
+            // Route::delete("/", [BookmarkController::class, 'remove']);
         });
     });
 });

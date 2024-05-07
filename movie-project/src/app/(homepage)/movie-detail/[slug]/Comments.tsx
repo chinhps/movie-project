@@ -15,6 +15,7 @@ import {
   Text,
   Textarea,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
@@ -30,6 +31,7 @@ export interface ICommentsProps {
 
 export default function Comments({ slug, ...props }: ICommentsProps) {
   const { data: session } = useSession();
+  const toast = useToast();
   const {
     formState: { errors },
     handleSubmit,
@@ -54,9 +56,19 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
         message: message,
         token: session?.user.token ?? "",
       }),
-    onSuccess: ({ data }) => {
+    onSuccess: (data) => {
+      toast({
+        description: data.msg,
+        status: "success",
+      });
       commentsQuery.refetch();
       setValue("message", "");
+    },
+    onError: (data) => {
+      toast({
+        description: "dfbdfbdf",
+        status: "warning",
+      });
     },
   });
 

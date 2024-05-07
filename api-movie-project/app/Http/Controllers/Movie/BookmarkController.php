@@ -27,7 +27,7 @@ class BookmarkController extends Controller
         return $this->bookmarkRepository->list([], $user, 20);
     }
 
-    public function add(MovieRequest $request)
+    public function toggle(MovieRequest $request)
     {
         $validated = $request->validated();
         $user = Auth::user();
@@ -35,28 +35,12 @@ class BookmarkController extends Controller
 
         try {
             DB::beginTransaction();
-            $this->bookmarkRepository->updateOrInsert(null, [], $user, $movie);
+            $toggle = $this->bookmarkRepository->toggle($user, $movie);
             DB::commit();
-            return BaseResponse::msg("Lưu thành công bạn có thể kiểm tra lại trong Bookmark!");
+            return BaseResponse::msg(!!$toggle['attached'] ? "Thêm bookmark thành công!" : "Xoá thành công!");
         } catch (\Exception $e) {
             DB::rollBack();
-            return BaseResponse::msg("Đã có trong bookmark!", 400);
-        }
-    }
-
-    public function remove(MovieRequest $request)
-    {
-        $validated = $request->validated();
-        $user = Auth::user();
-        $movie = $this->movieRepository->getBySlug($validated['slug']);
-        try {
-            DB::beginTransaction();
-            $this->bookmarkRepository->remove($user, $movie);
-            DB::commit();
-            return BaseResponse::msg("Đã xoá khỏi Bookmark!");
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return BaseResponse::msg("Phim không tồn tại!");
+            return BaseResponse::msg("Có lỗi gì đã xảy ra!", 400);
         }
     }
 }

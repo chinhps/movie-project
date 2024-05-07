@@ -6,14 +6,9 @@ import { MovieItemV2 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 
 export default function WatchHistoryPage() {
   const { data: session } = useSession();
-
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
 
   const historyClientQuery = useQuery({
     queryKey: ["watch-history-client"],
