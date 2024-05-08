@@ -17,7 +17,6 @@ export interface IMovieResponse {
     categories?: Array<Category>,
     movie_rate_count?: number,
     created_at?: string,
-    bookmark: boolean
 }
 
 export interface IMovieHistory {

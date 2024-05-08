@@ -1,10 +1,11 @@
 "use client";
 
 import bookmarkApi from "@/apis/bookmark";
+import { checkBookmark, saveBookmark } from "@/libs/function";
 import { Box, BoxProps, useToast } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiBookmark } from "react-icons/fi";
 
 interface IMovieBookmark extends BoxProps {
@@ -12,7 +13,6 @@ interface IMovieBookmark extends BoxProps {
 }
 
 export default function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
-  const toast = useToast();
   const session = useSession();
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
 
@@ -22,25 +22,23 @@ export default function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
         slug: slug,
         token: session.data?.user.token ?? "",
       }),
-    onSuccess: (data) => {
-      toast({
-        description: data.msg,
-        status: "success",
-      });
-    },
   });
 
   const handleBookmark = () => {
-    if (!session.data?.user.token) {
-      toast({
-        description: "Bạn cần đăng nhập để thao tác!",
-        status: "info",
-      });
-      return;
+    if (session.data?.user.token) {
+      bookmarkMutation.mutate();
     }
-    bookmarkMutation.mutate();
+    saveBookmark({ slug: slug });
     setIsBookmark((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (checkBookmark({ slug })) {
+      setIsBookmark(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box
       py={3}

@@ -30,3 +30,29 @@ export const checkEpisode = (episode: IEpisodeHistory) => {
   );
   return localHistories.find((elm) => elm.slug === episode.slug);
 };
+
+interface IBookmark {
+  slug: string;
+}
+
+export const saveBookmark = (bookmark: IBookmark) => {
+  const localBookmarks: Array<IBookmark> = JSON.parse(
+    localStorage.getItem("movie-bookmarks") ?? "[]"
+  );
+  if (!checkBookmark(bookmark)) {
+    const newBookmark: Array<IBookmark> = [
+      ...localBookmarks,
+      {
+        slug: bookmark.slug,
+      },
+    ];
+    localStorage.setItem("movie-bookmarks", JSON.stringify(newBookmark));
+  }
+};
+
+export const checkBookmark = (bookmark: IBookmark) => {
+  const localBookmarks: Array<IBookmark> = JSON.parse(
+    localStorage.getItem("movie-bookmarks") ?? "[]"
+  );
+  return localBookmarks.find((elm) => elm.slug === bookmark.slug);
+};

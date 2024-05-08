@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Movie;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class MovieDetailResource extends MovieResource
@@ -10,7 +9,6 @@ class MovieDetailResource extends MovieResource
 
     public function __construct(
         private $data,
-        private ?User $user = null
     ) {
     }
 
@@ -21,7 +19,7 @@ class MovieDetailResource extends MovieResource
      */
     public function toArray(Request $request): array
     {
-        return [...$this->resource($this->data), 'bookmark' => $this->user ? count($this->data->bookmark) > 0 : false];
+        return [...$this->resource($this->data)];
     }
 
     public function resource($data): array

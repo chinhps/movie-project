@@ -3,7 +3,6 @@
 namespace App\Repositories\Movie;
 
 use App\Models\Movie;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class MovieRepository implements MovieInterface
@@ -24,7 +23,7 @@ class MovieRepository implements MovieInterface
         return $query->paginate($limit);
     }
 
-    public function getFullBySlug(string $slug, User $user = null)
+    public function getFullBySlug(string $slug)
     {
         $query = $this->model
             ->where("slug", $slug)
@@ -33,12 +32,6 @@ class MovieRepository implements MovieInterface
             }])
             ->withCount('movieRate')
             ->withAvg("movieRate", "rate");
-
-        if ($user) {
-            $query = $query->with(['bookmark' => function ($query) use ($user) {
-                $query->where('users.id', $user->id);
-            }]);
-        }
 
         return $query->firstOrFail();
     }

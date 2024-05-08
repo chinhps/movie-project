@@ -1,8 +1,9 @@
 "use client";
 import bookmarkApi from "@/apis/bookmark";
-import { Button, Icon, useToast } from "@chakra-ui/react";
+import { checkBookmark, saveBookmark } from "@/libs/function";
+import { Button, Icon } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 
 export interface IBookmarkButtonProps {
@@ -18,7 +19,6 @@ export default function BookmarkButton({
   token,
   defaultValue,
 }: IBookmarkButtonProps) {
-  const toast = useToast();
   const [isBookmark, setIsBookmark] = useState<boolean>(defaultValue);
 
   const bookmarkMutation = useMutation({
@@ -27,25 +27,22 @@ export default function BookmarkButton({
         slug: slug,
         token: token,
       }),
-    onSuccess: (data) => {
-      toast({
-        description: data.msg,
-        status: "success",
-      });
-    },
   });
 
   const handleBookmark = () => {
-    if (!token) {
-      toast({
-        description: "Bạn cần đăng nhập để thao tác!",
-        status: "info",
-      });
-      return;
+    if (token) {
+      bookmarkMutation.mutate();
     }
-    bookmarkMutation.mutate();
+    saveBookmark({ slug: slug });
     setIsBookmark((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (checkBookmark({ slug })) {
+      setIsBookmark(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

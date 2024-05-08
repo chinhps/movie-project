@@ -44,9 +44,8 @@ class MovieController extends Controller
 
     public function movieDetail($slug)
     {
-        $user = Auth::user();
-        $movie = $this->movieRepository->getFullBySlug($slug, $user);
-        return new MovieDetailResource($movie, $user);
+        $movie = $this->movieRepository->getFullBySlug($slug);
+        return new MovieDetailResource($movie);
     }
 
     public function movieByCategory($slugCategory)
