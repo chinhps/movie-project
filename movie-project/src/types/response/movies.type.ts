@@ -40,7 +40,7 @@ export interface IEpisodeSource {
     source_link: string
 }
 
-interface IEpisode {
+export interface IEpisode {
     episode_name: string,
     slug: string,
 }

@@ -78,7 +78,6 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
     commentAddMutation.mutate(values.message);
   };
-  console.log("hasNextPage", commentsQuery.hasNextPage);
 
   return (
     <>

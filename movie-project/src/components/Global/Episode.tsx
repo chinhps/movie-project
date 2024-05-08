@@ -9,6 +9,7 @@ export interface IEpisodeProps {
   href?: string;
   slug?: string;
   episode: IEpisodeHistory;
+  active?: boolean;
 }
 
 export interface IEpisodeHistory {
@@ -56,7 +57,7 @@ export default function Episode(props: IEpisodeProps) {
       ref={episodeRef}
       href={props?.href ?? "/movie-watch/" + props.episode?.slug}
       variant="episode"
-      onClick={() => saveEpisode(props.episode)}
+      isActive={props.active}
     >
       {props.text}
     </Button>

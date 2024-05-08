@@ -4,13 +4,12 @@ import {
   Flex,
   HStack,
   Heading,
-  IconButton,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
-import { FiPlay, FiStar } from "react-icons/fi";
+import { FiStar } from "react-icons/fi";
 import MovieBookmarkItem from "./MovieBookmarkItem";
 import Link from "next/link";
 import { IMovieResponse } from "@/types/response/movies.type";
@@ -20,7 +19,7 @@ export default function MovieItem({ movie }: { movie: IMovieResponse }) {
     <Box rounded="5px" overflow="hidden">
       <Box position="relative" height="260px" overflow="hidden">
         <Box position="absolute" right={3} top={0}>
-          <MovieBookmarkItem />
+          <MovieBookmarkItem slug={movie.slug} />
         </Box>
         <Link href={"/movie-detail/" + movie.slug}>
           <Box userSelect="none">
@@ -61,7 +60,7 @@ export function MovieItemV3({ movie }: { movie: IMovieResponse }) {
   return (
     <Box rounded="xl" position="relative" height="320px" overflow="hidden">
       <Box position="absolute" right={3} top={0}>
-        <MovieBookmarkItem />
+        <MovieBookmarkItem slug={movie.slug} />
       </Box>
       <Link href={"/movie-detail/" + movie.slug}>
         <Box userSelect="none" boxShadow="md">
@@ -93,7 +92,7 @@ export function MovieItemV3({ movie }: { movie: IMovieResponse }) {
               </HStack>
             </Stack>
           </Link>
-          <MovieBookmarkItem rounded="full" />
+          <MovieBookmarkItem rounded="full" slug={movie.slug} />
         </HStack>
       </Box>
     </Box>
@@ -144,7 +143,7 @@ export function MovieItemV2({
           }}
         >
           <Box position="absolute" right={3} top={0} zIndex={5}>
-            <MovieBookmarkItem />
+            <MovieBookmarkItem slug={movie.slug} />
           </Box>
           <Link href={"/movie-detail/" + movie.slug}>
             <Box height="240px">

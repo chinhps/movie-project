@@ -18,12 +18,6 @@ export default function WatchNow({ children, slug, ...props }: IWatchNowProps) {
       w="100%"
       padding="23px 0"
       leftIcon={<FiFilm />}
-      onClick={() =>
-        saveEpisode({
-          movieId: 0,
-          slug: slug,
-        })
-      }
     >
       {children}
     </Button>

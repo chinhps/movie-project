@@ -1,27 +1,15 @@
 import moviesApi from "@/apis/movie";
-import Comment from "@/components/Global/Comments/Comment";
 import Episode from "@/components/Global/Episode";
 import {
-  AspectRatio,
-  Button,
   Divider,
-  Flex,
   HStack,
   Heading,
-  IconButton,
-  Input,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import {
-  FiChevronsRight,
-  FiCornerDownRight,
-  FiEyeOff,
-  FiMeh,
-  FiStar,
-} from "react-icons/fi";
+
 import Cinema from "./Cinema";
 import Comments from "../../movie-detail/[slug]/Comments";
 
@@ -56,19 +44,23 @@ export default async function MovieWatchPage({
             <Text>Báo cáo</Text>
           </Stack>
         </HStack>
-        <Cinema movieSource={episodeDetail.data.movie_sources} />
+        <Cinema
+          currentEpisodeSlug={episodeDetail.data.slug}
+          movieSource={episodeDetail.data.movie_sources}
+          episodes={episodeDetail.data.movie.movie_episodes}
+        />
         <VStack align="start" mt={2} bg="white" rounded={5} p={5}>
           <Text as="b">Danh sách tập</Text>
           <HStack wrap="wrap" maxH="240px" overflowY="auto">
             {episodeDetail.data.movie.movie_episodes?.map((episode, index) => (
               <Episode
                 key={index}
+                active={episode.slug === episodeDetail.data.slug}
                 text={episode.episode_name}
                 episode={{
                   movieId: episodeDetail.data.movie.id,
                   slug: episode.slug,
                 }}
-                // slug={episode.slug}
               />
             ))}
           </HStack>

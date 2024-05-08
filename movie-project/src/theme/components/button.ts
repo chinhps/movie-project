@@ -10,6 +10,9 @@ const episode = defineStyle({
     _hover: {
         background: 'var(--bg-main)',
         color: 'var(--bg-navbar)',
+    },
+    _active: {
+        border: "solid 1px red !important",
     }
 })
 
