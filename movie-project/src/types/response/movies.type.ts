@@ -25,6 +25,10 @@ export interface IMovieHistory {
     movie: IMovieResponse
 }
 
+export interface IBookmark {
+    slug: string;
+}
+
 export interface IEpisodeResponse {
     movie: IMovieResponse,
     id: number,

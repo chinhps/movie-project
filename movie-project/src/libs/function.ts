@@ -1,4 +1,5 @@
 import { IEpisodeHistory } from "@/types/episode.type";
+import { IBookmark } from "@/types/response/movies.type";
 
 export const numberFormat = (price: number, currency: boolean = true) => {
   const format = new Intl.NumberFormat("vi-VN", {
@@ -30,10 +31,6 @@ export const checkEpisode = (episode: IEpisodeHistory) => {
   );
   return localHistories.find((elm) => elm.slug === episode.slug);
 };
-
-interface IBookmark {
-  slug: string;
-}
 
 export const saveBookmark = (bookmark: IBookmark) => {
   const localBookmarks: Array<IBookmark> = JSON.parse(

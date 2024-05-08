@@ -1,7 +1,7 @@
 import fetchC from "@/libs/fetchC";
 import { IBaseResponse, IBaseResponseDetail } from "@/types/base.type";
 import { IEpisodeHistory } from "@/types/episode.type";
-import { IEpisodeResponse, IMovieHistory, IMovieResponse } from "@/types/response/movies.type";
+import { IBookmark, IEpisodeResponse, IMovieHistory, IMovieResponse } from "@/types/response/movies.type";
 
 const moviesApi = {
     latest: async () => {
@@ -67,7 +67,7 @@ const moviesApi = {
             }
         });
         return res;
-    }
+    },
 }
 
 export default moviesApi;

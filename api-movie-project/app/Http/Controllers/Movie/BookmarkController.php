@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Movie;
 
 use App\Http\Controllers\BaseResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Movie\MovieBookmarkRequest;
 use App\Http\Requests\Movie\MovieRequest;
+use App\Http\Resources\Movie\MovieResource;
 use App\Repositories\Bookmark\BookmarkInterface;
 use App\Repositories\Movie\MovieInterface;
 use App\Repositories\User\UserInterface;
@@ -25,6 +27,15 @@ class BookmarkController extends Controller
     {
         $user = Auth::user();
         return $this->bookmarkRepository->list([], $user, 20);
+    }
+
+    public function listClient(MovieBookmarkRequest $request)
+    {
+        $data = collect($request->data)->map(function ($movie) {
+            return $movie['slug'];
+        })->toArray();
+        $movieList = $this->movieRepository->getListHistory($data);
+        return MovieResource::collection($movieList);
     }
 
     public function toggle(MovieRequest $request)
