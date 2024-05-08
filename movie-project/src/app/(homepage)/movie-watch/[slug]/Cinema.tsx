@@ -1,6 +1,6 @@
 "use client";
 
-import { saveEpisode } from "@/components/Global/Episode";
+import { saveEpisode } from "@/libs/function";
 import { IEpisode, IEpisodeSource } from "@/types/response/movies.type";
 import { AspectRatio, Button, HStack, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";

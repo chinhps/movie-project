@@ -1,44 +1,10 @@
 "use client";
 
+import { checkEpisode } from "@/libs/function";
+import { IEpisodeProps } from "@/types/episode.type";
 import { Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-
-export interface IEpisodeProps {
-  text: string | number;
-  href?: string;
-  slug?: string;
-  episode: IEpisodeHistory;
-  active?: boolean;
-}
-
-export interface IEpisodeHistory {
-  movieId?: number;
-  slug?: string;
-}
-
-export const saveEpisode = (episode: IEpisodeHistory) => {
-  const localHistories: Array<IEpisodeHistory> = JSON.parse(
-    localStorage.getItem("movie-history") ?? "[]"
-  );
-  if (!checkEpisode(episode)) {
-    const newHistory: Array<IEpisodeHistory> = [
-      ...localHistories,
-      {
-        movieId: episode.movieId,
-        slug: episode.slug,
-      },
-    ];
-    localStorage.setItem("movie-history", JSON.stringify(newHistory));
-  }
-};
-
-const checkEpisode = (episode: IEpisodeHistory) => {
-  const localHistories: Array<IEpisodeHistory> = JSON.parse(
-    localStorage?.getItem("movie-history") ?? "[]"
-  );
-  return localHistories.find((elm) => elm.slug === episode.slug);
-};
 
 export default function Episode(props: IEpisodeProps) {
   const episodeRef = useRef<HTMLButtonElement | null>(null);

@@ -6,6 +6,7 @@ import { MovieItemV2 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function WatchHistoryPage() {
   const { data: session } = useSession();
@@ -17,7 +18,7 @@ export default function WatchHistoryPage() {
         JSON.parse(localStorage.getItem("movie-history") ?? "[]")
       ),
     retry: false,
-    enabled: !!localStorage.getItem("movie-history"),
+    enabled: false,
   });
 
   const historyQuery = useQuery({
@@ -26,6 +27,13 @@ export default function WatchHistoryPage() {
     retry: false,
     enabled: !!session,
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("movie-history")) {
+      historyClientQuery.refetch();
+    }    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
