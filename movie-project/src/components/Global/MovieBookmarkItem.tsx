@@ -37,7 +37,7 @@ export default function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
       setIsBookmark(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [session.data?.user.token]);
 
   return (
     <Box

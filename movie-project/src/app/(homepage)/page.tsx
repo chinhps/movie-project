@@ -1,4 +1,6 @@
+import bookmarkApi from "@/apis/bookmark";
 import moviesApi from "@/apis/movie";
+import { auth } from "@/auth";
 import Banner from "@/components/Global/Banner";
 import Header from "@/components/Global/Header";
 import MovieItem, {
@@ -7,6 +9,7 @@ import MovieItem, {
 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import Link from "next/link";
+import Bookmarks from "./Bookmarks";
 
 export default async function Home() {
   const moviesLatest = await moviesApi.latest();
@@ -15,6 +18,7 @@ export default async function Home() {
 
   return (
     <>
+      <Bookmarks />
       <Banner />
       <Header mb={3} mt={5} rightLink={<Link href="/sdfsd">Xem tất cả</Link>}>
         ANIME MỚI CẬP NHẬT

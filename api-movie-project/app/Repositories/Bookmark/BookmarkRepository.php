@@ -29,4 +29,10 @@ class BookmarkRepository implements BookmarkInterface
         $bookmark = $movie->bookmark()->toggle([$user->id]);
         return $bookmark;
     }
+
+    public function listSlug(User $user)
+    {
+        $query = $user->movies()->pluck("slug");
+        return $query;
+    }
 }

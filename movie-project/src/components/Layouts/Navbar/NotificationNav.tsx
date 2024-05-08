@@ -33,6 +33,7 @@ export default function NotificationNav({ token }: INotificationNavProps) {
     queryFn: () => notificationApi.list(token ?? ""),
     enabled: !!token,
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
   return (

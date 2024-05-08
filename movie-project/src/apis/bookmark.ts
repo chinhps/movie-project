@@ -21,6 +21,18 @@ const bookmarkApi = {
         const res: IBaseResponse<IMovieResponse> = await fetchC.put(url, { data });
         return res;
     },
+    bookmarksUser: async (token: string) => {
+        const url = "/movies/bookmarks";
+        const res: IBaseResponse<string> = await fetchC.get(url, {
+            cache: "no-store",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "content-type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+        });
+        return res;
+    },
 }
 
 export default bookmarkApi;

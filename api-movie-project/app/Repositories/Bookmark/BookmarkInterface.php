@@ -8,5 +8,6 @@ use App\Models\User;
 interface BookmarkInterface
 {
     public function list(array $filter = [], User $user, float $paginate = 15);
+    public function listSlug(User $user);
     public function toggle(User $user, Movie $movie);
 }

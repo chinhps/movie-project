@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movie\MovieBookmarkRequest;
 use App\Http\Requests\Movie\MovieRequest;
+use App\Http\Resources\Bookmark\BookmarkResource;
 use App\Http\Resources\Movie\MovieResource;
 use App\Repositories\Bookmark\BookmarkInterface;
 use App\Repositories\Movie\MovieInterface;
@@ -26,7 +27,7 @@ class BookmarkController extends Controller
     public function list()
     {
         $user = Auth::user();
-        return $this->bookmarkRepository->list([], $user, 20);
+        return ["data" => ($this->bookmarkRepository->listSlug($user))];
     }
 
     public function listClient(MovieBookmarkRequest $request)
