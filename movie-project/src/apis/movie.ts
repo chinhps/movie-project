@@ -47,10 +47,13 @@ const moviesApi = {
         });
         return res;
     },
-    listByCategory: async (slug: string) => {
+    listByCategory: async (slug: string, page?: number) => {
         const url = "/movies/category/" + slug;
         const res: IBaseResponse<IMovieResponse> = await fetchC.get(url, {
-            cache: "no-store"
+            cache: "no-store",
+            params: {
+                page: (page ?? "1").toString()
+            }
         });
         return res;
     },

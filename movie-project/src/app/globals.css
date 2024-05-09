@@ -4,6 +4,7 @@
 
 :root {
   --text-main: #edf2f4;
+  --text-black: #111111;
   --bg-navbar: #2b2d42;
   --bg-section: #d90429;
   --bg-header: #ef233c;
@@ -34,4 +35,53 @@ html {
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
   line-height: normal !important;
+}
+
+
+.navigate {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: left;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  .disabled {
+    color: gray;
+  }
+  .page-paginate {
+    transition: 0.3s;
+    font-weight: bold;
+    &:hover {
+      color: #d21616;
+    }
+  }
+  a {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: var(--text-black);
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+  .hd {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .active {
+    border-radius: 5px;
+    color: var(--text-main) !important;
+    background-color: var(--bg-navbar);
+    &:hover {
+      color: initial;
+    }
+  }
+  .break {
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }

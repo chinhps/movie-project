@@ -64,7 +64,12 @@ export function MovieItemV3({ movie }: { movie: IMovieResponse }) {
       </Box>
       <Link href={"/movie-detail/" + movie.slug}>
         <Box userSelect="none" boxShadow="md">
-          <Image src={movie.movie_image} alt="movie item" fill={true} />
+          <Image
+            src={movie.movie_image}
+            alt="movie item"
+            fill={true}
+            loading="lazy"
+          />
         </Box>
       </Link>
       <Box
@@ -147,7 +152,7 @@ export function MovieItemV2({
           </Box>
           <Link href={"/movie-detail/" + movie.slug}>
             <Box height="240px">
-              <Image fill={true} src={movie.movie_image} alt="#" />
+              <Image fill={true} src={movie.movie_image} alt="#" loading="lazy" />
             </Box>
           </Link>
         </Box>
