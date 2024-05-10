@@ -12,7 +12,7 @@ import Link from "next/link";
 import Bookmarks from "./Bookmarks";
 
 export default async function Home() {
-  const moviesLatest = await moviesApi.latest();
+  const moviesLatest = await moviesApi.latest({});
   const moviesRanking = await moviesApi.rankings();
   const moviesList = await moviesApi.rankings();
 
@@ -20,7 +20,11 @@ export default async function Home() {
     <>
       <Bookmarks />
       <Banner />
-      <Header mb={3} mt={5} rightLink={<Link href="/sdfsd">Xem tất cả</Link>}>
+      <Header
+        mb={3}
+        mt={5}
+        rightLink={<Link href="/movie-latest">Xem tất cả</Link>}
+      >
         ANIME MỚI CẬP NHẬT
       </Header>
       <HomeLayout mt={5}>

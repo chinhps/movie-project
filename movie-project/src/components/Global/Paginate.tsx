@@ -6,7 +6,7 @@ export default function Paginate({
   totalPage,
   currentPage,
   wingSize = 1,
-  maxPageOpen = 3,
+  maxPageOpen = 5,
   pageLink,
 }: {
   totalPage: number;
@@ -24,7 +24,7 @@ export default function Paginate({
     const left = currentPage < maxPageOpen;
     const right = currentPage > totalPage - maxPageOpen + 1;
 
-    if (map.length <= totalPage) {
+    if (map.length <= maxPageOpen) {
       return map;
     }
 

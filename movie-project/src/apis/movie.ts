@@ -4,10 +4,13 @@ import { IEpisodeHistory } from "@/types/episode.type";
 import { IBookmark, IEpisodeResponse, IMovieHistory, IMovieResponse } from "@/types/response/movies.type";
 
 const moviesApi = {
-    latest: async () => {
+    latest: async ({ page }: { page?: number }) => {
         const url = "/movies/latest";
         const res: IBaseResponse<IMovieResponse> = await fetchC.get(url, {
-            cache: "no-store"
+            cache: "no-store",
+            params: {
+                page: (page ?? "1").toString(),
+            }
         });
         return res;
     },

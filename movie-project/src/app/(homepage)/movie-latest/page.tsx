@@ -5,33 +5,32 @@ import Paginate from "@/components/Global/Paginate";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import { Heading, Text } from "@chakra-ui/react";
 
-export default async function MoviesPage({
+export default async function MovieLatestPage({
   searchParams: { page },
 }: {
   searchParams: { page: number | undefined };
 }) {
-  const movies = await moviesApi.list({ page });
+  const moviesLatest = await moviesApi.latest({ page });
 
   return (
     <>
       <Heading as="h2" fontSize="13px" my={2}>
         Danh mục
       </Heading>
-      <Header>Tất cả phim | BRANDNAME</Header>
+      <Header>ANIME MỚI CẬP NHẬT</Header>
       <Text fontSize="15px" my={2}>
-        Bạn có thể tìm kiếm phim trên Google (Tên phim + BRANDNAME). Bạn có thể
-        xem phim với trải nghiệm mượt và giao diện thân thiện.
+        Phim được cập nhật liên tục!
       </Text>
       <HomeLayout>
-        {movies.data.map((movie, index) => (
+        {moviesLatest.data.map((movie) => (
           <MovieItemV3 key={movie.id} movie={movie} />
         ))}
       </HomeLayout>
-      {movies.paginate && (
+      {moviesLatest.paginate && (
         <Paginate
-          pageLink={"/movies"}
-          currentPage={movies.paginate.current_page}
-          totalPage={movies.paginate.last_page}
+          pageLink={"/movie-latest"}
+          currentPage={moviesLatest.paginate.current_page}
+          totalPage={moviesLatest.paginate.last_page}
         />
       )}
     </>

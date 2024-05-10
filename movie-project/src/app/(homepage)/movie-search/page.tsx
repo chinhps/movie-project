@@ -22,7 +22,7 @@ export default async function MovieSearch({
       <Heading as="h2" fontSize="13px" my={2}>
         Tìm kiếm
       </Heading>
-      <Header>Phim: {name}</Header>
+      <Header>TỪ KHÓA: {name}</Header>
       <Text fontSize="15px" my={2}>
         Dưới đây là danh sách phim có liên quan tới từ khóa bạn tìm kiếm!
       </Text>
