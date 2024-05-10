@@ -54,7 +54,6 @@ export default async function MovieDetailPage({
               XEM NGAY
             </WatchNow>
             <BookmarkButton
-              defaultValue={movieDetail.data.bookmark}
               slug={movieDetail.data.slug}
               token={session?.user.token ?? ""}
             >
@@ -84,7 +83,7 @@ export default async function MovieDetailPage({
               </Text>{" "}
               <Flex flexWrap="wrap" gap={1}>
                 {movieDetail.data.categories?.map((category, index) => (
-                  <TagCustom key={index} text={category.name} />
+                  <TagCustom key={category.slug} text={category.name} />
                 ))}
               </Flex>
             </Flex>
@@ -123,7 +122,7 @@ export default async function MovieDetailPage({
             <HStack wrap="wrap" maxH="150px" overflowY="auto">
               {movieDetail.data.movie_episodes?.map((episode, index) => (
                 <Episode
-                  key={index}
+                  key={episode.slug}
                   text={episode.episode_name}
                   episode={{ movieId: movieDetail.data.id, slug: episode.slug }}
                   // slug={episode.slug}

@@ -35,9 +35,10 @@ export default function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
   useEffect(() => {
     if (checkBookmark({ slug })) {
       setIsBookmark(true);
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.data?.user.token]);
+    setIsBookmark(false);
+  }, [slug]);
 
   return (
     <Box
@@ -45,7 +46,6 @@ export default function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
       px={3}
       cursor="pointer"
       roundedBottom="5px"
-      // isLoading={bookmarkMutation.isPending}
       bg={isBookmark ? "var(--bg-section)" : "var(--bg-main)"}
       color={isBookmark ? "var(--bg-main)" : "var(--bg-section)"}
       onClick={handleBookmark}

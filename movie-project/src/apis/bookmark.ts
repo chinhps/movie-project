@@ -16,9 +16,9 @@ const bookmarkApi = {
         });
         return res;
     },
-    bookmarksClient: async (data: Array<IBookmark>) => {
+    bookmarksClient: async ({ data, page }: { data: Array<IBookmark>, page: number }) => {
         const url = "/movies/bookmarks-client";
-        const res: IBaseResponse<IMovieResponse> = await fetchC.put(url, { data });
+        const res: IBaseResponse<IMovieResponse> = await fetchC.put(url, { data, page });
         return res;
     },
     bookmarksUser: async (token: string) => {

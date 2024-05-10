@@ -37,9 +37,15 @@ export default function NavbarUser(props: INavbarUserProps) {
           {props.name} | Lv. {props.level}
         </MenuButton>
         <MenuList>
-          <MenuItem as={Link} href="/user">Hồ sơ</MenuItem>
-          <MenuItem>Đổi mật khẩu</MenuItem>
-          <MenuItem>Phim của tôi</MenuItem>
+          <MenuItem as={Link} href="/user">
+            Hồ sơ
+          </MenuItem>
+          <MenuItem as={Link} href="/user/change-password">
+            Đổi mật khẩu
+          </MenuItem>
+          <MenuItem as={Link} href="/bookmarks">
+            Phim của tôi
+          </MenuItem>
           <MenuItem onClick={onSignOut}>Đăng xuất</MenuItem>
         </MenuList>
       </Menu>

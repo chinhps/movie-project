@@ -5,7 +5,7 @@ import HomeLayout from "@/components/Layouts/HomeLayout";
 import { Heading, Text } from "@chakra-ui/react";
 
 export default async function MoviesPage() {
-  const movies = await moviesApi.list();
+  const movies = await moviesApi.list({});
 
   return (
     <>
@@ -19,7 +19,7 @@ export default async function MoviesPage() {
       </Text>
       <HomeLayout>
         {movies.data.map((movie, index) => (
-          <MovieItemV3 key={index} movie={movie} />
+          <MovieItemV3 key={movie.id} movie={movie} />
         ))}
       </HomeLayout>
     </>

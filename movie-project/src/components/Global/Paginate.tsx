@@ -1,4 +1,3 @@
-import { IPaginate } from "@/types/base.type";
 import { Box, HStack, Icon, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -25,6 +24,10 @@ export default function Paginate({
     const left = currentPage < maxPageOpen;
     const right = currentPage > totalPage - maxPageOpen + 1;
 
+    if (map.length <= totalPage) {
+      return map;
+    }
+
     // check current page near left or right
     if (left || right) {
       if (left) {
@@ -44,21 +47,29 @@ export default function Paginate({
     return map;
   };
 
+  const handlePageLink = (page: number | string) => {
+    const url = new URL(pageLink, "http://example");
+    if (url.search) {
+      return `${pageLink}&page=${page}`;
+    }
+    return `${pageLink}?page=${page}`;
+  };
+
   return (
     <>
       <HStack as="ul" className="navigate" mt="2rem" spacing={2}>
         {currentPage !== 1 && (
           <PaginatedItems>
-            <Link href={pageLink + "?page=" + (currentPage - 1)}>
+            <Link href={handlePageLink(currentPage - 1)}>
               <FiChevronLeft />
             </Link>
           </PaginatedItems>
         )}
         {handlePaginate().map((page, index) => (
-          <PaginatedItems key={index}>
+          <PaginatedItems key={page}>
             {page !== "..." ? (
               <Link
-                href={pageLink + "?page=" + page}
+                href={handlePageLink(page)}
                 className={page === currentPage ? "active" : ""}
               >
                 {page}
@@ -70,7 +81,7 @@ export default function Paginate({
         ))}
         {currentPage < totalPage && (
           <PaginatedItems>
-            <Link href={pageLink + "?page=" + (currentPage + 1)}>
+            <Link href={handlePageLink(currentPage + 1)}>
               <FiChevronRight />
             </Link>
           </PaginatedItems>

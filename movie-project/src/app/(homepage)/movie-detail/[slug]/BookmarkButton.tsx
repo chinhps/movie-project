@@ -10,16 +10,14 @@ export interface IBookmarkButtonProps {
   children: React.ReactNode;
   slug: string;
   token: string;
-  defaultValue: boolean;
 }
 
 export default function BookmarkButton({
   children,
   slug,
   token,
-  defaultValue,
 }: IBookmarkButtonProps) {
-  const [isBookmark, setIsBookmark] = useState<boolean>(defaultValue);
+  const [isBookmark, setIsBookmark] = useState<boolean>(false);
 
   const bookmarkMutation = useMutation({
     mutationFn: () =>

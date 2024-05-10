@@ -45,7 +45,7 @@ export default function WatchHistoryPage() {
             .map((_, index) => <MovieItemV2.skeleton key={index} />)}
         {historyClientQuery.data?.data.map((movie, index) => (
           <MovieItemV2
-            key={index}
+            key={movie.id}
             movie={movie.movie}
             watched={"Đã xem " + movie.episode_name}
           />
@@ -58,7 +58,7 @@ export default function WatchHistoryPage() {
             .fill(0)
             .map((_, index) => <MovieItemV2.skeleton key={index} />)}
         {historyQuery.data?.data.map((movie, index) => (
-          <MovieItemV2 key={index} movie={movie} watched={"Đã xem"} />
+          <MovieItemV2 key={movie.id} movie={movie} watched={"Đã xem"} />
         ))}
       </HomeLayout>
     </>

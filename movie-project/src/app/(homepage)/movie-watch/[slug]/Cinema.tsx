@@ -59,7 +59,7 @@ export default function Cinema({
         <HStack>
           {movieSource.map((source, index) => (
             <Button
-              key={index}
+              key={source.source_link}
               variant={sourceActive == source ? "mainButton" : "secondButton"}
               onClick={() => setSourceActive(source)}
             >

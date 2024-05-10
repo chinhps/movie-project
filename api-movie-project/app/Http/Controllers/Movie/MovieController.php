@@ -22,9 +22,16 @@ class MovieController extends Controller
     ) {
     }
 
-    public function movies()
+    public function movies(Request $request)
     {
-        $movies = $this->movieRepository->list(["sort"], 25);
+        $nameMovie = $request->input("name");
+        $query = [];
+
+        if ($nameMovie) {
+            $query[] = ["movie_name", "like", "%$nameMovie%"];
+        }
+
+        $movies = $this->movieRepository->list(["sort", "query" => $query], 25);
         return MovieResource::collection($movies);
     }
 

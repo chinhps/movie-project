@@ -25,7 +25,7 @@ export default async function Home() {
       </Header>
       <HomeLayout mt={5}>
         {moviesLatest.data.map((movie, index) => (
-          <MovieItemV2 key={index} movie={movie} />
+          <MovieItemV2 key={movie.id} movie={movie} />
         ))}
       </HomeLayout>
       <Header mb={3} mt={5}>
@@ -33,7 +33,7 @@ export default async function Home() {
       </Header>
       <HomeLayout>
         {moviesRanking.data.map((movie, index) => (
-          <MovieItemV3 key={index} movie={movie} />
+          <MovieItemV3 key={movie.id} movie={movie} />
         ))}
       </HomeLayout>
       <Header mb={3} mt={5} rightLink={<Link href="/movies">Xem tất cả</Link>}>
@@ -41,7 +41,7 @@ export default async function Home() {
       </Header>
       <HomeLayout>
         {moviesList.data.map((movie, index) => (
-          <MovieItem key={index} movie={movie} />
+          <MovieItem key={movie.id} movie={movie} />
         ))}
       </HomeLayout>
     </>

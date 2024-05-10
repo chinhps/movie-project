@@ -46,7 +46,10 @@ export default function NotificationNav({ token }: INotificationNavProps) {
         <PopoverCloseButton />
         <PopoverHeader>Thông báo!</PopoverHeader>
         <PopoverBody as={VStack} spacing={3} my={1}>
-          {!notificationQuery.data && <Text>Không có thông báo!</Text>}
+          {notificationQuery.isLoading && <Text>Đang tải...</Text>}
+          {notificationQuery.data?.data.length === 0 && (
+            <Text>Không có thông báo!</Text>
+          )}
           {notificationQuery.data?.data.map((notifi) => (
             <NotifiItem key={notifi.id} {...notifi} />
           ))}

@@ -7,24 +7,11 @@ import {
   IconButton,
   Input,
   List,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
   SimpleGrid,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FiBell,
-  FiBookmark,
-  FiLogIn,
-  FiRotateCw,
-  FiSearch,
-} from "react-icons/fi";
+import { FiBookmark, FiLogIn, FiRotateCw, FiSearch } from "react-icons/fi";
 import NavbarCategory, { CategoryItem } from "./NavbarCategory";
 import "./navbar.scss";
 import NavbarUser from "./NavbarUser";
@@ -52,33 +39,40 @@ export default async function Navbar() {
                 />
               </Link>
               <Box position="relative" rounded="md" overflow="hidden">
-                <Input
-                  py="10px"
-                  px="20px"
-                  type="text"
-                  fontSize="14px"
-                  placeholder="Nhập tên bộ phim..."
-                  w="500px"
-                  bg="white"
-                  _placeholder={{ color: "var(--bg-gray)", fontWeight: "400" }}
-                />
-                <HStack
-                  right={0}
-                  top={0}
-                  bottom={0}
-                  position="absolute"
-                  height="auto"
-                  spacing={0}
-                >
-                  <NavbarCategory />
-                  <IconButton
-                    rounded={0}
-                    height="100%"
-                    width="50px"
-                    aria-label="search"
-                    icon={<FiSearch />}
+                <form method="get" action="/movie-search">
+                  <Input
+                    py="10px"
+                    px="20px"
+                    type="text"
+                    fontSize="14px"
+                    placeholder="Nhập tên bộ phim..."
+                    w="500px"
+                    bg="white"
+                    name="name"
+                    _placeholder={{
+                      color: "var(--bg-gray)",
+                      fontWeight: "400",
+                    }}
                   />
-                </HStack>
+                  <HStack
+                    right={0}
+                    top={0}
+                    bottom={0}
+                    position="absolute"
+                    height="auto"
+                    spacing={0}
+                  >
+                    <NavbarCategory />
+                    <IconButton
+                      type="submit"
+                      rounded={0}
+                      height="100%"
+                      width="50px"
+                      aria-label="search"
+                      icon={<FiSearch />}
+                    />
+                  </HStack>
+                </form>
               </Box>
               <HStack>
                 <NotificationNav token={session?.user.token} />

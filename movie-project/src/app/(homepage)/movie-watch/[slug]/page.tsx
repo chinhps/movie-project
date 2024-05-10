@@ -54,7 +54,7 @@ export default async function MovieWatchPage({
           <HStack wrap="wrap" maxH="240px" overflowY="auto">
             {episodeDetail.data.movie.movie_episodes?.map((episode, index) => (
               <Episode
-                key={index}
+                key={episode.slug}
                 active={episode.slug === episodeDetail.data.slug}
                 text={episode.episode_name}
                 episode={{

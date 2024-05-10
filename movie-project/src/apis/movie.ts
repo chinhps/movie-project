@@ -18,10 +18,14 @@ const moviesApi = {
         });
         return res;
     },
-    list: async () => {
+    list: async ({ page, params }: { page?: number, params?: object }) => {
         const url = "/movies";
         const res: IBaseResponse<IMovieResponse> = await fetchC.get(url, {
-            cache: "no-store"
+            cache: "no-store",
+            params: {
+                page: (page ?? "1").toString(),
+                ...params
+            }
         });
         return res;
     },
