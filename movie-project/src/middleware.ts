@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 
 import {
     DEFAULT_URL_LOGIN_REDIRECT,
+    adminRoutes,
     apiAuthPrefix,
     authRoutes,
     publicRoutes,
@@ -19,10 +20,15 @@ export default auth((req) => {
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
     const isPublicRoutes = publicRoutes.includes(nextUrl.pathname);
     const isApiUserRoute = userRoutes.includes(nextUrl.pathname);
-
+    const isApiAdminRoute = adminRoutes.includes(nextUrl.pathname);
 
     if (isApiAuthRoute) {
         return;
+    }
+
+    if (isApiAdminRoute && req.auth?.user.role !== "ADMIN") {
+        req.nextUrl.pathname = "/user-login";
+        return Response.redirect(req.nextUrl);
     }
 
     if (isApiUserRoute && !isLoggedIn) {
