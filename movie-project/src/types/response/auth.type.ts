@@ -1,6 +1,6 @@
 export interface IResponseAuth {
     token: string,
-    msg: string,
+    msg: string | Array<string>,
     user: IUserAuth,
 }
 
@@ -11,4 +11,5 @@ export interface IUserAuth {
     level: number,
     created_at: string,
     token?: string,
+    role: "ADMIN" | "USER",
 }

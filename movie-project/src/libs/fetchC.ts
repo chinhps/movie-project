@@ -40,6 +40,11 @@ const fetchC = {
             ...init
         });
         const res = await data.json();
+
+        if (!data.ok) {
+            throw new Error(res.data.msg)
+        }
+
         return res;
     },
     put: async (url: string, params?: object, init?: RequestInit) => {

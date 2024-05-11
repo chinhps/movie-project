@@ -1,16 +1,72 @@
+"use client";
+import { login } from "@/actions/login";
+import authApi from "@/apis/auth";
+import { RegisterSchema } from "@/schemas";
+import { ICreateRegister } from "@/types/auth.type";
 import {
   Box,
   Button,
   Center,
   Checkbox,
+  FormControl,
+  FormErrorMessage,
   Heading,
   Input,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 export default function UserRegisterPage() {
+  const [dataUser, setDataUser] = useState<{
+    username: string;
+    password: string;
+  }>();
+  const toast = useToast();
+  const {
+    formState: { errors },
+    handleSubmit,
+    register: registerFrom,
+  } = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
+  });
+  const registerMutate = useMutation({
+    mutationFn: (params: ICreateRegister) => authApi.register(params),
+    onSuccess: ({ data }) => {
+      toast({
+        status: "success",
+        description: data.msg,
+      });
+      if (dataUser) {
+        login(dataUser);
+      }
+    },
+    onError: (data) => {
+      toast({
+        status: "error",
+        description: data.message,
+      });
+    },
+  });
+
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    registerMutate.mutate({
+      email: "",
+      username: values.username,
+      password: values.password,
+    });
+    setDataUser({
+      username: values.username,
+      password: values.password,
+    });
+  };
+
   return (
     <>
       <Stack
@@ -29,29 +85,58 @@ export default function UserRegisterPage() {
             Bạn có thể lưu trữ phim, chia sẻ, nhắn tin với bạn bè
           </Text>
         </Stack>
-        <Stack spacing={5}>
-          <Stack spacing={3}>
-            <Input variant="auth" placeholder="Tài khoản" />
-            <Input variant="auth" type="password" placeholder="Mật khẩu" />
-            <Input
-              variant="auth"
-              type="password"
-              placeholder="Xác nhận mật khẩu"
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack spacing={5}>
+            <Stack spacing={3}>
+              <FormControl isInvalid={!!errors.username}>
+                <Input
+                  variant="auth"
+                  placeholder="Tài khoản"
+                  {...registerFrom("username")}
+                />
+                <FormErrorMessage>{errors.username?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors.password}>
+                <Input
+                  variant="auth"
+                  type="password"
+                  placeholder="Mật khẩu"
+                  {...registerFrom("password")}
+                />
+                <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors.confirmPassword}>
+                <Input
+                  variant="auth"
+                  type="password"
+                  {...registerFrom("confirmPassword")}
+                  placeholder="Xác nhận mật khẩu"
+                />
+                <FormErrorMessage>
+                  {errors.confirmPassword?.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Stack>
+            <Checkbox
+              ml="0.5rem"
+              size="md"
+              colorScheme="green"
+              defaultChecked
+              color="gray.600"
+            >
+              Chấp nhập với Điều khoản & Dịch vụ
+            </Checkbox>
+            <Button
+              variant="mainButton"
+              w="100%"
+              py="1.5rem"
+              type="submit"
+              isLoading={registerMutate.isPending}
+            >
+              ĐĂNG KÝ NGAY
+            </Button>
           </Stack>
-          <Checkbox
-            ml="0.5rem"
-            size="md"
-            colorScheme="green"
-            defaultChecked
-            color="gray.600"
-          >
-            Chấp nhập với Điều khoản & Dịch vụ
-          </Checkbox>
-          <Button variant="mainButton" w="100%" py="1.5rem">
-            ĐĂNG KÝ NGAY
-          </Button>
-        </Stack>
+        </form>
         <Center color="gray.600" fontSize="15px">
           <Link href="/user-login">Bạn đã có tài khoản? Đăng nhập ngay</Link>
         </Center>
