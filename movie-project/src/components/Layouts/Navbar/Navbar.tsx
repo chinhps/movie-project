@@ -1,20 +1,31 @@
 import categoryApi from "@/apis/category";
 import {
   Box,
+  Button,
   Container,
   Flex,
   HStack,
   IconButton,
   Input,
   List,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   SimpleGrid,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { FiBookmark, FiLogIn, FiRotateCw, FiSearch } from "react-icons/fi";
+import {
+  FiBookmark,
+  FiChevronDown,
+  FiLogIn,
+  FiRotateCw,
+  FiSearch,
+} from "react-icons/fi";
 import NavbarCategory, { CategoryItem } from "./NavbarCategory";
 import "./navbar.scss";
-import NavbarUser from "./NavbarUser";
+import NavbarLogout from "./NavbarLogout";
 import { auth } from "@/auth";
 import NotificationNav from "./NotificationNav";
 
@@ -89,10 +100,28 @@ export default async function Navbar() {
                   />
                 </Link>
                 {session ? (
-                  <NavbarUser
-                    name={session?.user.name}
-                    level={session?.user.level}
-                  />
+                  <Menu>
+                    <MenuButton as={Button} rightIcon={<FiChevronDown />}>
+                      {session.user.name} | Lv. {session.user.level}
+                    </MenuButton>
+                    <MenuList>
+                      {session.user.role === "ADMIN" && (
+                        <MenuItem as={Link} href="/admin">
+                          Trang quản trị
+                        </MenuItem>
+                      )}
+                      <MenuItem as={Link} href="/user">
+                        Hồ sơ
+                      </MenuItem>
+                      <MenuItem as={Link} href="/user/change-password">
+                        Đổi mật khẩu
+                      </MenuItem>
+                      <MenuItem as={Link} href="/bookmarks">
+                        Phim của tôi
+                      </MenuItem>
+                      <NavbarLogout />
+                    </MenuList>
+                  </Menu>
                 ) : (
                   <Link href="/user-register">
                     <IconButton aria-label="login" icon={<FiLogIn />} />

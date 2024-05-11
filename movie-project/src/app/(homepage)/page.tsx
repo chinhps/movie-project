@@ -14,7 +14,7 @@ import Bookmarks from "./Bookmarks";
 export default async function Home() {
   const moviesLatest = await moviesApi.latest({});
   const moviesRanking = await moviesApi.rankings();
-  const moviesList = await moviesApi.rankings();
+  // const moviesList = await moviesApi.list({ page: 1, params: {}});
 
   return (
     <>
@@ -40,14 +40,14 @@ export default async function Home() {
           <MovieItemV3 key={movie.id} movie={movie} />
         ))}
       </HomeLayout>
-      <Header mb={3} mt={5} rightLink={<Link href="/movies">Xem tất cả</Link>}>
+      {/* <Header mb={3} mt={5} rightLink={<Link href="/movies">Xem tất cả</Link>}>
         TẤT CẢ PHIM
       </Header>
       <HomeLayout>
         {moviesList.data.map((movie, index) => (
           <MovieItem key={movie.id} movie={movie} />
         ))}
-      </HomeLayout>
+      </HomeLayout> */}
     </>
   );
 }
