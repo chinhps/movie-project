@@ -1,17 +1,32 @@
-import { Box, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+"use client";
+
+import Slider, { Settings } from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
+import { Box, HStack, Heading, Text, VStack } from "@chakra-ui/react";
 import { FiChevronRight, FiFilm, FiStar } from "react-icons/fi";
 
 export default function Banner() {
+  const settings: Settings = {
+    dots: false,
+    autoplay: true,
+  };
   return (
-    <Box
-      position="relative"
-      maxH="310px"
-      roundedTopStart={20}
-      roundedBottomEnd={20}
-      overflow="hidden"
-      boxShadow="lg"
-    >
+    <Box className="image-slider-container" boxShadow="md">
+      <Slider {...settings}>
+        <BannerItem />
+        <BannerItem />
+        <BannerItem />
+        <BannerItem />
+      </Slider>
+    </Box>
+  );
+}
+
+export function BannerItem() {
+  return (
+    <Box position="relative" height="350px">
       <Image
         src="/images/banner.png"
         width={1200}
