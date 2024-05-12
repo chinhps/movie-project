@@ -6,7 +6,14 @@ interface IHomeLayout extends SimpleGridProps {
 
 export default function HomeLayout({ children, ...props }: IHomeLayout) {
   return (
-    <SimpleGrid columns={5} maxW="1200px" mx="auto" spacing={3} {...props}>
+    <SimpleGrid
+      columns={{ base: 2, md: 3, lg: 4, xl: 5 }}
+      gap={{ base: 3, lg: 4 }}
+      px={{ base: 2, lg: 0 }}
+      maxW="1200px"
+      mx="auto"
+      {...props}
+    >
       {children}
     </SimpleGrid>
   );

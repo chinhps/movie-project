@@ -42,11 +42,15 @@ export default async function Navbar() {
         right={0}
         left={0}
         zIndex={5}
-        boxShadow="initial"
       >
         <input type="checkbox" id="dropbox" defaultChecked={false} hidden />
 
-        <Box bg="var(--bg-navbar)" py={3}>
+        <Box
+          bg="var(--bg-navbar)"
+          backdropFilter="saturate(180%) blur(5px)"
+          py={3}
+          boxShadow="base"
+        >
           <Container size="md">
             <Flex as="nav" justifyContent="space-between" alignItems="center">
               <Link href="/">

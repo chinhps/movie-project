@@ -10,6 +10,7 @@ export default function Banner() {
       roundedTopStart={20}
       roundedBottomEnd={20}
       overflow="hidden"
+      boxShadow="lg"
     >
       <Image
         src="/images/banner.png"

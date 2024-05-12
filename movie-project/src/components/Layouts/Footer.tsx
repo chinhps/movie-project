@@ -14,7 +14,7 @@ export default function Footer() {
     <>
       <Box
         as="footer"
-        bg="var(--bg-navbar)"
+        bg="var(--bg-main-second)"
         color="var(--text-main)"
         mt={10}
         py={8}

@@ -47,7 +47,7 @@ export function CategoryItem({ text, href }: { text: string; href: string }) {
     <ListItem
       as="li"
       _hover={{
-        backgroundColor: "var(--bg-navbar)",
+        backgroundColor: "var(--bg-main-second)",
         color: "var(--text-main)",
       }}
     >

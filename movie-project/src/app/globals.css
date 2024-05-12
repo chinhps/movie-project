@@ -5,8 +5,10 @@
 :root {
   --text-main: #edf2f4;
   --text-black: #111111;
-  --bg-navbar: #2b2d42;
-  --bg-section: #d90429;
+  --text-btn: var(--bg-section);
+  --bg-navbar: #14213df1;
+  --bg-main-second: #14213d;
+  --bg-section: #fca311;
   --bg-header: #ef233c;
   --bg-main: #edf2f4;
   --bg-footer: #111111;

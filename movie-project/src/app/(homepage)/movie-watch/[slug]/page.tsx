@@ -26,7 +26,7 @@ export default async function MovieWatchPage({
         <HStack
           justifyContent="space-between"
           rounded={10}
-          bg="var(--bg-navbar)"
+          bg="var(--bg-main-second)"
           px={6}
           py={4}
           color="var(--text-main)"

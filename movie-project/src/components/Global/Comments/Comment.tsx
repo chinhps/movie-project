@@ -16,7 +16,7 @@ export default function Comment(props: IComment) {
         {/* <Divider
           height="auto"
           orientation="vertical"
-          borderColor="var(--bg-navbar)"
+          borderColor="var(--bg-main-second)"
           borderLeftWidth="1px"
         /> */}
         {/* <VStack ml={5}>

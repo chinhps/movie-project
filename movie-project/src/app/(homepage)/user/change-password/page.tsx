@@ -7,7 +7,7 @@ import CardCollection, {
 import FormBase from "@/components/Global/Form/FormBase";
 import { ChangePasswordSchema } from "@/schemas";
 import { IUserChangePassword } from "@/types/user.type";
-import { useToast } from "@chakra-ui/react";
+import { Text, useToast } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -49,7 +49,10 @@ export default function UserChangePasswordPage() {
   return (
     <>
       <CardCollection title="Đổi mật khẩu">
-        <CardHeader>Bạn có thể đổi mật khẩu của bạn tại đây!</CardHeader>
+        <CardHeader>
+          <Text>Bạn có thể đổi mật khẩu của bạn tại đây!</Text>
+          <Text>Bạn không cần đăng nhập lại khi vừa đổi mật khẩu!</Text>
+        </CardHeader>
         <FormBase
           hookForm={hookForm}
           structures={[
