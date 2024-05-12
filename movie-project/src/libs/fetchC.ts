@@ -30,8 +30,8 @@ const fetchC = {
         const res = await data.json();
         return res;
     },
-    post: async (url: string, params?: object, init?: RequestInit) => {
-        const data = await fetch(initialFetch.BaseURL + url, {
+    post: async (url: string, params?: object, init?: Option) => {
+        const data = await fetch((init?.BaseURL ?? initialFetch.BaseURL) + url, {
             method: "POST",
             body: JSON.stringify(params),
             headers: {

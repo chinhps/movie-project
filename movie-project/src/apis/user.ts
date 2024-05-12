@@ -11,6 +11,14 @@ const userApi = {
             }
         });
         return res;
+    },
+    info: async () => {
+        const url = "/api/auth/session";
+        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, {}, {
+            cache: "no-store",
+            BaseURL: "http://localhost:3000"
+        });
+        return res;
     }
 }
 

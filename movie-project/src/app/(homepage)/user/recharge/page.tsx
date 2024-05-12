@@ -1,3 +1,3 @@
 export default function UserRechargePage() {
-  return <div>wrewrwew</div>;
+  return <div>Coming soon...</div>;
 }

@@ -1,8 +1,7 @@
+import { auth } from "@/auth";
 import CardCollection from "@/components/Global/Card/CardCollection";
 import { numberFormat } from "@/libs/function";
 import {
-  Avatar,
-  Center,
   Table,
   TableCaption,
   TableContainer,
@@ -12,8 +11,11 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import moment from "moment/moment";
 
-export default function UserPage() {
+export default async function UserPage() {
+  const session = await auth();
+
   return (
     <>
       <CardCollection title="Thông tin người dùng">
@@ -32,15 +34,19 @@ export default function UserPage() {
             <Tbody>
               <Tr>
                 <Td>Tên Hiển Thị</Td>
-                <Td color="ocean.200">chinh dep trai</Td>
+                <Td color="ocean.200">{session?.user.name}</Td>
               </Tr>
               <Tr>
-                <Td>Số dư</Td>
-                <Td color="ocean.200">{numberFormat(500000)}</Td>
+                <Td>Tên tài khoản</Td>
+                <Td color="ocean.200">{session?.user.username}</Td>
+              </Tr>
+              <Tr>
+                <Td>Level</Td>
+                <Td color="ocean.200">{session?.user.level}</Td>
               </Tr>
               <Tr>
                 <Td>Ngày Tham Gia</Td>
-                <Td>fgdfbd</Td>
+                <Td>{moment(session?.user.created_at).format("MM/DD/YYYY")}</Td>
               </Tr>
             </Tbody>
           </Table>
