@@ -23,3 +23,17 @@ export const RegisterSchema = z.object({
 export const CommentSchema = z.object({
     message: z.string().min(1).max(5000)
 })
+
+export const ChangePasswordSchema = z.object({
+    current_password: z.string().min(5),
+    password: z.string().min(5),
+    confirmPassword: z.string().min(5),
+}).refine(
+    (values) => {
+        return values.password === values.confirmPassword;
+    },
+    {
+        message: "Xác nhận mật khẩu không khớp!",
+        path: ["confirmPassword"],
+    }
+);

@@ -40,8 +40,10 @@ const fetchC = {
             ...init
         });
         const res = await data.json();
-
+        
         if (!data.ok) {
+            console.log("sdvsdv");
+            
             throw new Error(res.data.msg)
         }
 

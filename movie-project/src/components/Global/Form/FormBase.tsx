@@ -2,13 +2,14 @@
 
 import { Button, FormControl, FormErrorMessage, Input } from "@chakra-ui/react";
 import * as React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, UseFormReturn } from "react-hook-form";
 
 export interface IFormBaseProps {
   structures: Array<IFormInput>;
   isLoading?: boolean;
   buttonText?: string;
   onSubmit: SubmitHandler<any>;
+  hookForm: UseFormReturn<any>;
 }
 
 export interface IFormInput {
@@ -32,19 +33,20 @@ export interface IFormInput {
   }>;
 }
 
-export default function FormBase(props: IFormBaseProps) {
-  const {
+export default function FormBase({
+  hookForm: {
     control,
     handleSubmit,
     register,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm();
-
+  },
+  ...props
+}: IFormBaseProps) {
   return (
     <form onSubmit={handleSubmit(props.onSubmit)}>
       {props.structures.map((form, index) => (
-        <FormControl key={index} isInvalid={!!errors.username} my={2}>
+        <FormControl key={index} isInvalid={!!errors[form.name]} my={2}>
           <Input
             type={form.isPassword ? "password" : "text"}
             variant="formbase"

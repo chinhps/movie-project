@@ -105,7 +105,7 @@ class AuthController extends Controller
         $user = $request->user();
 
         if (!Hash::check($validated["current_password"], $user->password)) {
-            return BaseResponse::msg("Mật khẩu cũ của bạn không khớp", 400);
+            return BaseResponse::data(["msg" => "Mật khẩu cũ của bạn không khớp"], 400);
         }
 
         DB::beginTransaction();
@@ -115,10 +115,10 @@ class AuthController extends Controller
             ]);
 
             DB::commit();
-            return BaseResponse::msg("Đổi mật khẩu thành công!", status: 200);
+            return BaseResponse::data(["msg" => "Đổi mật khẩu thành công!"], 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            return BaseResponse::msg("Tạo tài khoản thất bại! Liên hệ admin để được hỗ trợ", 500);
+            return BaseResponse::data(["msg" => "Tạo tài khoản thất bại! Liên hệ admin để được hỗ trợ"], 400);
         }
     }
 }
