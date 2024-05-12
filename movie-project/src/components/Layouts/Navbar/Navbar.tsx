@@ -35,12 +35,20 @@ export default async function Navbar() {
 
   return (
     <>
-      <Box position="fixed" top={0} right={0} left={0} zIndex={5}>
+      <Box
+        as="header"
+        position="fixed"
+        top={0}
+        right={0}
+        left={0}
+        zIndex={5}
+        boxShadow="initial"
+      >
         <input type="checkbox" id="dropbox" defaultChecked={false} hidden />
 
         <Box bg="var(--bg-navbar)" py={3}>
           <Container size="md">
-            <Flex justifyContent="space-between" alignItems="center">
+            <Flex as="nav" justifyContent="space-between" alignItems="center">
               <Link href="/">
                 <Image
                   src="/images/logo.png"
