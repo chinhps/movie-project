@@ -1,17 +1,17 @@
-import { Spinner, Box, Text } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 
 export default function Loading() {
   return (
-    <Box
-      w="full"
-      m="auto"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      gap="2"
-    >
-      <Spinner color="red.500" />
-      <Text color="gray.700">Đang tải...</Text>
-    </Box>
+    <>
+      <Center
+        position="fixed"
+        inset={0}
+        bg="var(--banner-description)"
+        blur="md"
+        zIndex={100}
+      >
+        <Spinner />
+      </Center>
+    </>
   );
 }

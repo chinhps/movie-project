@@ -3,6 +3,10 @@
 @tailwind utilities; */
 
 :root {
+  /* ADMIN */
+  --bg-navbar-admin: #03033f;
+  
+  /* USER */
   --text-main: #edf2f4;
   --text-black: #111111;
   --text-btn: var(--bg-section);

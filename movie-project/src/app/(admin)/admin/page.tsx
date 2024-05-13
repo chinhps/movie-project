@@ -1,6 +1,13 @@
 import { auth } from "@/auth";
+import CardCollection from "@/components/Global/CardCollection";
 
 export default async function AdminPage() {
   const session = await auth();
-  return <div>{JSON.stringify(session)}</div>;
+  return (
+    <>
+      <CardCollection title="Trang chủ">
+        {JSON.stringify(session)}
+      </CardCollection>
+    </>
+  );
 }
