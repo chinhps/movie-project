@@ -23,7 +23,7 @@ export const navbarList: Array<ISildeBar> = [
             },
             {
                 name: "Danh sách",
-                link: "/admin/categories"
+                link: "/admin/category-list"
             },
         ]
     },
@@ -36,7 +36,7 @@ export const navbarList: Array<ISildeBar> = [
             },
             {
                 name: "Danh sách",
-                link: "/admin/movies"
+                link: "/admin/movie-list"
             },
         ]
     },
@@ -63,7 +63,7 @@ export const navbarList: Array<ISildeBar> = [
         children: [
             {
                 name: "Danh sách",
-                link: "/admin/categories"
+                link: "/admin/comments"
             },
         ]
     },

@@ -52,6 +52,13 @@ export default function AdminLayout({
           <GridItem colSpan={9}>{children}</GridItem>
         </SimpleGrid>
       </Container>
+      <Box py={5} as="footer">
+        <Flex justifyContent="center">
+          <Text pt={6} fontSize="sm" textAlign="center" color="gray.500">
+            © 2024 Admin Dashboard. All rights reserved
+          </Text>
+        </Flex>
+      </Box>
     </>
   );
 }
@@ -197,10 +204,6 @@ export function SildeBar() {
                       <ListItem
                         py="1rem"
                         px="2.5rem"
-                        fontWeight={
-                          location.pathname == vl.link ? "500" : "normal"
-                        }
-                        bg={location.pathname == vl.link ? "gray.100" : "none"}
                         _hover={{ bg: "gray.100" }}
                       >
                         {vl.name}
