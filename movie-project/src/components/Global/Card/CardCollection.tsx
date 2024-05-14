@@ -1,12 +1,11 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import React from "react";
+import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
 
 export default function CardCollection({
   children,
   title,
-  fontSize,
+  fontSize = "18px",
   button,
-  padding,
+  padding = "1.5rem",
 }: {
   children: React.ReactElement | React.ReactNode | string;
   title: string;
@@ -16,13 +15,9 @@ export default function CardCollection({
 }) {
   return (
     <>
-      <Box bg="main.item2" rounded="md" p={padding} w="100%" height="100%">
+      <Box bg="var(--bg-white)" rounded="md" p={padding} w="100%" height="100%">
         <Flex justifyContent="space-between">
-          <Heading
-            fontSize={fontSize ?? "18px"}
-            color="main.item"
-            textTransform="uppercase"
-          >
+          <Heading fontSize={fontSize} textTransform="uppercase">
             {title}
           </Heading>
           {button}
@@ -36,7 +31,9 @@ export default function CardCollection({
 export function CardHeader({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Text fontSize="14px" color="var(--bg-gray)" >{children}</Text>
+      <Stack fontSize="14px" color="var(--bg-gray)">
+        {children}
+      </Stack>
     </>
   );
 }

@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import CardCollection from "@/components/Global/CardCollection";
 import { StatsCard } from "@/components/Global/Statistical";
 import { SimpleGrid } from "@chakra-ui/react";
 import { BsPerson } from "react-icons/bs";
