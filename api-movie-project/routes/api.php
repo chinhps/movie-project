@@ -25,6 +25,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+# ADMIN
+Route::middleware(['decryptToken:sanctum'])
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('categories', [CategoryController::class, 'categoryListAdmin']);
+        Route::get('movies', [MovieController::class, 'movieListAdmin']);
+    });
+
 # AUTH
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);

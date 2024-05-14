@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Movie;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Movie\MovieAdminResource;
 use App\Http\Resources\Movie\MovieDetailResource;
 use App\Http\Resources\Movie\MovieLatestResource;
 use App\Http\Resources\Movie\MovieResource;
@@ -20,6 +21,14 @@ class MovieController extends Controller
         private MovieEpisodeInterface $movieEpisodeRepository,
         private CategoryInterface $categoryRepository
     ) {
+    }
+
+    # ADMIN
+    public function movieListAdmin()
+    {
+        $query = [];
+        $movies = $this->movieRepository->list(["sort", "query" => $query], 25);
+        return MovieAdminResource::collection($movies);
     }
 
     public function movies(Request $request)

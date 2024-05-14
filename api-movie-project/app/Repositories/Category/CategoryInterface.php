@@ -4,6 +4,6 @@ namespace App\Repositories\Category;
 
 interface CategoryInterface
 {
-    public function list();
+    public function list(array $filter = [], float $limit = 15);
     public function getBySlug($slug);
 }

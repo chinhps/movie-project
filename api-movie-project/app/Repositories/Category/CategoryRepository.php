@@ -12,9 +12,13 @@ class CategoryRepository implements CategoryInterface
     ) {
     }
 
-    public function list()
+    public function list(array $filter = [], float $limit = 15)
     {
-        return $this->model->get();
+        if ($limit == 0) {
+            return $this->model->get();
+        }
+        $query = $this->model->withCount(["movies"]);
+        return $query->paginate($limit);
     }
 
     public function getBySlug($slug)
