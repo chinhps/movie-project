@@ -54,7 +54,7 @@ export const navbarList: Array<ISildeBar> = [
         children: [
             {
                 name: "Danh sách",
-                link: "/admin/categories"
+                link: "/admin/comments"
             },
         ]
     },
@@ -63,7 +63,7 @@ export const navbarList: Array<ISildeBar> = [
         children: [
             {
                 name: "Danh sách",
-                link: "/admin/comments"
+                link: "/admin/rates"
             },
         ]
     },
