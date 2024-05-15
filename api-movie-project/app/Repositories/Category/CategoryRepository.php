@@ -36,4 +36,10 @@ class CategoryRepository implements CategoryInterface
         $model->save();
         return $model;
     }
+
+    public function detail(float $id)
+    {
+        $model = $this->model->find($id);
+        return $model;
+    }
 }

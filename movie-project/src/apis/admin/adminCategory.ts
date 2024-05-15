@@ -19,6 +19,19 @@ const adminCategoryApi = {
         });
         return res;
     },
+    detail: async ({ token, id }: { token: string, id: number }) => {
+        const url = "/admin/categories/" + id;
+        const res: IBaseResponseDetail<ICategoryResponse> = await fetchC.get(url, {
+            cache: "no-store",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "content-type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+
+        });
+        return res;
+    },
     upsert: async ({ token, params }: { token: string, params: object }) => {
         const url = "/admin/categories/upsert";
         const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, { ...params }, {

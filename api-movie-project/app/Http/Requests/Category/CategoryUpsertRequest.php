@@ -22,7 +22,7 @@ class CategoryUpsertRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "id" => "nullable,exists:categories,id",
+            "id" => "nullable|exists:categories,id",
             "name" => "required",
             "description" => "required"
         ];

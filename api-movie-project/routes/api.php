@@ -32,6 +32,7 @@ Route::middleware(['decryptToken:sanctum'])
     ->group(function () {
         Route::prefix('categories')->group(function () {
             Route::get('/', [CategoryController::class, 'categoryListAdmin']);
+            Route::get('/{id}', [CategoryController::class, 'categoryDetailAdmin']);
             Route::post('upsert', [CategoryController::class, 'categoryUpsertAdmin']);
         });
 

@@ -36,6 +36,12 @@ class CategoryController extends Controller
         return CategoryAdminResource::collection($categories);
     }
 
+    public function categoryDetailAdmin($id)
+    {
+        $category = $this->categoryRepository->detail($id);
+        return new CategoryAdminResource($category);
+    }
+
     public function categoryUpsertAdmin(CategoryUpsertRequest $request)
     {
         $validated = $request->validated();

@@ -7,9 +7,10 @@ import CardCollection, {
 } from "@/components/Global/Card/CardCollection";
 import Paginate from "@/components/Global/Paginate";
 import TableCustom from "@/components/Global/TableCustom";
-import { Td, Text, Tr } from "@chakra-ui/react";
+import { Button, Td, Text, Tr } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function CategoryListPage({
   searchParams: { page },
@@ -29,7 +30,14 @@ export default function CategoryListPage({
   });
   return (
     <>
-      <CardCollection title="Danh sách thể loại">
+      <CardCollection
+        title="Danh sách thể loại"
+        button={
+          <Button as={Link} href="./category-upsert" colorScheme="red" variant="outline">
+            THÊM MỚI
+          </Button>
+        }
+      >
         <CardHeader>
           <Text>Danh sách thể loại!</Text>
         </CardHeader>

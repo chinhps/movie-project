@@ -9,8 +9,9 @@ import { CreateCategorySchema } from "@/schemas";
 import { IUpsertBase } from "@/types/base.type";
 import { Text, useToast } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -21,9 +22,18 @@ export default function CategoryUpsertPage({
 }) {
   const session = useSession();
   const toast = useToast();
+  const [dataDefault, setDataDefault] = useState<object>();
 
   const hookForm = useForm<z.infer<typeof CreateCategorySchema>>({
     resolver: zodResolver(CreateCategorySchema),
+  });
+
+  const detailQuery = useQuery({
+    queryKey: ["category-detail-admin", id],
+    queryFn: () =>
+      adminCategoryApi.detail({ token: session.data?.user.token ?? "", id }),
+    enabled: !!id && !!session.data?.user.token,
+    retry: false,
   });
 
   const upsertMutate = useMutation({
@@ -41,6 +51,12 @@ export default function CategoryUpsertPage({
       });
     },
   });
+
+  useEffect(() => {
+    if (detailQuery.data?.data) {
+      setDataDefault(detailQuery.data?.data);
+    }
+  }, [detailQuery.data?.data]);
 
   const onSubmit = (values: z.infer<typeof CreateCategorySchema>) => {
     if (session.data?.user.token) {
@@ -64,6 +80,7 @@ export default function CategoryUpsertPage({
           isLoading={upsertMutate.isPending}
           hookForm={hookForm}
           onSubmit={onSubmit}
+          dataDefault={dataDefault}
           structures={[
             {
               label: "Tên thể loại",

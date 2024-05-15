@@ -16,7 +16,7 @@ export default function CardCollection({
   return (
     <>
       <Box bg="var(--bg-white)" rounded="md" p={padding} w="100%" height="100%">
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" alignItems="center">
           <Heading fontSize={fontSize} textTransform="uppercase">
             {title}
           </Heading>

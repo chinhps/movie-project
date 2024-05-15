@@ -1,8 +1,15 @@
 "use client";
 
-import { Button, FormControl, FormErrorMessage, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  Textarea,
+} from "@chakra-ui/react";
 import * as React from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
+import { useEffect } from "react";
 
 export interface IFormBaseProps {
   structures: Array<IFormInput>;
@@ -10,6 +17,7 @@ export interface IFormBaseProps {
   buttonText?: string;
   onSubmit: SubmitHandler<any>;
   hookForm: UseFormReturn<any>;
+  dataDefault?: object;
 }
 
 export interface IFormInput {
@@ -41,8 +49,19 @@ export default function FormBase({
     setValue,
     formState: { errors, isSubmitting },
   },
+  dataDefault,
   ...props
 }: IFormBaseProps) {
+  useEffect(() => {
+    dataDefault &&
+      Object.entries(dataDefault).forEach(([key, value]) => {
+        if (value) {
+          setValue(key, value);
+        }
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataDefault]);
+
   return (
     <form onSubmit={handleSubmit(props.onSubmit)}>
       {props.structures.map((form, index) => (
