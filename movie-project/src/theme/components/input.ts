@@ -26,7 +26,7 @@ export const inputTheme = defineMultiStyleConfig({
         border: '1px solid',
         borderColor: 'gray.200',
         borderRadius: '5px',
-        padding: '1rem 2rem',
+        padding: '1rem 1rem',
         _placeholder: { color: 'var(--bg-gray)', fontWeight: '400' },
       },
     }),

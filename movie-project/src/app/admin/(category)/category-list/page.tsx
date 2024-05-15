@@ -53,7 +53,7 @@ export default function CategoryListPage({
               <Td>
                 <ActionList
                   actions={["EDIT", "DELETE"]}
-                  linkUpdate={"./update/service/"}
+                  linkUpdate={"/admin/category-upsert?id=" + category.id}
                   onClickExits={() => alert(1)}
                 />
               </Td>

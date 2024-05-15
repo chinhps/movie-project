@@ -1,6 +1,7 @@
 import { HStack, IconButton, useDisclosure } from "@chakra-ui/react";
 import { FiEdit, FiX } from "react-icons/fi";
 import ModelConfirm from "./Model/ModelConfirm";
+import Link from "next/link";
 
 export default function ActionList({
   linkUpdate,
@@ -36,13 +37,14 @@ export default function ActionList({
         {actions?.map((action) => {
           if (action === "EDIT") {
             return (
-              <IconButton
-                key={action}
-                aria-label="Change"
-                colorScheme="orange"
-                variant="outline"
-                icon={<FiEdit />}
-              />
+              <Link key={action} href={linkUpdate ?? "#"}>
+                <IconButton
+                  aria-label="Change"
+                  colorScheme="orange"
+                  variant="outline"
+                  icon={<FiEdit />}
+                />
+              </Link>
             );
           }
           if (action === "DELETE") {

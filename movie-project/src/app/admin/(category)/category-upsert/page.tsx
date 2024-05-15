@@ -47,6 +47,7 @@ export default function CategoryUpsertPage({
       upsertMutate.mutate({
         token: session.data?.user.token,
         params: {
+          id: id ?? null,
           ...values,
         },
       });
@@ -57,7 +58,7 @@ export default function CategoryUpsertPage({
     <>
       <CardCollection title={id ? "Sửa thể loại" : "Thêm thể loại"}>
         <CardHeader>
-          <Text>Danh phim!</Text>
+          <Text>Thêm và cập nhật thể loại!</Text>
         </CardHeader>
         <FormBase
           isLoading={upsertMutate.isPending}
