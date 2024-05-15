@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Category;
 
+use App\Http\Controllers\BaseResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\CategoryUpsertRequest;
 use App\Http\Resources\Category\CategoryAdminResource;
 use App\Http\Resources\Category\CategoryResource;
 use App\Repositories\Category\CategoryInterface;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -29,7 +32,26 @@ class CategoryController extends Controller
     # ADMIN
     public function categoryListAdmin()
     {
-        $categories = $this->categoryRepository->list([],15);
+        $categories = $this->categoryRepository->list([], 15);
         return CategoryAdminResource::collection($categories);
+    }
+
+    public function categoryUpsertAdmin(CategoryUpsertRequest $request)
+    {
+        $validated = $request->validated();
+
+        try {
+            DB::beginTransaction();
+            $this->categoryRepository->updateOrInsert($validated["id"] ?? null, [
+                "name" => $validated['name'],
+                "description" => $validated['description'],
+                "slug" => Str::slug($validated['name'])
+            ]);
+            DB::commit();
+            return BaseResponse::msg("Thao tác thành công!");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return BaseResponse::msg($e->getMessage(), 422);
+        }
     }
 }

@@ -30,7 +30,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['decryptToken:sanctum'])
     ->prefix('admin')
     ->group(function () {
-        Route::get('categories', [CategoryController::class, 'categoryListAdmin']);
+        Route::prefix('categories')->group(function () {
+            Route::get('/', [CategoryController::class, 'categoryListAdmin']);
+            Route::post('upsert', [CategoryController::class, 'categoryUpsertAdmin']);
+        });
+
         Route::get('movies', [MovieController::class, 'movieListAdmin']);
         Route::get('users', [UserController::class, 'userListAdmin']);
     });

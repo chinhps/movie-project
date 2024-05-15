@@ -37,3 +37,8 @@ export const ChangePasswordSchema = z.object({
         path: ["confirmPassword"],
     }
 );
+
+export const CreateCategorySchema = z.object({
+    name: z.string().min(1).max(5000),
+    description: z.string()
+})

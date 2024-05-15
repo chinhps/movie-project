@@ -1,5 +1,5 @@
 import fetchC from "@/libs/fetchC";
-import { IBaseResponse } from "@/types/base.type";
+import { IBaseResponse, IBaseResponseDetail, IResponseWithMessage } from "@/types/base.type";
 import { ICategoryResponse } from "@/types/response/category.type";
 
 const adminCategoryApi = {
@@ -10,6 +10,19 @@ const adminCategoryApi = {
             params: {
                 page: (page ?? 1).toString()
             },
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "content-type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+
+        });
+        return res;
+    },
+    upsert: async ({ token, params }: { token: string, params: object }) => {
+        const url = "/admin/categories/upsert";
+        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, { ...params }, {
+            cache: "no-store",
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
                 "content-type": "application/json",

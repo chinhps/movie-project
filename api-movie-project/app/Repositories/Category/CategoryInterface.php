@@ -6,4 +6,5 @@ interface CategoryInterface
 {
     public function list(array $filter = [], float $limit = 15);
     public function getBySlug($slug);
+    public function updateOrInsert(float|null $id, array $params);
 }

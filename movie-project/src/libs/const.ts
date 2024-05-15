@@ -19,7 +19,7 @@ export const navbarList: Array<ISildeBar> = [
         children: [
             {
                 name: "Thêm thể loại",
-                link: "/admin/movie-create"
+                link: "/admin/category-upsert"
             },
             {
                 name: "Danh sách",
@@ -32,7 +32,7 @@ export const navbarList: Array<ISildeBar> = [
         children: [
             {
                 name: "Thêm phim",
-                link: "/admin/movie-create"
+                link: "/admin/movie-upsert"
             },
             {
                 name: "Danh sách",

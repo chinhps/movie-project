@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, FormControl, FormErrorMessage, Input } from "@chakra-ui/react";
+import { Button, FormControl, FormErrorMessage, Input, Textarea } from "@chakra-ui/react";
 import * as React from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 
@@ -47,16 +47,31 @@ export default function FormBase({
     <form onSubmit={handleSubmit(props.onSubmit)}>
       {props.structures.map((form, index) => (
         <FormControl key={index} isInvalid={!!errors[form.name]} my={2}>
-          <Input
-            type={form.isPassword ? "password" : "text"}
-            variant="formbase"
-            disabled={form.disable}
-            {...register(form.name, {
-              value: form.default ?? null,
-              ...(form.validate ?? null),
-            })}
-            placeholder={form.placeholder ?? form.label}
-          />
+          {form.type === "INPUT" ? (
+            <Input
+              type={form.isPassword ? "password" : "text"}
+              variant="formbase"
+              disabled={form.disable}
+              {...register(form.name, {
+                value: form.default ?? null,
+                ...(form.validate ?? null),
+              })}
+              placeholder={form.placeholder ?? form.label}
+            />
+          ) : form.type === "TEXTAREA" ? (
+            <Textarea
+              variant="outline"
+              fontSize="sm"
+              fontWeight="500"
+              // size="lg"
+              {...register(form.name, {
+                value: form.default ?? null,
+                ...(form.validate ?? null),
+              })}
+              placeholder={form.placeholder ?? form.label}
+            />
+          ) : null}
+
           <FormErrorMessage>
             {errors[form.name] && (errors[form.name]?.message as string)}
           </FormErrorMessage>
