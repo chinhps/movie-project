@@ -52,3 +52,24 @@ interface Category {
     name: string,
     slug: string
 }
+
+export interface IMovieAdmin {
+    id: number,
+    movie_name: string,
+    movie_name_other: string,
+    release: string,
+    status: "off" | "on",
+    banner_image: string,
+    movie_image: string,
+    description: string,
+    created_at: string,
+    updated_at: string,
+    views: number,
+    slug: string,
+    episodes_counter: number,
+    movie_rate_avg_rate: number,
+    movie_episode_laster?: IEpisode,
+    comments_counter: number,
+    report_counter: number,
+    episoded_counter: number
+}
