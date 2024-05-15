@@ -11,6 +11,7 @@ use App\Http\Controllers\Movie\ReportController;
 use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\LogoutController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ Route::middleware(['decryptToken:sanctum'])
     ->group(function () {
         Route::get('categories', [CategoryController::class, 'categoryListAdmin']);
         Route::get('movies', [MovieController::class, 'movieListAdmin']);
+        Route::get('users', [UserController::class, 'userListAdmin']);
     });
 
 # AUTH

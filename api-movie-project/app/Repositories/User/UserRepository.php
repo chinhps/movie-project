@@ -31,4 +31,11 @@ class UserRepository implements UserInterface
         $user->save();
         return $user;
     }
+
+    public function list(array $filter = [], float $limit = 15)
+    {
+        $query = $this->model->withCount('comments');
+        $query = queryRepository($query, $filter);
+        return $query->paginate($limit);
+    }
 }

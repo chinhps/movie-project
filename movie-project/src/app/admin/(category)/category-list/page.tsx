@@ -40,8 +40,16 @@ export default function CategoryListPage({
             <Tr key={category.id}>
               <Td>#{category.id}</Td>
               <Td>{category.name}</Td>
-              <Td>{category.description}</Td>
-              <Td>{category.slug}</Td>
+              <Td>
+                <Text w="200px" overflow="hidden">
+                  {category.description}
+                </Text>
+              </Td>
+              <Td>
+                <Text w="200px" overflow="hidden">
+                  {category.slug}
+                </Text>
+              </Td>
               <Td>
                 <ActionList
                   actions={["EDIT", "DELETE"]}
