@@ -42,3 +42,8 @@ export const CreateCategorySchema = z.object({
     name: z.string().min(1).max(5000),
     description: z.string()
 })
+
+export const CreateMovieSchema = z.object({
+    name: z.string().min(1).max(5000),
+    description: z.string()
+})

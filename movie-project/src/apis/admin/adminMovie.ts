@@ -1,5 +1,5 @@
 import fetchC from "@/libs/fetchC";
-import { IBaseResponse } from "@/types/base.type";
+import { IBaseResponse, IBaseResponseDetail, IResponseWithMessage } from "@/types/base.type";
 import { IMovieAdmin } from "@/types/response/movies.type";
 
 const adminMovieApi = {
@@ -16,6 +16,18 @@ const adminMovieApi = {
                 "Authorization": "Bearer " + token
             },
 
+        });
+        return res;
+    },
+    upsert: async ({ token, params }: { token: string, params: object }) => {
+        const url = "/admin/movies/upsert";
+        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, { ...params }, {
+            cache: "no-store",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "content-type": "application/json",
+                "Authorization": "Bearer " + token
+            },
         });
         return res;
     }
