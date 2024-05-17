@@ -32,7 +32,8 @@
         "files": [
             "app/Helper/QueryRepository.php",
             "app/Helper/Crypto.php",
-            "app/Helper/Function.php"
+            "app/Helper/Function.php",
+            "app/Helper/Upload.php"
         ]
     },
     "autoload-dev": {
