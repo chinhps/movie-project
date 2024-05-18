@@ -51,6 +51,6 @@ export const CreateMovieSchema = z.object({
     categories: z.array(z.string()),
     episodes_counter: z.number().min(1),
     description: z.string().min(1),
-    banner_image: z.array(z.instanceof(File)),
-    movie_image: z.array(z.instanceof(File)),
+    banner_image: z.array(z.union([z.instanceof(File), z.string()])).nonempty(),
+    movie_image: z.array(z.union([z.instanceof(File), z.string()])).nonempty(),
 })

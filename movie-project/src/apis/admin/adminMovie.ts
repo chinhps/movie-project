@@ -1,7 +1,7 @@
 import fetchC from "@/libs/fetchC";
 import { objectToFormData } from "@/libs/function";
 import { IBaseResponse, IBaseResponseDetail, IResponseWithMessage } from "@/types/base.type";
-import { IMovieAdmin } from "@/types/response/movies.type";
+import { IMovieAdmin, IMovieAdminDetail } from "@/types/response/movies.type";
 
 const adminMovieApi = {
     list: async ({ token, page }: { token: string, page?: number }) => {
@@ -35,7 +35,20 @@ const adminMovieApi = {
                 },
             });
         return res;
-    }
+    },
+    detail: async ({ token, id }: { token: string, id: number }) => {
+        const url = "/admin/movies/" + id;
+        const res: IBaseResponseDetail<IMovieAdminDetail> = await fetchC.get(url, {
+            cache: "no-store",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "content-type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+
+        });
+        return res;
+    },
 }
 
 export default adminMovieApi;

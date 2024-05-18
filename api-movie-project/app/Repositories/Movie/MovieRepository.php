@@ -23,6 +23,12 @@ class MovieRepository implements MovieInterface
         return $query->paginate($limit);
     }
 
+    public function detail(float $id)
+    {
+        $query = $this->model->where('id', $id)->with('categories');
+        return $query->firstOrFail();
+    }
+
     public function getFullBySlug(string $slug)
     {
         $query = $this->model

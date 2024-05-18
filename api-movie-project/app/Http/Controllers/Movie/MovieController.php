@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movie\MovieUpsertAdminRequest;
 use App\Http\Resources\Movie\MovieAdminResource;
+use App\Http\Resources\Movie\MovieDetailAdminResource;
 use App\Http\Resources\Movie\MovieDetailResource;
 use App\Http\Resources\Movie\MovieLatestResource;
 use App\Http\Resources\Movie\MovieResource;
@@ -77,6 +78,12 @@ class MovieController extends Controller
             DB::rollBack();
             return BaseResponse::msg($e->getMessage(), 422);
         }
+    }
+
+    public function movieDetailAdmin($id)
+    {
+        $movie = $this->movieRepository->detail($id);
+        return new MovieDetailAdminResource($movie);
     }
 
     public function movies(Request $request)

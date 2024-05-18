@@ -73,3 +73,7 @@ export interface IMovieAdmin {
     report_counter: number,
     episoded_counter: number
 }
+
+export interface IMovieAdminDetail extends IMovieAdmin {
+    categories: Array<string>
+}

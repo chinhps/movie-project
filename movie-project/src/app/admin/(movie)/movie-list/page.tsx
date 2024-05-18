@@ -61,7 +61,7 @@ export default function MovieListPage({
               <Td>
                 <ActionList
                   actions={["EDIT", "DELETE"]}
-                  linkUpdate={"./update/service/"}
+                  linkUpdate={"./movie-upsert?id=" + movie.id}
                   onClickExits={() => alert(1)}
                 />
               </Td>

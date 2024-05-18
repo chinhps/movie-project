@@ -10,8 +10,9 @@ import { CreateMovieSchema } from "@/schemas";
 import { IUpsertBase } from "@/types/base.type";
 import { Text, useToast } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -22,9 +23,18 @@ export default function MovieCreatePage({
 }) {
   const session = useSession();
   const toast = useToast();
+  const [dataDefault, setDataDefault] = useState<object>();
 
   const hookForm = useForm<z.infer<typeof CreateMovieSchema>>({
     resolver: zodResolver(CreateMovieSchema),
+  });
+
+  const detailQuery = useQuery({
+    queryKey: ["movie-detail-admin", id],
+    queryFn: () =>
+      adminMovieApi.detail({ token: session.data?.user.token ?? "", id }),
+    enabled: !!id && !!session.data?.user.token,
+    retry: false,
   });
 
   const upsertMutate = useMutation({
@@ -44,11 +54,23 @@ export default function MovieCreatePage({
     },
   });
 
+  useEffect(() => {
+    if (detailQuery.data?.data) {
+      setDataDefault({
+        ...detailQuery.data?.data,
+        status: detailQuery.data?.data.status === "on",
+      });
+    }
+  }, [detailQuery.data?.data]);
+
   const onSubmit = (values: z.infer<typeof CreateMovieSchema>) => {
     if (session.data?.user.token) {
       upsertMutate.mutate({
         token: session.data?.user.token,
-        params: values,
+        params: {
+          id: id ?? null,
+          ...values,
+        },
       });
     }
   };
@@ -75,6 +97,7 @@ export default function MovieCreatePage({
               "button button"
             `,
           }}
+          dataDefault={dataDefault}
           isLoading={upsertMutate.isPending}
           hookForm={hookForm}
           onSubmit={onSubmit}

@@ -31,6 +31,10 @@ export const navbarList: Array<ISildeBar> = [
         name: "Quản lý phim",
         children: [
             {
+                name: "Cập nhật tập",
+                link: "/admin/movie-upsert"
+            },
+            {
                 name: "Thêm phim",
                 link: "/admin/movie-upsert"
             },
