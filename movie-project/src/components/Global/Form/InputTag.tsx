@@ -54,6 +54,13 @@ const InputTag: FC<InputTagProps> = ({
   });
 
   useEffect(() => {
+    if (values && values.toString() != inputValues.toString()) {
+      setInputValues(values);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values]);
+
+  useEffect(() => {
     if (onChange) {
       onChange(inputValues);
     }

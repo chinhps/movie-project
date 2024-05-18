@@ -44,6 +44,9 @@ export default function FileCustomRHF({
     if (value && typeof value === "object") {
       setFileList([...value]);
     }
+    if (value && typeof value === "string") {
+      setFileList([value]);
+    }
   }, [value]);
 
   return (
