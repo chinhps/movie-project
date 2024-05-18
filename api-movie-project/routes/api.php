@@ -35,8 +35,11 @@ Route::middleware(['decryptToken:sanctum'])
             Route::get('/{id}', [CategoryController::class, 'categoryDetailAdmin']);
             Route::post('upsert', [CategoryController::class, 'categoryUpsertAdmin']);
         });
-
-        Route::get('movies', [MovieController::class, 'movieListAdmin']);
+        Route::prefix('movies')->group(function () {
+            Route::get('/', [MovieController::class, 'movieListAdmin']);
+            Route::get('/{id}', [MovieController::class, 'movieDetailAdmin']);
+            Route::post('upsert', [MovieController::class, 'movieUpsertAdmin']);
+        });
         Route::get('users', [UserController::class, 'userListAdmin']);
     });
 

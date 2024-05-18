@@ -1,4 +1,14 @@
-import { HStack, Input, Tag, TagCloseButton, TagLabel } from "@chakra-ui/react";
+import categoryApi from "@/apis/category";
+import {
+  HStack,
+  Input,
+  List,
+  ListItem,
+  Tag,
+  TagCloseButton,
+  TagLabel,
+} from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useCallback, useEffect, useState, FC } from "react";
 
 interface InputTagProps {
@@ -17,7 +27,9 @@ const InputTag: FC<InputTagProps> = ({
   name,
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [inputValues, setInputValues] = useState<Array<string | number>>(values || []);
+  const [inputValues, setInputValues] = useState<Array<string | number>>(
+    values || []
+  );
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -34,12 +46,19 @@ const InputTag: FC<InputTagProps> = ({
     setInputValues((prevValues) => prevValues.filter((_, i) => i !== index));
   }, []);
 
+  const categoryQuery = useQuery({
+    queryKey: ["category-all-admin"],
+    queryFn: () => categoryApi.list(),
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
   useEffect(() => {
     if (onChange) {
       onChange(inputValues);
     }
   }, [inputValues, onChange]);
-  
+
   return (
     <>
       <HStack
@@ -74,9 +93,18 @@ const InputTag: FC<InputTagProps> = ({
             _focus={{ boxShadow: "none" }}
             minW="200px"
             h="auto"
-            w={inputValue.length * 7 + "px"}
+            flex="1"
           />
         )}
+        {name === "categories" ? (
+          <List as="datalist" id={name}>
+            {categoryQuery.data?.data.map((vl, index) => (
+              <ListItem key={index} as="option">
+                {vl.name}
+              </ListItem>
+            ))}
+          </List>
+        ) : null}
       </HStack>
     </>
   );

@@ -5,6 +5,7 @@ import CardCollection, {
   CardHeader,
 } from "@/components/Global/Card/CardCollection";
 import FormBase from "@/components/Global/Form/FormBase";
+import { objectToFormData } from "@/libs/function";
 import { CreateMovieSchema } from "@/schemas";
 import { IUpsertBase } from "@/types/base.type";
 import { Text, useToast } from "@chakra-ui/react";
@@ -27,7 +28,8 @@ export default function MovieCreatePage({
   });
 
   const upsertMutate = useMutation({
-    mutationFn: (params: IUpsertBase) => adminMovieApi.upsert(params),
+    mutationFn: (params: { token: string; params: object }) =>
+      adminMovieApi.upsert(params),
     onSuccess: ({ data }) => {
       toast({
         status: "success",
@@ -46,10 +48,7 @@ export default function MovieCreatePage({
     if (session.data?.user.token) {
       upsertMutate.mutate({
         token: session.data?.user.token,
-        params: {
-          id: id ?? null,
-          ...values,
-        },
+        params: values,
       });
     }
   };
@@ -58,7 +57,9 @@ export default function MovieCreatePage({
     <>
       <CardCollection title={id ? "Sửa thông tin phim" : "Thêm phim mới"}>
         <CardHeader>
-          <Text>Thêm và cập nhật phim!</Text>
+          <Text>
+            Thêm và cập nhật phim! Thêm phim xong sẽ qua cập nhật tập phim!
+          </Text>
         </CardHeader>
         <FormBase
           customStyle={{

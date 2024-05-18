@@ -12,6 +12,7 @@ class Movie extends Model
 {
     use HasFactory;
     protected $table = "movies";
+    protected $guarded = [];
 
     public function categories(): BelongsToMany
     {

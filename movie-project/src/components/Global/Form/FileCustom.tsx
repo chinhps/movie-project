@@ -37,6 +37,7 @@ export default function FileCustomRHF({
     const updatedList = [...fileList];
     updatedList.splice(fileList.indexOf(file), 1);
     setFileList(updatedList);
+    onChange(updatedList);
   };
 
   useEffect(() => {

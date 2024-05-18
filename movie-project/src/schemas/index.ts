@@ -44,6 +44,13 @@ export const CreateCategorySchema = z.object({
 })
 
 export const CreateMovieSchema = z.object({
-    name: z.string().min(1).max(5000),
-    description: z.string()
+    movie_name: z.string().min(1).max(5000),
+    movie_name_other: z.string().min(1).max(5000),
+    release: z.string().min(1),
+    status: z.boolean(),
+    categories: z.array(z.string()),
+    episodes_counter: z.number().min(1),
+    description: z.string().min(1),
+    banner_image: z.array(z.instanceof(File)),
+    movie_image: z.array(z.instanceof(File)),
 })

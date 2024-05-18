@@ -40,13 +40,24 @@ const fetchC = {
             ...init
         });
         const res = await data.json();
-        
         if (!data.ok) {
-            console.log("sdvsdv");
-            
             throw new Error(res.data.msg)
         }
-
+        return res;
+    },
+    postFormData: async (url: string, params: FormData, init?: Option) => {
+        const data = await fetch((init?.BaseURL ?? initialFetch.BaseURL) + url, {
+            method: "POST",
+            body: params,
+            headers: {
+                ...initialFetch.headers
+            },
+            ...init
+        });
+        const res = await data.json();
+        if (!data.ok) {
+            throw new Error(res.data.msg)
+        }
         return res;
     },
     put: async (url: string, params?: object, init?: RequestInit) => {

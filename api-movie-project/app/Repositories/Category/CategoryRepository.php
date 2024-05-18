@@ -21,6 +21,11 @@ class CategoryRepository implements CategoryInterface
         return $query->paginate($limit);
     }
 
+    public function listIn(array $filter = [])
+    {
+        return $this->model->whereIn('name', $filter)->pluck('id');
+    }
+
     public function getBySlug($slug)
     {
         return $this->model->where('slug', $slug)->firstOrFail();

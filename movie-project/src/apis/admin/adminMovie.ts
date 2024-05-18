@@ -1,4 +1,5 @@
 import fetchC from "@/libs/fetchC";
+import { objectToFormData } from "@/libs/function";
 import { IBaseResponse, IBaseResponseDetail, IResponseWithMessage } from "@/types/base.type";
 import { IMovieAdmin } from "@/types/response/movies.type";
 
@@ -20,15 +21,19 @@ const adminMovieApi = {
         return res;
     },
     upsert: async ({ token, params }: { token: string, params: object }) => {
+        const formData = new FormData();
+        objectToFormData(formData, params);
+        formData.append("dataDefault", JSON.stringify(params) ?? "");
         const url = "/admin/movies/upsert";
-        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, { ...params }, {
-            cache: "no-store",
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-                "content-type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-        });
+        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.postFormData(url,
+            formData,
+            {
+                cache: "no-store",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Authorization": "Bearer " + token,
+                },
+            });
         return res;
     }
 }

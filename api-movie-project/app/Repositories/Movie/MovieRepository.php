@@ -51,4 +51,16 @@ class MovieRepository implements MovieInterface
             ->withAvg("movieRate", "rate")->paginate($limit);
         return $query;
     }
+
+    public function updateOrInsert(float|null $id, array $params, array $categoryIds = [])
+    {
+        $model = new Movie();
+        if ($id) {
+            $model = $this->model->find($id);
+        }
+        $model->fill($params);
+        $model->save();
+        $model->categories()->sync($categoryIds);
+        return $model;
+    }
 }
