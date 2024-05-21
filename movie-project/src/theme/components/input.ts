@@ -7,7 +7,7 @@ const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(
 
 export const inputTheme = defineMultiStyleConfig({
   defaultProps: {
-    size: '2xl',
+    // size: '2xl',
   },
   variants: {
     auth: () => ({
