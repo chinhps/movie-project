@@ -38,18 +38,18 @@ class EpisodeController extends Controller
 
         try {
             DB::beginTransaction();
-            foreach ($validated['data'] as $episode_data) {
+            foreach ($validated['data'] as $episodeData) {
                 $episode = $this->movieEpisodeRepository->updateOrInsert(null, [
-                    "episode_name" => $episode_data['episode_name'],
-                    "status" => "on",
-                    "slug" => Str::slug($movie->movie_name . " " . $episode_data['episode_name'])
+                    "episode_name" => $episodeData['episode_name'],
+                    "status" => $episodeData['status'] ? "on" : "off",
+                    "slug" => Str::slug($movie->movie_name . " " . $episodeData['episode_name'])
                 ], $movie);
 
-                foreach ($episode_data['servers'] as $source) {
+                foreach ($episodeData['servers'] as $source) {
                     $this->episodeSourceRepository->updateOrInsert(null, [
                         "server_name" => $source['server_name'],
                         "source_link" => $source['server_source'],
-                        "status" => "on"
+                        "status" => $source['status'] ? "on" : "off"
                     ], $episode);
                 }
             }

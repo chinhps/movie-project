@@ -21,16 +21,18 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { FiEye, FiPlus } from "react-icons/fi";
+import { FiEye, FiEyeOff, FiPlus } from "react-icons/fi";
 
 interface IEpisodeState {
   id: number;
   episode_name: string;
+  status: boolean;
   servers: Array<IServer>;
 }
 
 interface IServer {
   id: number;
+  status: boolean;
   server_name: string;
   server_source: string;
 }
@@ -39,6 +41,7 @@ function newEpisode(id: number): IEpisodeState {
   return {
     id: id,
     episode_name: "",
+    status: true,
     servers: [newServer(0)],
   };
 }
@@ -46,6 +49,7 @@ function newEpisode(id: number): IEpisodeState {
 function newServer(id: number): IServer {
   return {
     id: id,
+    status: true,
     server_name: "",
     server_source: "",
   };
@@ -93,14 +97,20 @@ export default function MovieEpisodePage({
     (name: keyof IEpisodeState | keyof IServer) =>
     (idEpisode: number) =>
     (idServer: number) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (
+      event:
+        | React.ChangeEvent<HTMLInputElement>
+        | React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
       const index = episodes.findIndex((episode) => episode.id === idEpisode);
       if (idServer === -1) {
         setEpisodes((prev) => {
           const newEpisodes = [...prev];
           newEpisodes[index] = {
             ...prev[index],
-            [name]: event.target.value,
+            [name]: (event as React.ChangeEvent<HTMLInputElement>).target.value
+              ? (event as React.ChangeEvent<HTMLInputElement>).target.value
+              : !prev[index].status,
           };
           return newEpisodes;
         });
@@ -114,7 +124,9 @@ export default function MovieEpisodePage({
         );
         newServers[index].servers[indexServer] = {
           ...prev[index].servers[indexServer],
-          [name]: event.target.value,
+          [name]: (event as React.ChangeEvent<HTMLInputElement>).target.value
+            ? (event as React.ChangeEvent<HTMLInputElement>).target.value
+            : !prev[index].servers[indexServer].status,
         };
         return newServers;
       });
@@ -160,9 +172,10 @@ export default function MovieEpisodePage({
               />
               <IconButton
                 aria-label="Status"
-                icon={<FiEye />}
+                icon={episode.status ? <FiEye /> : <FiEyeOff />}
                 colorScheme="red"
                 variant="outline"
+                onClick={handleChangeEpisodes("status")(index)(-1)}
               />
               <IconButton
                 aria-label="Add new episode"
@@ -213,9 +226,10 @@ export default function MovieEpisodePage({
                     />
                     <IconButton
                       aria-label="Status"
-                      icon={<FiEye />}
+                      icon={server.status ? <FiEye /> : <FiEyeOff />}
                       colorScheme="red"
                       variant="outline"
+                      onClick={handleChangeEpisodes("status")(index)(index2)}
                     />
                   </HStack>
                 </FormControl>

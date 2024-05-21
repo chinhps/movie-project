@@ -25,6 +25,8 @@ class EpisodeUpsertAdminRequest extends BaseRequest
         return [
             "idMovie" => "required|exists:movies,id",
             "data.*.episode_name" => "required",
+            "data.*.status" => "boolean",
+            "data.*.servers.*.status" => "boolean",
             "data.*.servers.*.server_name" => "required",
             "data.*.servers.*.server_source" => "required",
         ];
