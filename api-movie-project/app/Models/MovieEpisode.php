@@ -11,6 +11,7 @@ class MovieEpisode extends Model
 {
     use HasFactory;
     protected $table = "movie_episodes";
+    protected $guarded = [];
 
     public function movie(): BelongsTo
     {

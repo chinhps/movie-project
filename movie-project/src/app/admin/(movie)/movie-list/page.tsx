@@ -7,9 +7,11 @@ import CardCollection, {
 } from "@/components/Global/Card/CardCollection";
 import Paginate from "@/components/Global/Paginate";
 import TableCustom from "@/components/Global/TableCustom";
-import { Td, Text, Tr } from "@chakra-ui/react";
+import { Button, Td, Text, Tr } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { FiPlus } from "react-icons/fi";
 
 export default function MovieListPage({
   searchParams: { page },
@@ -29,7 +31,20 @@ export default function MovieListPage({
   });
   return (
     <>
-      <CardCollection title="Danh sách phim">
+      <CardCollection
+        title="Danh sách phim"
+        button={
+          <Button
+            as={Link}
+            href="/admin/movie-upsert"
+            colorScheme="red"
+            variant="outline"
+            leftIcon={<FiPlus />}
+          >
+            Thêm phim
+          </Button>
+        }
+      >
         <CardHeader>
           <Text>Danh phim!</Text>
         </CardHeader>

@@ -8,12 +8,14 @@ import FormBase from "@/components/Global/Form/FormBase";
 import { objectToFormData } from "@/libs/function";
 import { CreateMovieSchema } from "@/schemas";
 import { IUpsertBase } from "@/types/base.type";
-import { Text, useToast } from "@chakra-ui/react";
+import { Button, HStack, Text, useToast } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FiChevronRight, FiPlus } from "react-icons/fi";
 import * as z from "zod";
 
 export default function MovieCreatePage({
@@ -77,7 +79,36 @@ export default function MovieCreatePage({
 
   return (
     <>
-      <CardCollection title={id ? "Sửa thông tin phim" : "Thêm phim mới"}>
+      <CardCollection
+        title={id ? "Sửa thông tin phim" : "Thêm phim mới"}
+        button={
+          <>
+            <HStack>
+              {id && (
+                <Button
+                  as={Link}
+                  href={"/admin/movie-episode/" + id}
+                  colorScheme="red"
+                  variant="outline"
+                  leftIcon={<FiPlus />}
+                >
+                  Thêm tập phim
+                </Button>
+              )}
+
+              <Button
+                as={Link}
+                href="/admin/movie-list"
+                colorScheme="red"
+                variant="outline"
+                rightIcon={<FiChevronRight />}
+              >
+                Trở lại
+              </Button>
+            </HStack>
+          </>
+        }
+      >
         <CardHeader>
           <Text>
             Thêm và cập nhật phim! Thêm phim xong sẽ qua cập nhật tập phim!

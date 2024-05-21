@@ -2,6 +2,7 @@
 
 namespace App\Repositories\MovieEpisode;
 
+use App\Models\Movie;
 use App\Models\MovieEpisode;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -51,5 +52,18 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
                 ->withAvg("movieRate", "rate");
         }])->paginate($limit);
         return $query;
+    }
+
+    public function updateOrInsert(float|null $id, array $params, Movie $movie)
+    {
+        $model = new MovieEpisode();
+        if ($id) {
+            $model = $this->model->find($id);
+        }
+        $model->fill($params);
+        $model->movie()->associate($movie);
+        $model->save();
+
+        return $model;
     }
 }

@@ -8,6 +8,8 @@ use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Comment\CommentInterface;
 use App\Repositories\Comment\CommentRepository;
+use App\Repositories\EpisodeSource\EpisodeSourceInterface;
+use App\Repositories\EpisodeSource\EpisodeSourceRepository;
 use App\Repositories\Information\InformationInterface;
 use App\Repositories\Information\InformationRepository;
 use App\Repositories\Movie\MovieInterface;
@@ -38,5 +40,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ReportInterface::class, ReportRepository::class);
         $this->app->bind(BookmarkInterface::class, BookmarkRepository::class);
         $this->app->bind(MovieHistoryInterface::class, MovieHistoryRepository::class);
+        $this->app->bind(EpisodeSourceInterface::class, EpisodeSourceRepository::class);
     }
 }
