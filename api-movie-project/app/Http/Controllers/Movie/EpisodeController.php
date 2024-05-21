@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Movie;
 use App\Http\Controllers\BaseResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Episode\EpisodeUpsertAdminRequest;
+use App\Http\Resources\Episode\EpisodeByMovieAdminResource;
 use App\Http\Resources\Episode\EpisodeDetailResource;
 use App\Repositories\EpisodeSource\EpisodeSourceInterface;
 use App\Repositories\Movie\MovieInterface;
@@ -29,6 +30,7 @@ class EpisodeController extends Controller
 
     public function episodeDetailAdmin($idMovie)
     {
+        return new EpisodeByMovieAdminResource($this->movieRepository->detail($idMovie));
     }
 
     public function episodeUpsertAdmin(EpisodeUpsertAdminRequest $request)
@@ -39,14 +41,14 @@ class EpisodeController extends Controller
         try {
             DB::beginTransaction();
             foreach ($validated['data'] as $episodeData) {
-                $episode = $this->movieEpisodeRepository->updateOrInsert(null, [
+                $episode = $this->movieEpisodeRepository->updateOrInsert($episodeData['idEpisode'] ?? null, [
                     "episode_name" => $episodeData['episode_name'],
                     "status" => $episodeData['status'] ? "on" : "off",
                     "slug" => Str::slug($movie->movie_name . " " . $episodeData['episode_name'])
                 ], $movie);
 
                 foreach ($episodeData['servers'] as $source) {
-                    $this->episodeSourceRepository->updateOrInsert(null, [
+                    $this->episodeSourceRepository->updateOrInsert($source['idSource'] ?? null, [
                         "server_name" => $source['server_name'],
                         "source_link" => $source['server_source'],
                         "status" => $source['status'] ? "on" : "off"

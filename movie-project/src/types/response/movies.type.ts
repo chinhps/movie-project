@@ -39,8 +39,10 @@ export interface IEpisodeResponse {
 }
 
 export interface IEpisodeSource {
+    id: number,
     server_name: string,
-    source_link: string
+    source_link: string,
+    status: "on" | "off",
 }
 
 export interface IEpisode {
@@ -76,4 +78,8 @@ export interface IMovieAdmin {
 
 export interface IMovieAdminDetail extends IMovieAdmin {
     categories: Array<string>
+}
+
+export interface IEpisodeDetailAdmin extends IEpisodeResponse {
+    status: "on" | "off",
 }

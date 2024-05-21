@@ -18,13 +18,14 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { FiEye, FiEyeOff, FiPlus } from "react-icons/fi";
 
 interface IEpisodeState {
   id: number;
+  idEpisode: number | null;
   episode_name: string;
   status: boolean;
   servers: Array<IServer>;
@@ -32,6 +33,7 @@ interface IEpisodeState {
 
 interface IServer {
   id: number;
+  idSource: number | null;
   status: boolean;
   server_name: string;
   server_source: string;
@@ -40,6 +42,7 @@ interface IServer {
 function newEpisode(id: number): IEpisodeState {
   return {
     id: id,
+    idEpisode: null,
     episode_name: "",
     status: true,
     servers: [newServer(0)],
@@ -49,6 +52,7 @@ function newEpisode(id: number): IEpisodeState {
 function newServer(id: number): IServer {
   return {
     id: id,
+    idSource: null,
     status: true,
     server_name: "",
     server_source: "",
@@ -63,6 +67,17 @@ export default function MovieEpisodePage({
   const toast = useToast();
   const session = useSession();
   const [episodes, setEpisodes] = useState<Array<IEpisodeState>>([]);
+
+  const detailQuery = useQuery({
+    queryKey: ["episode-detail-admin", params.id],
+    queryFn: () =>
+      adminEpisodeApi.detail({
+        token: session.data?.user.token ?? "",
+        id: Number(params.id),
+      }),
+    enabled: !!params.id && !!session.data?.user.token,
+    retry: false,
+  });
 
   const upsertMutate = useMutation({
     mutationFn: (params: { token: string; params: object }) =>
@@ -133,8 +148,28 @@ export default function MovieEpisodePage({
     };
 
   useEffect(() => {
-    setEpisodes((prev) => [...prev, newEpisode(0)]);
-  }, []);
+    if (detailQuery.data?.data) {
+      setEpisodes(
+        detailQuery.data.data.map((episode, index) => {
+          return {
+            id: index,
+            idEpisode: episode.id,
+            episode_name: episode.episode_name,
+            status: episode.status === "on",
+            servers: episode.movie_sources.map((source, index2) => {
+              return {
+                id: index2,
+                idSource: source.id,
+                status: source.status === "on",
+                server_name: source.server_name,
+                server_source: source.source_link,
+              };
+            }),
+          };
+        })
+      );
+    }
+  }, [detailQuery.data?.data]);
 
   return (
     <CardCollection title="Cập nhật tập phim">
@@ -168,6 +203,7 @@ export default function MovieEpisodePage({
             <HStack>
               <Input
                 placeholder="Tên tập phim"
+                defaultValue={episode.episode_name}
                 onChange={handleChangeEpisodes("episode_name")(index)(-1)}
               />
               <IconButton
@@ -213,6 +249,7 @@ export default function MovieEpisodePage({
                     <Input
                       variant="formbase"
                       placeholder="Tên server"
+                      defaultValue={server.server_name}
                       onChange={handleChangeEpisodes("server_name")(index)(
                         index2
                       )}
@@ -220,6 +257,7 @@ export default function MovieEpisodePage({
                     <Input
                       variant="formbase"
                       placeholder="Source link"
+                      defaultValue={server.server_source}
                       onChange={handleChangeEpisodes("server_source")(index)(
                         index2
                       )}

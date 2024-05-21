@@ -1,9 +1,10 @@
 import fetchC from "@/libs/fetchC";
-import { IBaseResponseDetail, IResponseWithMessage } from "@/types/base.type";
+import { IBaseResponseData, IBaseResponseDetail, IResponseWithMessage } from "@/types/base.type";
+import { IEpisodeDetailAdmin, IEpisodeResponse } from "@/types/response/movies.type";
 
 const adminEpisodeApi = {
     upsert: async ({ token, params }: { token: string, params: object }) => {
-        const url = "/admin/episode/upsert";
+        const url = "/admin/episodes/upsert";
         const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url,
             params,
             {
@@ -14,6 +15,19 @@ const adminEpisodeApi = {
                     "Authorization": "Bearer " + token,
                 },
             });
+        return res;
+    },
+    detail: async ({ token, id }: { token: string, id: number }) => {
+        const url = "/admin/episodes/" + id;
+        const res: IBaseResponseData<IEpisodeDetailAdmin> = await fetchC.get(url, {
+            cache: "no-store",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "content-type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+
+        });
         return res;
     },
 }

@@ -25,7 +25,7 @@ class MovieRepository implements MovieInterface
 
     public function detail(float $id)
     {
-        $query = $this->model->where('id', $id)->with('categories');
+        $query = $this->model->where('id', $id)->with(['categories', 'movieEpisodes.movieSources']);
         return $query->firstOrFail();
     }
 
