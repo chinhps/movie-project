@@ -59,7 +59,7 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
         message: message,
         token: session?.user.token ?? "",
       }),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       toast({
         description: data.msg,
         status: "success",

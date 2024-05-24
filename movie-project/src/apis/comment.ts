@@ -1,5 +1,5 @@
 import fetchC from "@/libs/fetchC";
-import { IBaseResponse, IResponseWithMessage } from "@/types/base.type";
+import { IBaseResponse, IBaseResponseDetail, IResponseWithMessage } from "@/types/base.type";
 import { ICommentResponse } from "@/types/response/comment.type";
 
 const commentApi = {
@@ -15,7 +15,7 @@ const commentApi = {
     },
     createComment: async ({ movieSlug, token, message }: { movieSlug: string, token: string, message: string }) => {
         const url = "/comments/movie";
-        const res: IResponseWithMessage = await fetchC.post(url, { message: message, slug: movieSlug }, {
+        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, { message: message, slug: movieSlug }, {
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
                 "content-type": "application/json",

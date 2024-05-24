@@ -16,9 +16,11 @@
     "@hookform/resolvers": "^3.3.4",
     "@tanstack/react-query": "^5.32.1",
     "framer-motion": "^11.0.25",
+    "hls.js": "^1.5.8",
     "moment": "^2.30.1",
     "next": "14.1.4",
     "next-auth": "^5.0.0-beta.16",
+    "plyr": "^3.7.8",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.3",
@@ -30,6 +32,7 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@types/hls.js": "^1.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
