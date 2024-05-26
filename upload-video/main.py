@@ -59,7 +59,7 @@ def UI(root, FILEUPLOAD):
       fileLabel.place(x=20, y=70)
 
 
-      uploadButton = tk.Button(root, text="Upload File right now!", command=button_clicked, state="disabled", width=20, height=2)
+      uploadButton = tk.Button(root, text="Upload File right now!", command=lambda: handleUpload(FILEUPLOAD), state="disabled", width=20, height=2)
       uploadButton.place(x=480, y=100)
       tk.Button(root, text="Chọn file để upload", command=lambda: fileChoose(fileLabel, FILEUPLOAD, uploadButton), width=20, height=2).place(x=20, y=100)
       
@@ -94,15 +94,33 @@ def loginWithGoogle():
   USER = creds.client_id
   return creds
     
-
 def fileChoose(fileLabel, FILEUPLOAD, uploadButton):
   filepath = filedialog.askopenfilename()
   FILEUPLOAD.set(filepath)
   uploadButton.config(state=tk.NORMAL)
   fileLabel.config(text="File đã chọn: " + FILEUPLOAD.get())
 
-def button_clicked():
-    print("Button đã được nhấn!")
+def ffmpegHandle(FILEUPLOAD):
+ # ffmpeg -i input.mp4 -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls output.m3u8
+  command = [
+    "./ffmpeg/ffmpeg.exe", "-i", 
+    FILEUPLOAD.get(), 
+    "-codec", "copy",  # Sửa "-codec: copy" thành "-codec", "copy"
+    "-start_number", "0",  # Sửa "-start_number 0" thành "-start_number", "0"
+    "-hls_time", "10",  # Sửa "-hls_time 10" thành "-hls_time", "10"
+    "-hls_list_size", "0",  # Sửa "-hls_list_size 0" thành "-hls_list_size", "0"
+    "-f", "hls", "./assets/output/output.m3u8"
+  ]
+  process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  
+  # Kiểm tra nếu có lỗi
+  if process.returncode != 0:
+    print("Có lỗi xảy ra khi chạy FFmpeg:", process.stderr.decode())
+  else:
+    print("FFmpeg chạy thành công, output.m3u8 đã được tạo.")
+
+def handleUpload(FILEUPLOAD):
+  ffmpegHandle(FILEUPLOAD)
 
 if __name__ == "__main__":
     main()
