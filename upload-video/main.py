@@ -17,7 +17,7 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"]
 USER = None
-
+ 
 def main():
     
     if not os.path.exists("credentials.json"):
