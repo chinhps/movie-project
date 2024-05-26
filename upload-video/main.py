@@ -4,6 +4,9 @@ from tkinter import ttk
 from tkinter import messagebox
 
 import sys
+import random
+import binascii
+import shutil
 
 import os.path
 import subprocess
@@ -112,15 +115,58 @@ def ffmpegHandle(FILEUPLOAD):
     "-f", "hls", "./assets/output/output.m3u8"
   ]
   process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  
   # Kiểm tra nếu có lỗi
   if process.returncode != 0:
     print("Có lỗi xảy ra khi chạy FFmpeg:", process.stderr.decode())
   else:
     print("FFmpeg chạy thành công, output.m3u8 đã được tạo.")
 
+def handleCombineVideoWithImage():
+
+  URL_FINAL = "./assets/finals"
+  URL_FLAGS = "./assets/flags"
+  URL_OUTPUT = "./assets/output"
+
+  # # remove finals
+  if os.path.exists(URL_FINAL):
+    shutil.rmtree(URL_FINAL)
+    
+  # create new folder final
+  os.makedirs(URL_FINAL)
+
+  # check exists output
+  if not os.path.exists(f"{URL_OUTPUT}/output.m3u8"):
+    messagebox.showwarning("Thông báo!", "Thao tác thất bại! x31")
+    sys.exit()
+  # get count file output
+  flagsCount = countFile(URL_FLAGS)
+  sourceCount = countFile(URL_OUTPUT)
+  
+  # convert .ts to image
+  for i in range(0, sourceCount - 1):
+    # random flag to video
+    randomFlag = random.randint(0, flagsCount - 1)
+    with open(f"{URL_FLAGS}/{randomFlag}.png", "rb") as fileFlag:
+      flagHex = binascii.hexlify(fileFlag.read()).decode('utf-8')
+    with open(f"{URL_OUTPUT}/output{i}.ts", "rb") as fileOutput:
+      outputHex = binascii.hexlify(fileOutput.read()).decode('utf-8')
+
+    finalFile = f"{URL_FINAL}/image-{i}.png"
+    # combine 2 hex to new file
+    with open(finalFile, "wb") as newFile:
+      # convert hex to binary and save new file
+      newFile.write(binascii.unhexlify(flagHex + outputHex))
+
+  print(sourceCount - 1)
+
+def countFile(folderPath):
+  with os.scandir(folderPath) as entries:
+    filesCount = sum(1 for entry in entries if entry.is_file())
+  return filesCount
+
 def handleUpload(FILEUPLOAD):
-  ffmpegHandle(FILEUPLOAD)
+  # ffmpegHandle(FILEUPLOAD)
+  handleCombineVideoWithImage()
 
 if __name__ == "__main__":
     main()
