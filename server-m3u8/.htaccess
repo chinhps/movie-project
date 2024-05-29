@@ -1,0 +1,9 @@
+AddType application/vnd.apple.mpegurl .m3u8
+AddType video/mp2t .ts
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET"
+    Header set Access-Control-Allow-Headers "*"
+    Header set Access-Control-Expose-Headers "Accept-Ranges, Content-Encoding, Content-Length, Content-Range"
+</IfModule>
