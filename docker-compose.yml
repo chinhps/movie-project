@@ -3,6 +3,13 @@ networks:
     name: movie-network
 
 services:
+  server-m3u8:
+    image: chinhps/laravel-image:v8.2
+    container_name: server-m3u8-container
+    ports:
+      - 8085:80
+    volumes:
+      - ./server-m3u8:/var/www/html
   movie-backend:
     image: chinhps/laravel-image:v8.2
     container_name: movie-backend-container
