@@ -15,6 +15,8 @@ import requests
 import fileinput
 import re
 from collections import OrderedDict
+import configparser
+from concurrent.futures import ThreadPoolExecutor
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -22,7 +24,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
-from googleapiclient.http import MediaIoBaseDownload
 
 URL_FINAL = "./assets/finals"
 URL_FLAGS = "./assets/flags"
@@ -31,22 +32,33 @@ URL_OUTPUT = "./assets/output"
 SCOPES = ["https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive.metadata.readonly"]
 USER = None
 
+# CONFIG
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+SecondShortVideo = config['DEFAULT']['SecondShortVideo']
+ThreadUpload = config['DEFAULT']['ThreadUpload']
+LinkApiUploadM3u8 = config['DEFAULT']['LinkApiUploadM3u8']
+
+
 def main():
-    
-    if not os.path.exists("credentials.json"):
-      messagebox.showwarning("Thông báo!", "Bạn cần file credentials.json để có thể tiếp tục sử dụng!")
-      sys.exit()
+  
+  global SecondShortVideo, ThreadUpload, LinkApiUploadM3u8
 
-    root = tk.Tk()
-    FILEUPLOAD = tk.StringVar(root)
+  if not os.path.exists("credentials.json"):
+    messagebox.showwarning("Thông báo!", "Bạn cần file credentials.json để có thể tiếp tục sử dụng!")
+    sys.exit()
 
-    root.title("Upload file with Google Photo")
-    root.geometry("650x185")
-    
-    UI(root, FILEUPLOAD)
+  root = tk.Tk()
+  FILEUPLOAD = tk.StringVar(root)
 
-    root.resizable(False, False)
-    root.mainloop()
+  root.title("Upload file with Google Photo")
+  root.geometry("650x210")
+  
+  UI(root, FILEUPLOAD)
+
+  root.resizable(False, False)
+  root.mainloop()
 
 def UI(root, FILEUPLOAD):
     
@@ -71,6 +83,10 @@ def UI(root, FILEUPLOAD):
       fileLabel = tk.Label(root, text="File đã chọn: Chưa chọn file để upload!")
       fileLabel.place(x=20, y=70)
 
+      # final upload
+      serverName = tk.Entry(root, fg='grey', width=15, state='readonly').place(x=20, y=180)
+      source = tk.Entry(root, fg='grey',width=75, state='readonly').place(x=120, y=180)
+      tk.Button(root, text="😁", width=6, height=1).place(x=579, y=180)
 
       uploadButton = tk.Button(root, text="Upload File right now!", command=lambda: handleUpload(FILEUPLOAD, creds), state="disabled", width=20, height=2)
       uploadButton.place(x=480, y=100)
@@ -116,6 +132,7 @@ def fileChoose(fileLabel, FILEUPLOAD, uploadButton):
 def ffmpegHandle(FILEUPLOAD):
 
   global URL_OUTPUT
+  global SecondShortVideo
 
   # check and create output folder
   if os.path.exists(URL_OUTPUT):
@@ -128,7 +145,7 @@ def ffmpegHandle(FILEUPLOAD):
     FILEUPLOAD.get(), 
     "-codec", "copy",
     "-start_number", "0",
-    "-hls_time", "10",
+    "-hls_time", SecondShortVideo,
     "-hls_list_size", "0",
     "-f", "hls", f"{URL_OUTPUT}/output.m3u8"
   ]
@@ -179,7 +196,6 @@ def handleCombineVideoWithImage():
 
   print("Đã xong convert files!")
 
-
 def createFolderDrive(creds, folderName):
   try:
     # create drive api client
@@ -197,7 +213,6 @@ def createFolderDrive(creds, folderName):
   except HttpError as error:
     print(f"An error occurred: {error}")
     file = None
-
 
 def uploadToDrive(creds,folderId,fileName,locationFile):
   try:
@@ -247,7 +262,6 @@ def randomWord(length):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(length))
 
-
 def getLinkDriveByFileId(fileId):
   drive_url = f"https://drive.google.com/file/d/{fileId}/view"
   # get html drive
@@ -261,9 +275,22 @@ def getLinkDriveByFileId(fileId):
   else:
       print('No image URLs found in the JavaScript code.')
       return None
-  
+
+def UploadToLinkDrive(creds, filename, folderId):
+  print(f"Đang xử lý: {filename}")
+  imageIdDrive = uploadToDrive(
+    creds=creds,
+    folderId=folderId, 
+    fileName=filename, 
+    locationFile=f"./assets/finals/{filename}"
+  )
+  linkDrive = getLinkDriveByFileId(imageIdDrive)
+  return filename, f"{linkDrive}=d"
 
 def handleUpload(FILEUPLOAD, creds):
+  
+  global ThreadUpload
+
   ffmpegCheck = ffmpegHandle(FILEUPLOAD)
   if ffmpegCheck:
     handleCombineVideoWithImage()
@@ -274,17 +301,14 @@ def handleUpload(FILEUPLOAD, creds):
   # create OrderedDict
   mapM3u8 = OrderedDict()
 
-  # upload all file to drive
-  for filename in os.listdir("./assets/finals"):
-    print(filename)
-    imageIdDrive = uploadToDrive(
-      creds=creds,
-      folderId=folderId, 
-      fileName=filename, 
-      locationFile=f"./assets/finals/{filename}"
-    )
-    linkDrive = getLinkDriveByFileId(imageIdDrive)
-    mapM3u8[filename] = f"{linkDrive}=d"
+  with ThreadPoolExecutor(max_workers=ThreadUpload) as executor:
+    filesToProcess = os.listdir("./assets/finals")
+    # upload all file to drive
+    results = list(executor.map(lambda file: UploadToLinkDrive(creds=creds, filename=file, folderId=folderId), filesToProcess))
+  
+  # update link by thread
+  for filename, link in results:
+        mapM3u8[filename] = link
 
   for key, value in mapM3u8.items():
     # get number in file output
@@ -292,7 +316,8 @@ def handleUpload(FILEUPLOAD, creds):
     with fileinput.FileInput("./assets/output/output.m3u8", inplace=True) as file:
       for line in file:
           sys.stdout.write(line.replace(f"output{number}.ts", value))
-  print("done!")
+
+  messagebox.showinfo("Thông báo!", "Đã thực hiện xong bạn có thể thấy link stream ở dưới!")
 
 if __name__ == "__main__":
     main()
