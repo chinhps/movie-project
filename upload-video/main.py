@@ -315,32 +315,33 @@ def handleUpload(FILEUPLOAD, creds, serverName, source):
   
   global SecondShortVideo, ThreadUpload, LinkApiUploadM3u8
 
-  # ffmpegCheck = ffmpegHandle(FILEUPLOAD)
-  # if ffmpegCheck:
-  #   handleCombineVideoWithImage()
+  ffmpegCheck = ffmpegHandle(FILEUPLOAD)
+  if ffmpegCheck:
+    handleCombineVideoWithImage()
 
-  # nameFolder = f"{randomWord(10)}_{random.randint(11111,99999)}"
-  # folderId = createFolderDrive(creds, nameFolder)
+  nameFolder = f"{randomWord(10)}_{random.randint(11111,99999)}"
+  folderId = createFolderDrive(creds, nameFolder)
 
-  # # create OrderedDict
-  # mapM3u8 = OrderedDict()
+  # create OrderedDict
+  mapM3u8 = OrderedDict()
 
-  # with ThreadPoolExecutor(max_workers=ThreadUpload) as executor:
-  #   filesToProcess = os.listdir("./assets/finals")
-  #   # upload all file to drive
-  #   results = list(executor.map(lambda file: UploadToLinkDrive(creds=creds, filename=file, folderId=folderId), filesToProcess))
+  with ThreadPoolExecutor(max_workers=ThreadUpload) as executor:
+    filesToProcess = os.listdir("./assets/finals")
+    # upload all file to drive
+    results = list(executor.map(lambda file: UploadToLinkDrive(creds=creds, filename=file, folderId=folderId), filesToProcess))
   
-  # # update link by thread
-  # for filename, link in results:
-  #       mapM3u8[filename] = link
+  # update link by thread
+  for filename, link in results:
+        mapM3u8[filename] = link
 
-  # for key, value in mapM3u8.items():
-  #   # get number in file output
-  #   number = key.split('-')[1].split('.')[0]
-  #   with fileinput.FileInput("./assets/output/output.m3u8", inplace=True) as file:
-  #     for line in file:
-  #         sys.stdout.write(line.replace(f"output{number}.ts", value))
-  # # upload m3u8 to server
+  for key, value in mapM3u8.items():
+    # get number in file output
+    number = key.split('-')[1].split('.')[0]
+    with fileinput.FileInput("./assets/output/output.m3u8", inplace=True) as file:
+      for line in file:
+          sys.stdout.write(line.replace(f"output{number}.ts", value))
+  
+  # upload m3u8 to server
   linkM3u8 = UploadM3u8("./assets/output/output.m3u8")
   if not linkM3u8 is None:
     source.insert(0, f"{LinkApiUploadM3u8}/{linkM3u8}")
