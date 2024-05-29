@@ -37,7 +37,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 SecondShortVideo = config['DEFAULT']['SecondShortVideo']
-ThreadUpload = config['DEFAULT']['ThreadUpload']
+ThreadUpload = int(config['DEFAULT']['ThreadUpload'])
 LinkApiUploadM3u8 = config['DEFAULT']['LinkApiUploadM3u8']
 FileNameUploadM3u8 = config['DEFAULT']['FileNameUploadM3u8']
 
