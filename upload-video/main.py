@@ -39,11 +39,14 @@ config.read('config.ini')
 SecondShortVideo = config['DEFAULT']['SecondShortVideo']
 ThreadUpload = config['DEFAULT']['ThreadUpload']
 LinkApiUploadM3u8 = config['DEFAULT']['LinkApiUploadM3u8']
+FileNameUploadM3u8 = config['DEFAULT']['FileNameUploadM3u8']
 
 
 def main():
   
   global SecondShortVideo, ThreadUpload, LinkApiUploadM3u8
+
+  print(f"ThreadUpload: {ThreadUpload}", f"LinkApiUploadM3u8: {LinkApiUploadM3u8}")
 
   if not os.path.exists("credentials.json"):
     messagebox.showwarning("Thông báo!", "Bạn cần file credentials.json để có thể tiếp tục sử dụng!")
@@ -84,11 +87,12 @@ def UI(root, FILEUPLOAD):
       fileLabel.place(x=20, y=70)
 
       # final upload
-      serverName = tk.Entry(root, fg='grey', width=15, state='readonly').place(x=20, y=180)
-      source = tk.Entry(root, fg='grey',width=75, state='readonly').place(x=120, y=180)
-      tk.Button(root, text="😁", width=6, height=1).place(x=579, y=180)
+      serverName = tk.Entry(root, fg='grey', width=15)
+      serverName.place(x=20, y=180)
+      source = tk.Entry(root, fg='grey',width=85 - 1)
+      source.place(x=120, y=180)
 
-      uploadButton = tk.Button(root, text="Upload File right now!", command=lambda: handleUpload(FILEUPLOAD, creds), state="disabled", width=20, height=2)
+      uploadButton = tk.Button(root, text="Upload File right now!", command=lambda: handleUpload(FILEUPLOAD, creds, serverName, source), state="disabled", width=20, height=2)
       uploadButton.place(x=480, y=100)
       tk.Button(root, text="Chọn file để upload", command=lambda: fileChoose(fileLabel, FILEUPLOAD, uploadButton), width=20, height=2).place(x=20, y=100)
       
@@ -287,37 +291,68 @@ def UploadToLinkDrive(creds, filename, folderId):
   linkDrive = getLinkDriveByFileId(imageIdDrive)
   return filename, f"{linkDrive}=d"
 
-def handleUpload(FILEUPLOAD, creds):
+def UploadM3u8(pathFile):
+
+  global LinkApiUploadM3u8, FileNameUploadM3u8
+  try:
+    with open(pathFile, 'rb') as file:
+      # Define the files dictionary
+      files = {"fileToUpload": (pathFile, file)}
+
+      # Send the POST request
+      response = requests.post(f"{LinkApiUploadM3u8}/{FileNameUploadM3u8}", files=files).json()
+
+      # Print the response from the server
+      if response['status'] == 200: 
+        # return file
+        return response['fileName']
+      return None
+    
+  except requests.exceptions.RequestException as e:
+    print(f'HTTP Request failed: {e}')
+
+def handleUpload(FILEUPLOAD, creds, serverName, source):
   
-  global ThreadUpload
+  global SecondShortVideo, ThreadUpload, LinkApiUploadM3u8
 
-  ffmpegCheck = ffmpegHandle(FILEUPLOAD)
-  if ffmpegCheck:
-    handleCombineVideoWithImage()
+  # ffmpegCheck = ffmpegHandle(FILEUPLOAD)
+  # if ffmpegCheck:
+  #   handleCombineVideoWithImage()
 
-  nameFolder = f"{randomWord(10)}_{random.randint(11111,99999)}"
-  folderId = createFolderDrive(creds, nameFolder)
+  # nameFolder = f"{randomWord(10)}_{random.randint(11111,99999)}"
+  # folderId = createFolderDrive(creds, nameFolder)
 
-  # create OrderedDict
-  mapM3u8 = OrderedDict()
+  # # create OrderedDict
+  # mapM3u8 = OrderedDict()
 
-  with ThreadPoolExecutor(max_workers=ThreadUpload) as executor:
-    filesToProcess = os.listdir("./assets/finals")
-    # upload all file to drive
-    results = list(executor.map(lambda file: UploadToLinkDrive(creds=creds, filename=file, folderId=folderId), filesToProcess))
+  # with ThreadPoolExecutor(max_workers=ThreadUpload) as executor:
+  #   filesToProcess = os.listdir("./assets/finals")
+  #   # upload all file to drive
+  #   results = list(executor.map(lambda file: UploadToLinkDrive(creds=creds, filename=file, folderId=folderId), filesToProcess))
   
-  # update link by thread
-  for filename, link in results:
-        mapM3u8[filename] = link
+  # # update link by thread
+  # for filename, link in results:
+  #       mapM3u8[filename] = link
 
-  for key, value in mapM3u8.items():
-    # get number in file output
-    number = key.split('-')[1].split('.')[0]
-    with fileinput.FileInput("./assets/output/output.m3u8", inplace=True) as file:
-      for line in file:
-          sys.stdout.write(line.replace(f"output{number}.ts", value))
-
-  messagebox.showinfo("Thông báo!", "Đã thực hiện xong bạn có thể thấy link stream ở dưới!")
+  # for key, value in mapM3u8.items():
+  #   # get number in file output
+  #   number = key.split('-')[1].split('.')[0]
+  #   with fileinput.FileInput("./assets/output/output.m3u8", inplace=True) as file:
+  #     for line in file:
+  #         sys.stdout.write(line.replace(f"output{number}.ts", value))
+  # # upload m3u8 to server
+  linkM3u8 = UploadM3u8("./assets/output/output.m3u8")
+  if not linkM3u8 is None:
+    source.insert(0, f"{LinkApiUploadM3u8}/{linkM3u8}")
+    source.config(state='readonly')
+    serverName.insert(0, "DRI")
+    serverName.config(state='readonly')
+    # DONE
+    messagebox.showinfo("Thông báo!", "Đã thực hiện xong bạn có thể thấy link stream ở dưới!")
+  else:
+    # FAIL
+    messagebox.showwarning("Thông báo!", "Không thể upload m3u8 lên server")
+    
 
 if __name__ == "__main__":
     main()
