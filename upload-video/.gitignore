@@ -3,3 +3,4 @@ token.json
 /ffmpeg/ffmpeg.exe
 /ffmpeg/ffplay.exe
 /ffmpeg/ffprobe.exe
+/build
