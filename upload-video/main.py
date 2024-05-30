@@ -80,6 +80,8 @@ def UI(root, FILEUPLOAD):
       checkFFMPEG = tk.Label(root, text="Trạng thái: Đang kiểm tra")
       checkFFMPEG.place(x=20, y=40)
 
+      tk.Button(root, text="Đăng xuất!", command=lambda: logout(root, FILEUPLOAD)).place(x=560, y=10)
+
       try:
         subprocess.run(["./ffmpeg/ffmpeg.exe", "-version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         checkFFMPEG.config(text="Trạng thái: Đã sẵn sàng!")
@@ -107,6 +109,16 @@ def UI(root, FILEUPLOAD):
       progressbar = ttk.Progressbar(root, orient='horizontal', length=610, mode='determinate')
       progressbar.place(x=20, y=150)
       progressbar['value'] = 80
+
+def logout(root, FILEUPLOAD):
+  global USER
+  filePath = "./token.json"
+  if os.path.exists(filePath):
+    USER = None
+    os.remove(filePath)
+    UI(root, FILEUPLOAD)
+  else:
+      print("File không tồn tại.")
 
 def loginFirst(root, FILEUPLOAD):
    loginWithGoogle()
