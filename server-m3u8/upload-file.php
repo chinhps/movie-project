@@ -39,7 +39,7 @@ if ($uploadOk == 0) {
         $response_data = array(
             'status' => 200,
             'message' => 'File uploaded successfully',
-            'fileName' => $target_file
+            'fileName' => getCurrentLink() . "/" . $target_file
         );
         echo json_encode($response_data);
     } else {
@@ -49,4 +49,12 @@ if ($uploadOk == 0) {
         );
         echo json_encode($response_data);
     }
+}
+
+function getCurrentLink()
+{
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http';
+    $hostName = $_SERVER['HTTP_HOST'];
+    $currentUrl = $protocol . '://' . $hostName;
+    return  $currentUrl;
 }
