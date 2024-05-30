@@ -7,9 +7,9 @@ options = {
 }
 
 setup(
-    name = "Uload file to Drive",
+    name = "Uload file multi server",
     version = "0.1",
-    description = "Upload file to drive by chinh.dev",
+    description = "Upload file to multi server by chinh.dev",
     options = options,
     executables = [Executable("main.py", base="Win32GUI")]
 )
