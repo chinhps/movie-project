@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\HLS\HLSController;
 use App\Http\Controllers\Information\InforController;
 use App\Http\Controllers\Movie\BookmarkController;
 use App\Http\Controllers\Movie\CommentController;
@@ -25,6 +26,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+# CREATE M3U8
+Route::prefix('m3u8/hls')->group(function () {
+    Route::get('/{slug}', [HLSController::class, 'get']);
+    Route::post('/create-hls', [HLSController::class, 'create']);
+});
 
 # ADMIN
 Route::middleware(['decryptToken:sanctum'])

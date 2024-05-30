@@ -10,6 +10,8 @@ use App\Repositories\Comment\CommentInterface;
 use App\Repositories\Comment\CommentRepository;
 use App\Repositories\EpisodeSource\EpisodeSourceInterface;
 use App\Repositories\EpisodeSource\EpisodeSourceRepository;
+use App\Repositories\HLS\HLSInterface;
+use App\Repositories\HLS\HLSRepository;
 use App\Repositories\Information\InformationInterface;
 use App\Repositories\Information\InformationRepository;
 use App\Repositories\Movie\MovieInterface;
@@ -41,5 +43,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BookmarkInterface::class, BookmarkRepository::class);
         $this->app->bind(MovieHistoryInterface::class, MovieHistoryRepository::class);
         $this->app->bind(EpisodeSourceInterface::class, EpisodeSourceRepository::class);
+        $this->app->bind(HLSInterface::class, HLSRepository::class);
     }
 }
