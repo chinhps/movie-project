@@ -46,6 +46,7 @@ export function CategoryItem({ text, href }: { text: string; href: string }) {
   return (
     <ListItem
       as="li"
+      color="var(--bg-navbar)"
       _hover={{
         backgroundColor: "var(--bg-main-second)",
         color: "var(--text-main)",
@@ -58,6 +59,7 @@ export function CategoryItem({ text, href }: { text: string; href: string }) {
         py={4}
         scroll={true}
         onClick={handleClose}
+        
       >
         {text}
       </Box>
