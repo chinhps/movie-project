@@ -38,7 +38,7 @@ class HLSController extends Controller
             ]);
             DB::commit();
             return BaseResponse::data([
-                "link" => env("APP_URL") . "/m3u8/hls/" . $slug,
+                "slug" => $slug,
                 "message" => "Tạo thành công!"
             ]);
         } catch (\Exception $e) {
