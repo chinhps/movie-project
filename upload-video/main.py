@@ -17,6 +17,7 @@ import re
 from collections import OrderedDict
 import configparser
 from concurrent.futures import ThreadPoolExecutor
+import threading
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -40,6 +41,8 @@ SecondShortVideo = config['DEFAULT']['SecondShortVideo']
 ThreadUpload = int(config['DEFAULT']['ThreadUpload'])
 LinkApiUploadM3u8 = config['DEFAULT']['LinkApiUploadM3u8']
 FileNameUploadM3u8 = config['DEFAULT']['FileNameUploadM3u8']
+ApiHydra = config['OTHER']['ApiHydra']
+HydraCustomLink = config['OTHER']['HydraCustomLink']
 
 
 def main():
@@ -56,7 +59,7 @@ def main():
   FILEUPLOAD = tk.StringVar(root)
 
   root.title("Upload file with Google Photo")
-  root.geometry("650x210")
+  root.geometry("650x235")
   
   UI(root, FILEUPLOAD)
 
@@ -92,7 +95,12 @@ def UI(root, FILEUPLOAD):
       source = tk.Entry(root, fg='grey',width=85 - 1)
       source.place(x=120, y=180)
 
-      uploadButton = tk.Button(root, text="Upload File right now!", command=lambda: handleUpload(FILEUPLOAD, creds, serverName, source), state="disabled", width=20, height=2)
+      serverName2 = tk.Entry(root, fg='grey', width=15)
+      serverName2.place(x=20, y=205)
+      source2 = tk.Entry(root, fg='grey',width=85 - 1)
+      source2.place(x=120, y=205)
+
+      uploadButton = tk.Button(root, text="Upload File right now!", command=lambda: handleUpload(FILEUPLOAD, creds, serverName, source, serverName2, source2), state="disabled", width=20, height=2)
       uploadButton.place(x=480, y=100)
       tk.Button(root, text="Chọn file để upload", command=lambda: fileChoose(fileLabel, FILEUPLOAD, uploadButton), width=20, height=2).place(x=20, y=100)
       
@@ -311,13 +319,18 @@ def UploadM3u8(pathFile):
   except requests.exceptions.RequestException as e:
     print(f'HTTP Request failed: {e}')
 
-def handleUpload(FILEUPLOAD, creds, serverName, source):
-  
+def handleUpload(FILEUPLOAD, creds, serverName, source, serverName2, source2):
+
   global SecondShortVideo, ThreadUpload, LinkApiUploadM3u8
+
+  # upload to hydra
+  thread = threading.Thread(target=uploadToHydra(FILEUPLOAD, serverName2, source2))
 
   ffmpegCheck = ffmpegHandle(FILEUPLOAD)
   if ffmpegCheck:
     handleCombineVideoWithImage()
+
+  thread.start()
 
   nameFolder = f"{randomWord(10)}_{random.randint(11111,99999)}"
   folderId = createFolderDrive(creds, nameFolder)
@@ -344,16 +357,36 @@ def handleUpload(FILEUPLOAD, creds, serverName, source):
   # upload m3u8 to server
   linkM3u8 = UploadM3u8("./assets/output/output.m3u8")
   if not linkM3u8 is None:
-    source.insert(0, f"{LinkApiUploadM3u8}/{linkM3u8}")
+    source.insert(0, f"{linkM3u8}")
     source.config(state='readonly')
     serverName.insert(0, "DRI")
     serverName.config(state='readonly')
+    thread.join()
     # DONE
     messagebox.showinfo("Thông báo!", "Đã thực hiện xong bạn có thể thấy link stream ở dưới!")
   else:
     # FAIL
     messagebox.showwarning("Thông báo!", "Không thể upload m3u8 lên server")
     
+
+def uploadToHydra(pathFile, serverName2, source2):
+  global ApiHydra, HydraCustomLink
+  print("start hydra")
+  try:
+    with open(pathFile.get(), 'rb') as file:
+      fileType = 'video/mp4'
+      # Define the files dictionary
+      files = {"file": (pathFile.get(), file, fileType)}
+      # Send the POST request
+      response = requests.post(ApiHydra, files=files).json()
+      source2.insert(0, f"{HydraCustomLink}/{response['slug']}")
+      source2.config(state='readonly')
+      serverName2.insert(0, "HDY")
+      serverName2.config(state='readonly')
+      print(response['slug'])
+  except requests.exceptions.RequestException as e:
+    print(f'HTTP Request failed: {e}')
+
 
 if __name__ == "__main__":
     main()
