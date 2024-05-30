@@ -20,6 +20,7 @@ import Comments from "./Comments";
 import WatchNow from "./WatchNow";
 import BookmarkButton from "./BookmarkButton";
 import { auth } from "@/auth";
+import { notFound } from "next/navigation";
 
 export default async function MovieDetailPage({
   params,
@@ -28,7 +29,11 @@ export default async function MovieDetailPage({
 }) {
   const session = await auth();
   const movieDetail = await moviesApi.detail(params.slug, session?.user.token);  
-  
+
+  if (typeof movieDetail.data === "undefined") {
+    return notFound();
+  }
+
   return (
     <Stack gap={3}>
       <Grid

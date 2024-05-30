@@ -5,6 +5,7 @@ import { MovieItemV3 } from "@/components/Global/MovieItem";
 import Paginate from "@/components/Global/Paginate";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import { Heading, Text } from "@chakra-ui/react";
+import { notFound } from "next/navigation";
 
 export default async function CategoryPage({
   params: { slug },
@@ -15,6 +16,10 @@ export default async function CategoryPage({
 }) {
   const categoryDetail = await categoryApi.detail(slug);
   const movies = await moviesApi.listByCategory(slug, page);
+
+  if (typeof categoryDetail.data === "undefined") {
+    return notFound();
+  }
 
   return (
     <>

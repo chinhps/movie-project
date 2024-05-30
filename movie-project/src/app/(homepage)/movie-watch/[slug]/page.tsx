@@ -12,6 +12,7 @@ import Link from "next/link";
 
 import Cinema from "./Cinema";
 import Comments from "../../movie-detail/[slug]/Comments";
+import { notFound } from "next/navigation";
 
 export default async function MovieWatchPage({
   params,
@@ -19,6 +20,9 @@ export default async function MovieWatchPage({
   params: { slug: string };
 }) {
   const episodeDetail = await moviesApi.watch(params.slug);
+  if (typeof episodeDetail.data === "undefined") {
+    return notFound();
+  }
 
   return (
     <>

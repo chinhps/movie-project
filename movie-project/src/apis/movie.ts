@@ -34,16 +34,8 @@ const moviesApi = {
     },
     detail: async (slug: string, token?: string) => {
         let url = "/movies/detail/" + slug;
-        let headers = {};
-        if (token) {
-            url = "/movies/detail-user/" + slug;
-            headers = {
-                "Authorization": "Bearer " + token
-            }
-        }
         const res: IBaseResponseDetail<IMovieResponse> = await fetchC.get(url, {
             cache: "no-store",
-            headers: headers
         });
         return res;
     },
