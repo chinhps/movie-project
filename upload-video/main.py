@@ -40,10 +40,10 @@ config.read('config.ini')
 SecondShortVideo = config['DEFAULT']['SecondShortVideo']
 ThreadUpload = int(config['DEFAULT']['ThreadUpload'])
 LinkApiUploadM3u8 = config['DEFAULT']['LinkApiUploadM3u8']
-FileNameUploadM3u8 = config['DEFAULT']['FileNameUploadM3u8']
+LinkApiHLS = config['DEFAULT']['LinkApiHLS']
+ClientHLS = config['DEFAULT']['ClientHLS']
 ApiHydra = config['OTHER']['ApiHydra']
 HydraCustomLink = config['OTHER']['HydraCustomLink']
-
 
 def main():
   
@@ -301,19 +301,23 @@ def UploadToLinkDrive(creds, filename, folderId):
 
 def UploadM3u8(pathFile):
 
-  global LinkApiUploadM3u8, FileNameUploadM3u8
+  global LinkApiUploadM3u8, LinkApiHLS, ClientHLS
   try:
     with open(pathFile, 'rb') as file:
       # Define the files dictionary
       files = {"fileToUpload": (pathFile, file)}
 
       # Send the POST request
-      response = requests.post(f"{LinkApiUploadM3u8}/{FileNameUploadM3u8}", files=files).json()
+      response = requests.post(LinkApiUploadM3u8, files=files).json()
 
       # Print the response from the server
       if response['status'] == 200: 
+        
+        json = {"link_m3u8": response['fileName']}
+        responseHls = requests.post(LinkApiHLS, json=json).json()
         # return file
-        return response['fileName']
+        return f"{ClientHLS}/{responseHls['data']['slug']}"
+      
       return None
     
   except requests.exceptions.RequestException as e:
@@ -321,16 +325,15 @@ def UploadM3u8(pathFile):
 
 def handleUpload(FILEUPLOAD, creds, serverName, source, serverName2, source2):
 
-  global SecondShortVideo, ThreadUpload, LinkApiUploadM3u8
+  global SecondShortVideo, ThreadUpload
 
   # upload to hydra
-  thread = threading.Thread(target=uploadToHydra(FILEUPLOAD, serverName2, source2))
+  thread = threading.Thread(target=uploadToHydra, args=(FILEUPLOAD, serverName2, source2))
+  thread.start()
 
   ffmpegCheck = ffmpegHandle(FILEUPLOAD)
   if ffmpegCheck:
     handleCombineVideoWithImage()
-
-  thread.start()
 
   nameFolder = f"{randomWord(10)}_{random.randint(11111,99999)}"
   folderId = createFolderDrive(creds, nameFolder)
