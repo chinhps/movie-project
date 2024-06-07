@@ -28,6 +28,7 @@ import "./navbar.scss";
 import NavbarLogout from "./NavbarLogout";
 import { auth } from "@/auth";
 import NotificationNav from "./NotificationNav";
+import NavbarMobile from "./NavbarMobile";
 
 export default async function Navbar() {
   const categories = await categoryApi.list();
@@ -35,17 +36,11 @@ export default async function Navbar() {
 
   return (
     <>
-      <Box
-        as="header"
-        position="fixed"
-        top={0}
-        right={0}
-        left={0}
-        zIndex={5}
-      >
+      <Box as="header" position="fixed" top={0} right={0} left={0} zIndex={5}>
         <input type="checkbox" id="dropbox" defaultChecked={false} hidden />
-
+        <NavbarMobile />
         <Box
+          display={{ base: "none", lg: "block" }}
           bg="var(--bg-navbar)"
           backdropFilter="saturate(180%) blur(5px)"
           py={3}
@@ -131,7 +126,9 @@ export default async function Navbar() {
                       <MenuItem as={Link} href="/bookmarks">
                         Phim của tôi
                       </MenuItem>
-                      <NavbarLogout />
+                      <MenuItem>
+                        <NavbarLogout />
+                      </MenuItem>
                     </MenuList>
                   </Menu>
                 ) : (
@@ -154,7 +151,7 @@ export default async function Navbar() {
             position="absolute"
             textAlign="center"
             overflow="hidden"
-            columns={5}
+            columns={{ base: 3, md: 5 }}
             zIndex={10}
             bg="white"
             left={4}

@@ -1,7 +1,7 @@
 "use client";
 
 import logout from "@/actions/logout";
-import { MenuItem, useToast } from "@chakra-ui/react";
+import { Link, MenuItem, useToast } from "@chakra-ui/react";
 
 export default function NavbarLogout() {
   const toast = useToast();
@@ -18,7 +18,7 @@ export default function NavbarLogout() {
 
   return (
     <>
-      <MenuItem onClick={onSignOut}>Đăng xuất</MenuItem>
+      <Link onClick={onSignOut}>Đăng xuất</Link>
     </>
   );
 }

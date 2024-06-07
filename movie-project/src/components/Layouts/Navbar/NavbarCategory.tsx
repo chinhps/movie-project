@@ -1,9 +1,16 @@
 "use client";
 
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { Box, Button, Container, ListItem, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  IconButton,
+  ListItem,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FiChevronDown, FiChevronUp, FiGrid, FiMenu, FiX } from "react-icons/fi";
 import "./navbar.scss";
 import Link from "next/link";
 
@@ -26,7 +33,17 @@ export default function NavbarCategory() {
 
   return (
     <>
+      <IconButton
+        as="label"
+        htmlFor="dropbox"
+        icon={!isOpenCategory ? <FiGrid /> : <FiX />}
+        aria-label="category list"
+        display={{ base: "flex", lg: "none" }}
+        ref={handleCloseCategory.domButtonNodeRef}
+        onClick={() => setIsOpenCategory((prev) => !prev)}
+      />
       <Button
+        display={{ base: "none", lg: "flex" }}
         as="label"
         htmlFor="dropbox"
         variant="ghost"
@@ -47,6 +64,7 @@ export function CategoryItem({ text, href }: { text: string; href: string }) {
     <ListItem
       as="li"
       color="var(--bg-navbar)"
+      my="auto"
       _hover={{
         backgroundColor: "var(--bg-main-second)",
         color: "var(--text-main)",
@@ -59,7 +77,6 @@ export function CategoryItem({ text, href }: { text: string; href: string }) {
         py={4}
         scroll={true}
         onClick={handleClose}
-        
       >
         {text}
       </Box>
