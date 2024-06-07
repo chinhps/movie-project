@@ -12,7 +12,7 @@ export default function HomeLayout({
   return (
     <>
       <Navbar />
-      <Container size="md" mt="6rem">
+      <Container size="md" mt="6rem" minH="90vh">
         {children}
       </Container>
       <Footer />
