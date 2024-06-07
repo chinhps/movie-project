@@ -55,7 +55,11 @@ export default function Cinema({
         ></iframe>
       </AspectRatio>
 
-      <HStack justifyContent="space-between" mt={1}>
+      <HStack
+        flexDirection={{ base: "column", md: "row" }}
+        justifyContent="space-between"
+        mt={1}
+      >
         <HStack>
           {movieSource.map((source, index) => (
             <Button
@@ -67,7 +71,7 @@ export default function Cinema({
             </Button>
           ))}
         </HStack>
-        <Text fontSize="13px">
+        <Text fontSize="13px" textAlign="center">
           Lưu lại hoặc nhớ link thông báo: BRANDNAME.com để có thể truy cập web
           khi nhà mạng chặn!
         </Text>

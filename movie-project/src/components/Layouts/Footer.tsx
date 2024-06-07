@@ -20,7 +20,11 @@ export default function Footer() {
         py={8}
       >
         <Container size="md">
-          <Grid templateColumns="repeat(5, 1fr)" gap={10} fontSize="14px">
+          <Grid
+            templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(5, 1fr)" }}
+            gap={10}
+            fontSize="14px"
+          >
             <GridItem as={Flex} flexDirection="column" colSpan={3} gap={3}>
               <Heading as="h2" fontSize="23px">
                 BRAND NAME

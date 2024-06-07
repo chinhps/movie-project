@@ -18,7 +18,7 @@ export default function Header({ rightLink, ...props }: IHeaderProps) {
       >
         <Heading
           as="h1"
-          fontSize="18px"
+          fontSize="15px"
           w="fit-content"
           color="var(--text-main)"
           textTransform="uppercase"

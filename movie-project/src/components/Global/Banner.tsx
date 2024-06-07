@@ -11,6 +11,7 @@ export default function Banner() {
   const settings: Settings = {
     dots: false,
     autoplay: true,
+    arrows: false
   };
   return (
     <Box className="image-slider-container" boxShadow="md">
@@ -26,7 +27,7 @@ export default function Banner() {
 
 export function BannerItem() {
   return (
-    <Box position="relative" height="350px">
+    <Box position="relative" maxH="350px">
       <Image
         src="/images/banner.png"
         width={1200}
@@ -42,7 +43,7 @@ export function BannerItem() {
         bg="var(--banner-description)"
         color="var(--text-main)"
       >
-        <Heading as="h1" fontSize="18px">
+        <Heading as="h1" fontSize="1rem">
           Kimetsu no Yaiba Hashira Training Arc, Thanh Gươm Diệt Quỷ Phần 4: Đặc
           biệt
         </Heading>

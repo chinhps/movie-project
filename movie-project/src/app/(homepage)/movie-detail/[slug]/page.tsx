@@ -43,7 +43,7 @@ export default async function MovieDetailPage({
         rounded={5}
         p={5}
       >
-        <GridItem colSpan={1}>
+        <GridItem colSpan={{ base: 4, md: 1 }}>
           <Box rounded="md" overflow="hidden">
             <Image
               src={movieDetail.data.movie_image}
@@ -74,7 +74,7 @@ export default async function MovieDetailPage({
             </Button>
           </VStack>
         </GridItem>
-        <GridItem as={Flex} flexDirection="column" gap={3} colSpan={3}>
+        <GridItem as={Flex} flexDirection="column" gap={3} colSpan={{ base: 4, md: 3 }}>
           <Heading as="h1" fontSize="30px">
             {movieDetail.data.movie_name}
           </Heading>

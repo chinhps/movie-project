@@ -105,6 +105,7 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
               <Textarea
                 p={0}
                 rows={3}
+                resize="none"
                 placeholder="Viết gì đó tại đây..."
                 bg="var(--bg-white)"
                 variant="pill"

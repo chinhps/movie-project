@@ -10,7 +10,7 @@ export default function UserLayout({
     <>
       <SimpleGrid columns={12} spacing="1rem">
         <GridItem
-          colSpan={3}
+          colSpan={{ base: 12, md: 3 }}
           bg="var(--bg-auth-from)"
           overflow="hidden"
           rounded="md"
@@ -18,7 +18,12 @@ export default function UserLayout({
         >
           <SideBar />
         </GridItem>
-        <GridItem colSpan={9} bg="var(--bg-auth-from)" rounded="md" p="2rem">
+        <GridItem
+          colSpan={{ base: 12, md: 9 }}
+          bg="var(--bg-auth-from)"
+          rounded="md"
+          p={{ base: 0, md: "2rem" }}
+        >
           {children}
         </GridItem>
       </SimpleGrid>

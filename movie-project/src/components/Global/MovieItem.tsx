@@ -58,7 +58,7 @@ export default function MovieItem({ movie }: { movie: IMovieResponse }) {
 
 export function MovieItemV3({ movie }: { movie: IMovieResponse }) {
   return (
-    <Box rounded="xl" position="relative" height="320px" overflow="hidden">
+    <Box rounded="xl" position="relative" height={{base: "250px", md:"320px"}} overflow="hidden">
       <Box position="absolute" right={3} top={0}>
         <MovieBookmarkItem slug={movie.slug} />
       </Box>
@@ -116,7 +116,6 @@ export function MovieItemV2({
       <Box
         role="group"
         p={2}
-        maxW="330px"
         w="full"
         bg="white"
         boxShadow="sm"
@@ -151,7 +150,7 @@ export function MovieItemV2({
             <MovieBookmarkItem slug={movie.slug} />
           </Box>
           <Link href={"/movie-detail/" + movie.slug}>
-            <Box height="240px">
+            <Box height={{base: "190px", md:"250px"}}>
               <Image fill={true} src={movie.movie_image} alt="#" loading="lazy" />
             </Box>
           </Link>
