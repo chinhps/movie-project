@@ -54,6 +54,17 @@ export const checkBookmark = (bookmark: IBookmark) => {
   return localBookmarks.find((elm) => elm.slug === bookmark.slug);
 };
 
+export const removeBookmark = (bookmark: IBookmark) => {
+  const localBookmarks: Array<IBookmark> = JSON.parse(
+    localStorage.getItem("movie-bookmarks") ?? "[]"
+  );
+  const index = localBookmarks.findIndex((elm) => elm.slug === bookmark.slug);
+  localBookmarks.splice(index, 1);
+  console.log(localBookmarks, index);
+  
+  localStorage.setItem("movie-bookmarks", JSON.stringify(localBookmarks));
+};
+
 export function objectToFormData(
   formData: FormData,
   data: Record<string, any>,
