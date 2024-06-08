@@ -1,18 +1,23 @@
 import moviesApi from "@/apis/movie";
-import Episode from "@/components/Global/Episode";
-import {
-  Divider,
-  HStack,
-  Heading,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import Link from "next/link";
-
-import Cinema from "./Cinema";
-import Comments from "../../movie-detail/[slug]/Comments";
 import { notFound } from "next/navigation";
+import Cinema from "./Cinema";
+import {
+  Box,
+  Divider,
+  GridItem,
+  Heading,
+  SimpleGrid,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+} from "@chakra-ui/react";
+import Image from "next/image";
+import { EpisodeWithImage } from "@/components/Global/Episode";
+import Comments from "../../movie-detail/[slug]/Comments";
 
 export default async function MovieWatchPage({
   params,
@@ -26,52 +31,45 @@ export default async function MovieWatchPage({
 
   return (
     <>
-      <Stack spacing={2}>
-        <HStack
-          justifyContent="space-between"
-          rounded={10}
-          bg="var(--bg-main-second)"
-          px={6}
-          py={4}
-          color="var(--text-main)"
-        >
-          <Stack>
-            <Heading as="h1" fontSize="20px">
-              <Link href={"/movie-detail/" + episodeDetail.data.movie.slug}>
-                {episodeDetail.data.movie.movie_name}
-              </Link>
-            </Heading>
-            <Text>Đang xem tập {episodeDetail.data.episode_name}</Text>
-          </Stack>
-          <Stack align="end" fontSize="15px">
-            <Text>Đăng 2 ngày trước</Text>
-            <Text>Báo cáo</Text>
-          </Stack>
-        </HStack>
-        <Cinema
-          currentEpisodeSlug={episodeDetail.data.slug}
-          movieSource={episodeDetail.data.movie_sources}
-          episodes={episodeDetail.data.movie.movie_episodes}
-        />
-        <VStack align="start" mt={2} bg="white" rounded={5} p={5}>
-          <Text as="b">Danh sách tập</Text>
-          <HStack wrap="wrap" maxH="240px" overflowY="auto">
-            {episodeDetail.data.movie.movie_episodes?.map((episode, index) => (
-              <Episode
-                key={episode.slug}
-                active={episode.slug === episodeDetail.data.slug}
-                text={episode.episode_name}
-                episode={{
-                  movieId: episodeDetail.data.movie.id,
-                  slug: episode.slug,
-                }}
-              />
-            ))}
-          </HStack>
-        </VStack>
-        <Divider mt={2} color="gray.100" />
-        <Comments slug={episodeDetail.data.movie.slug} />
-      </Stack>
+      <SimpleGrid columns={12} spacing="1rem" mb="1rem">
+        <GridItem colSpan={{ base: 12, md: 9 }}>
+          <Cinema
+            currentEpisodeSlug={episodeDetail.data.slug}
+            movieSource={episodeDetail.data.movie_sources}
+            episodes={episodeDetail.data.movie.movie_episodes}
+            movieSlug={episodeDetail.data.movie.slug}
+            movieName={episodeDetail.data.movie.movie_name}
+            episodeName={episodeDetail.data.episode_name}
+          />
+        </GridItem>
+        <GridItem colSpan={{ base: 12, md: 3 }}>
+          <Tabs>
+            <TabList fontSize="1rem">
+              <Tab as="h2">DANH SÁCH TẬP</Tab>
+              <Tab>OVA</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel as={Stack} gap={2} maxH="650px" overflow="auto" mt={1}>
+                {episodeDetail.data.movie.movie_episodes?.map((episode) => (
+                  <EpisodeWithImage
+                    key={episode.slug}
+                    episodeImage={episodeDetail.data.movie.movie_image}
+                    episodeName={episode.episode_name}
+                    movieName={episodeDetail.data.movie.movie_name}
+                    slug={episode.slug}
+                    views={1000000}
+                  />
+                ))}
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </GridItem>
+      </SimpleGrid>
+      <SimpleGrid columns={12} spacing="1rem" mb="1rem">
+        <GridItem colSpan={{ base: 12, md: 9 }}>
+          <Comments slug={episodeDetail.data.movie.slug} />
+        </GridItem>
+      </SimpleGrid>
     </>
   );
 }

@@ -121,7 +121,7 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
           </HStack>
         </form>
       </VStack>
-      <VStack bg="white" rounded={5} p={5}>
+      <VStack bg="white" rounded={5} p={5} my={2}>
         {commentsQuery.data?.pages[0]?.paginate?.total === 0 && (
           <Text mx="auto" fontSize="14px" color="var(--bg-section)">
             Chưa có ai bình luận! Hãy là người đầu tiên ❤

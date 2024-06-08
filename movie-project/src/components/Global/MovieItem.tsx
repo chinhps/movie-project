@@ -137,7 +137,7 @@ export function MovieItemV2({
             top: 0,
             left: 0,
             backgroundImage: `url(${movie.movie_image})`,
-            filter: "blur(4px)",
+            filter: "blur(3px)",
             zIndex: -1,
           }}
           _groupHover={{
@@ -150,7 +150,7 @@ export function MovieItemV2({
             <MovieBookmarkItem slug={movie.slug} />
           </Box>
           <Link href={"/movie-detail/" + movie.slug}>
-            <Box height={{base: "190px", md:"250px"}}>
+            <Box height={{base: "190px", md:"280px"}}>
               <Image fill={true} src={movie.movie_image} alt="#" loading="lazy" />
             </Box>
           </Link>

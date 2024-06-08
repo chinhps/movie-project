@@ -1,8 +1,9 @@
 "use client";
 
-import { checkEpisode } from "@/libs/function";
+import { checkEpisode, numberFormat } from "@/libs/function";
 import { IEpisodeProps } from "@/types/episode.type";
-import { Button } from "@chakra-ui/react";
+import { Box, Button, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
@@ -27,5 +28,51 @@ export default function Episode(props: IEpisodeProps) {
     >
       {props.text}
     </Button>
+  );
+}
+
+interface IEpisodeWithImage {
+  movieName: string;
+  episodeName: string;
+  views: number;
+  episodeImage: string;
+  slug: string;
+}
+
+export function EpisodeWithImage({
+  movieName,
+  episodeName,
+  episodeImage,
+  views,
+  slug,
+}: IEpisodeWithImage) {
+  return (
+    <>
+      <Link href={"/movie-watch/" + slug}>
+        <SimpleGrid columns={12} gap={2}>
+          <GridItem colSpan={5} position="relative">
+            <Box width="100%" height="65px" overflow="hidden">
+              <Image
+                src={episodeImage}
+                alt={`${movieName} - Tập ${episodeName}`}
+                width={200}
+                height={140}
+              />
+            </Box>
+          </GridItem>
+          <GridItem
+            colSpan={7}
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+          >
+            <Text fontSize="17px">Tập {episodeName} - sdfsdf</Text>
+            <Text fontSize="14px" color="var(--bg-gray)">
+              {numberFormat(views, false)} lượt xem
+            </Text>
+          </GridItem>
+        </SimpleGrid>
+      </Link>
+    </>
   );
 }

@@ -18,7 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiMenu, FiX } from "react-icons/fi";
 import "@/app/globals.css";
-import SildeBarAdmin from "@/components/Layouts/SildeBarAdmin";
+import SildeBarAdmin from "@/components/Layouts/SildeBarAdmin/SildeBarAdmin";
 
 export default function AdminLayout({
   children,

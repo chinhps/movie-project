@@ -30,8 +30,8 @@ export function BannerItem() {
     <Box position="relative" maxH="350px">
       <Image
         src="/images/banner.png"
-        width={1200}
-        height={100}
+        width={1500}
+        height={300}
         alt="banner for anime"
       />
       <VStack
