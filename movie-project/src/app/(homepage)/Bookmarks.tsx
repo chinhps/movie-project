@@ -4,11 +4,11 @@ import bookmarkApi from "@/apis/bookmark";
 import { saveBookmark } from "@/libs/function";
 import { IBookmark } from "@/types/response/movies.type";
 import { useToast } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 
-export default function Bookmarks() {
+function Bookmarks() {
   const session = useSession();
   const toast = useToast();
 
@@ -20,7 +20,15 @@ export default function Bookmarks() {
     refetchOnWindowFocus: false,
   });
 
-  useEffect(() => {
+  const bookmarkMutation = useMutation({
+    mutationFn: (slug: string) =>
+      bookmarkApi.toggleBookmark({
+        slug: slug,
+        token: session.data?.user.token ?? "",
+      }),
+  });
+
+  const handleBookmark = useCallback(() => {
     if (bookmarksQuery.data?.data) {
       const localBookmarks: Array<IBookmark> = JSON.parse(
         localStorage.getItem("movie-bookmarks") ?? "[]"
@@ -31,18 +39,27 @@ export default function Bookmarks() {
         };
       });
       if (localBookmarks.toString() !== newHistory.toString()) {
-        bookmarksQuery.data?.data.map((slugBookmark) => {
-          saveBookmark({
-            slug: slugBookmark,
-          });
-        });
+        const inLocal = localBookmarks.filter(
+          (item) => !newHistory.includes(item)
+        );
+        console.log("server missing", inLocal);
+
+        const inServer = newHistory.filter(
+          (item) => !localBookmarks.includes(item)
+        );
+        console.log("local missing", inServer);
+
         toast({
           description: "Đã đồng bộ bookmark!",
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookmarksQuery.isFetching]);
+  }, [bookmarksQuery.data?.data, toast]);
+
+  useEffect(() => {
+    handleBookmark();
+  }, [handleBookmark]);
 
   return <></>;
 }
+export default React.memo(Bookmarks);

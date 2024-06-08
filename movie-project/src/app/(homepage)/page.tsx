@@ -9,7 +9,7 @@ import MovieItem, {
 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import Link from "next/link";
-import Bookmarks from "./Bookmarks";
+// import Bookmarks from "./Bookmarks";
 
 export default async function Home() {
   const moviesLatest = await moviesApi.latest({});
@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <>
-      <Bookmarks />
+      {/* <Bookmarks /> */}
       <Banner />
       <Header
         mb={3}
