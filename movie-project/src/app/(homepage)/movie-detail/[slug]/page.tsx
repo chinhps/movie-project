@@ -28,7 +28,7 @@ export default async function MovieDetailPage({
   params: { slug: string };
 }) {
   const session = await auth();
-  const movieDetail = await moviesApi.detail(params.slug, session?.user.token);  
+  const movieDetail = await moviesApi.detail(params.slug, session?.user.token);
 
   if (typeof movieDetail.data === "undefined") {
     return notFound();
@@ -58,10 +58,7 @@ export default async function MovieDetailPage({
             >
               XEM NGAY
             </WatchNow>
-            <BookmarkButton
-              slug={movieDetail.data.slug}
-              token={session?.user.token ?? ""}
-            >
+            <BookmarkButton slug={movieDetail.data.slug}>
               BOOKMARK
             </BookmarkButton>
             <Button
@@ -74,7 +71,12 @@ export default async function MovieDetailPage({
             </Button>
           </VStack>
         </GridItem>
-        <GridItem as={Flex} flexDirection="column" gap={3} colSpan={{ base: 4, md: 3 }}>
+        <GridItem
+          as={Flex}
+          flexDirection="column"
+          gap={3}
+          colSpan={{ base: 4, md: 3 }}
+        >
           <Heading as="h1" fontSize="30px">
             {movieDetail.data.movie_name}
           </Heading>
