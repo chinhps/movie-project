@@ -63,7 +63,7 @@ export function CommentItem({ name, level, message, createdAt }: IComment) {
         <Box bg="white" width="fit-content" p="1rem" rounded="xl">
           <Flex gap={5} flexDirection="row" justify="space-between">
             <HStack spacing={0} mb={2}>
-              <Text as="b" mr={2} fontSize="14px">
+              <Text as="b" mr={2} fontSize="14px" maxW="100px" noOfLines={1}>
                 {name}
               </Text>
               <TagCustom text={"Lv: " + level} />
