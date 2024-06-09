@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import { EpisodeWithImage } from "@/components/Global/Episode";
 import Comments from "../../movie-detail/[slug]/Comments";
+import EpisodeList from "./EpisodeList";
 
 export default async function MovieWatchPage({
   params,
@@ -49,18 +50,12 @@ export default async function MovieWatchPage({
               <Tab>OVA</Tab>
             </TabList>
             <TabPanels>
-              <TabPanel as={Stack} gap={2} maxH="650px" overflow="auto" mt={1}>
-                {episodeDetail.data.movie.movie_episodes?.map((episode) => (
-                  <EpisodeWithImage
-                    key={episode.slug}
-                    episodeImage={episodeDetail.data.movie.movie_image}
-                    episodeName={episode.episode_name}
-                    movieName={episodeDetail.data.movie.movie_name}
-                    slug={episode.slug}
-                    views={1000000}
-                  />
-                ))}
-              </TabPanel>
+              <EpisodeList
+                episodeList={episodeDetail.data.movie.movie_episodes}
+                currentSlug={params.slug}
+                episodeImage={episodeDetail.data.movie.movie_image}
+                movieName={episodeDetail.data.movie.movie_name}
+              />
             </TabPanels>
           </Tabs>
         </GridItem>

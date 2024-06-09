@@ -25,6 +25,7 @@
   --gradient-movie: linear-gradient(#11111100, #111111c1);
   --bg-title: #0000002c;
   --bg-episode-watched: #dfdfdf;
+  --episode-hover: #c3c3c390;
 
 
   /* Banner */
@@ -36,6 +37,7 @@
 
 body {
   background-color: var(--bg-main) !important;
+  scroll-behavior: smooth;
 }
 
 html {
