@@ -20,7 +20,8 @@ class CommentResource extends BaseResource
             "user" => [
                 "name" => $this->user->name,
                 "level" => $this->user->level,
-            ]
+            ],
+            "created_at" => $this->created_at
         ];
     }
 }
