@@ -1,7 +1,10 @@
 "use client";
 
 import commentApi from "@/apis/comment";
-import Comment from "@/components/Global/Comments/Comment";
+import Comment, {
+  CommentItem,
+  CommentItemSkeleton,
+} from "@/components/Global/Comments/Comment";
 import { numberFormat } from "@/libs/function";
 import { CommentSchema } from "@/schemas";
 import {
@@ -78,7 +81,7 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
     commentAddMutation.mutate(values.message);
   };
-
+  
   return (
     <>
       <VStack spacing={3} align="start">
@@ -121,7 +124,7 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
           </HStack>
         </form>
       </VStack>
-      <VStack bg="white" rounded={5} p={5} my={2}>
+      <VStack rounded={5} my={5}>
         {commentsQuery.data?.pages[0]?.paginate?.total === 0 && (
           <Text mx="auto" fontSize="14px" color="var(--bg-section)">
             Chưa có ai bình luận! Hãy là người đầu tiên ❤
@@ -135,10 +138,15 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
                 message={comment.message}
                 name={comment.user.name}
                 level={comment.user.level}
+                createdAt={comment.created_at}
               />
             ))}
           </Fragment>
         ))}
+        {commentsQuery.isPending &&
+          new Array(5)
+            .fill(0)
+            .map((_, index) => <CommentItemSkeleton key={index} />)}
         {commentsQuery.hasNextPage && !commentsQuery.isFetchingNextPage && (
           <Button
             mx="auto"

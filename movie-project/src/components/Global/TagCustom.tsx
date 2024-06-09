@@ -1,4 +1,4 @@
-import { Tag } from "@chakra-ui/react";
+import { Box, Tag, Text } from "@chakra-ui/react";
 
 export interface ITagCustomProps {
   href?: string;
@@ -7,8 +7,8 @@ export interface ITagCustomProps {
 
 export default function TagCustom(props: ITagCustomProps) {
   return (
-    <Tag borderRadius="full" fontSize="13px" variant="solid" colorScheme="blue">
-      {props.text}
-    </Tag>
+    <Box bg="var(--bg-navbar)" px={3} rounded="full">
+      <Text color="var(--text-main)">{props.text}</Text>
+    </Box>
   );
 }

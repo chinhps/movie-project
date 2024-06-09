@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.3.4",
     "@tanstack/react-query": "^5.32.1",
+    "dayjs": "^1.11.11",
     "framer-motion": "^11.0.25",
     "hls.js": "^1.5.8",
     "moment": "^2.30.1",

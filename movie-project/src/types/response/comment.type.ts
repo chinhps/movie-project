@@ -4,5 +4,6 @@ export interface ICommentResponse {
     user: {
         name: string,
         level: number
-    }
+    },
+    created_at: string
 }
