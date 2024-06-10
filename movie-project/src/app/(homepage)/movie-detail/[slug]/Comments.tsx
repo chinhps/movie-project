@@ -1,40 +1,63 @@
 "use client";
 
 import commentApi from "@/apis/comment";
+import reportApi from "@/apis/report";
 import Comment, {
   CommentItem,
   CommentItemSkeleton,
 } from "@/components/Global/Comments/Comment";
+import FormBase from "@/components/Global/Form/FormBase";
+import ModalReport from "@/components/Global/Model/ModalReport";
+import useDisclosureData from "@/hooks/useDisclosureData";
 import { numberFormat } from "@/libs/function";
 import { CommentSchema } from "@/schemas";
 import {
   Button,
+  Checkbox,
+  CheckboxGroup,
   Flex,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   HStack,
   IconButton,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
   Text,
   Textarea,
   VStack,
   useToast,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { Fragment, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FiCornerDownRight, FiMeh, FiStar } from "react-icons/fi";
+import { FiCornerDownRight } from "react-icons/fi";
 import * as z from "zod";
 
 export interface ICommentsProps {
   slug: string;
 }
 
-export default function Comments({ slug, ...props }: ICommentsProps) {
+export default function Comments({ slug }: ICommentsProps) {
   const { data: session } = useSession();
   const toast = useToast();
+  const {
+    isOpen,
+    onOpenData,
+    onCloseData,
+    data: idComment,
+  } = useDisclosureData<number>();
+  const [reasonReport, setReasonReport] = useState<(string | number)[]>();
+
   const {
     formState: { errors },
     handleSubmit,
@@ -70,10 +93,21 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
       commentsQuery.refetch();
       setValue("message", "");
     },
-    onError: (data) => {
+  });
+
+  const reportMutation = useMutation({
+    mutationFn: ({ ...data }: { id: number; reason: (string | number)[] }) =>
+      reportApi.comment({
+        token: session?.user.token ?? "",
+        data: {
+          id: data.id,
+          reason: data.reason,
+        },
+      }),
+    onSuccess: ({ data }) => {
       toast({
-        description: "dfbdfbdf",
-        status: "warning",
+        description: data.msg,
+        status: "success",
       });
     },
   });
@@ -81,9 +115,36 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
     commentAddMutation.mutate(values.message);
   };
-  
+
+  const handleReport = () => {
+    onCloseData();
+    if (reasonReport && idComment) {
+      reportMutation.mutate({
+        id: Number(idComment),
+        reason: reasonReport,
+      });
+    }
+  };
+
   return (
     <>
+      <ModalReport
+        isOpen={isOpen}
+        onCloseData={onCloseData}
+        handleSubmit={handleReport}
+      >
+        <CheckboxGroup
+          colorScheme="green"
+          onChange={(vl) => setReasonReport(vl)}
+        >
+          <Stack spacing={2} direction="column">
+            <Checkbox value="spam">Spam</Checkbox>
+            <Checkbox value="trouble">Quấy rối</Checkbox>
+            <Checkbox value="other">Khác</Checkbox>
+          </Stack>
+        </CheckboxGroup>
+      </ModalReport>
+
       <VStack spacing={3} align="start">
         <Text as="b">
           Bình luận (
@@ -139,6 +200,7 @@ export default function Comments({ slug, ...props }: ICommentsProps) {
                 name={comment.user.name}
                 level={comment.user.level}
                 createdAt={comment.created_at}
+                onClick={() => onOpenData(comment.id)}
               />
             ))}
           </Fragment>

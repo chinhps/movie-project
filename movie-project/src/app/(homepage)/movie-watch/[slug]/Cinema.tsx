@@ -6,9 +6,12 @@ import {
   AspectRatio,
   Box,
   Button,
+  Checkbox,
+  CheckboxGroup,
   HStack,
   Heading,
   IconButton,
+  Stack,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -17,6 +20,11 @@ import { useEffect, useState } from "react";
 import { FiChevronsRight, FiEyeOff, FiFlag } from "react-icons/fi";
 import BookmarkButton from "../../movie-detail/[slug]/BookmarkButton";
 import Link from "next/link";
+import useDisclosureData from "@/hooks/useDisclosureData";
+import ModalReport from "@/components/Global/Model/ModalReport";
+import { useMutation } from "@tanstack/react-query";
+import reportApi from "@/apis/report";
+import { useSession } from "next-auth/react";
 
 export default function Cinema({
   movieSource,
@@ -35,6 +43,9 @@ export default function Cinema({
 }) {
   const router = useRouter();
   const toast = useToast();
+  const { data: session } = useSession();
+  const { isOpen, onOpenData, onCloseData } = useDisclosureData<string>();
+  const [reasonReport, setReasonReport] = useState<(string | number)[]>();
   const [sourceActive, setSourceActive] = useState<IEpisodeSource>(() => {
     return movieSource[0];
   });
@@ -54,6 +65,33 @@ export default function Cinema({
     }
   };
 
+  const reportMutation = useMutation({
+    mutationFn: ({ ...data }: { slug: string; reason: (string | number)[] }) =>
+      reportApi.movie({
+        token: session?.user.token ?? "",
+        data: {
+          slug: data.slug,
+          reason: data.reason,
+        },
+      }),
+    onSuccess: ({ data }) => {
+      toast({
+        description: data.msg,
+        status: "success",
+      });
+    },
+  });
+
+  const handleReport = () => {
+    if (reasonReport) {
+      reportMutation.mutate({
+        slug: movieSlug,
+        reason: reasonReport,
+      });
+    }
+    onCloseData();
+  };
+
   useEffect(() => {
     saveEpisode({
       movieId: 0,
@@ -63,6 +101,22 @@ export default function Cinema({
 
   return (
     <>
+      <ModalReport
+        isOpen={isOpen}
+        onCloseData={onCloseData}
+        handleSubmit={handleReport}
+      >
+        <CheckboxGroup
+          colorScheme="green"
+          onChange={(vl) => setReasonReport(vl)}
+        >
+          <Stack spacing={2} direction="column">
+            <Checkbox value="vietsub">Lỗi Việt sub</Checkbox>
+            <Checkbox value="wrong_episode">Sai tập</Checkbox>
+            <Checkbox value="cantWatch">Không thể xem</Checkbox>
+          </Stack>
+        </CheckboxGroup>
+      </ModalReport>
       <Box>
         <AspectRatio rounded={10} overflow="hidden" ratio={16 / 9} bg="black">
           <iframe
@@ -107,7 +161,11 @@ export default function Cinema({
 
           <HStack>
             <BookmarkButton slug={movieSlug} />
-            <IconButton icon={<FiFlag />} aria-label="report video" />
+            <IconButton
+              icon={<FiFlag />}
+              aria-label="report video"
+              onClick={() => onOpenData(movieSlug)}
+            />
             <Button rightIcon={<FiChevronsRight />} onClick={handleNextMovie}>
               Tiếp theo
             </Button>

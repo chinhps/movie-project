@@ -30,6 +30,7 @@ interface IComment {
   level: number;
   message: string;
   createdAt: string;
+  onClick: () => void;
 }
 
 export default React.memo(function Comment(props: IComment) {
@@ -53,7 +54,7 @@ export default React.memo(function Comment(props: IComment) {
   );
 });
 
-export function CommentItem({ name, level, message, createdAt }: IComment) {
+export function CommentItem({ name, level, message, createdAt, onClick }: IComment) {
   return (
     <HStack spacing={2} mt={1} width="100%" alignItems="start">
       <Box rounded="full" overflow="hidden">
@@ -77,7 +78,7 @@ export function CommentItem({ name, level, message, createdAt }: IComment) {
                 icon={<FiMoreHorizontal />}
               />
               <MenuList>
-                <MenuItem>Báo cáo</MenuItem>
+                <MenuItem onClick={onClick}>Báo cáo</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
