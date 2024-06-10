@@ -14,6 +14,11 @@ class CommentRepository implements CommentInterface
     ) {
     }
 
+    public function detail(float $id)
+    {
+        return $this->model->find($id);
+    }
+
     public function listBySlug($slug, float $limit = 15)
     {
         return $this->model->whereHas('movie', function ($query) use ($slug) {

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Movie;
+namespace App\Http\Requests\Report;
 
 use App\Http\Requests\BaseRequest;
+use Illuminate\Validation\Rule;
 
-class MovieReportRequest extends BaseRequest
+class CommentReportRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +23,20 @@ class MovieReportRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "message" => "bail|required|max:350",
-            "slug" => "required|exists:movies,slug"
+            "id" => "required|exists:comments,id",
+            "reason" => "required|array",
+            "reason.*" => [
+                'required',
+                Rule::in(['spam', 'trouble', 'other']),
+            ],
         ];
     }
 
     public function messages(): array
     {
         return [
-            "message.required" => 'Bạn cần phải nhập gì đó',
-            "message.min" => 'Bạn nhắn hơi dài quá rồi :(',
-            "slug.*" => "Lỗi liên quan đến slug"
+            "reason.*" => "Bạn cần phải chọn lý do!",
+            "id.*" => "Không tồn tại bình luận này nữa!"
         ];
     }
 }

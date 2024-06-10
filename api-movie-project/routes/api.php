@@ -8,8 +8,8 @@ use App\Http\Controllers\Movie\CommentController;
 use App\Http\Controllers\Movie\EpisodeController;
 use App\Http\Controllers\Movie\MovieController;
 use App\Http\Controllers\Movie\MovieHistoryController;
-use App\Http\Controllers\Movie\ReportController;
 use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\Report\ReportController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\User\UserController;
@@ -75,6 +75,13 @@ Route::middleware(['decryptToken:sanctum'])->prefix('user')->group(function () {
     Route::get('notification', [NotificationController::class, 'list']);
 });
 
+Route::middleware(['decryptToken:sanctum'])->prefix('report')->group(function () {
+    # report comment
+    Route::post('/comment',  [ReportController::class, 'comment']);
+    # report movie
+    Route::post('/movie',  [ReportController::class, 'movie']);
+});
+
 Route::prefix("movies")->group(function () {
     Route::get("/", [MovieController::class, 'movies']);
     Route::get("latest", [MovieController::class, 'moviesLatest']);
@@ -98,8 +105,6 @@ Route::prefix("movies")->group(function () {
         Route::get("detail-user/{slug}", [MovieController::class, 'movieDetail']);
         # history watch
         Route::get("histories-account", [MovieHistoryController::class, 'listAccount']);
-        # report movie
-        Route::post("report", [ReportController::class, 'createReport']);
         # bookmark for user
         Route::prefix("bookmarks")->group(function () {
             Route::get("/", [BookmarkController::class, 'list']);
