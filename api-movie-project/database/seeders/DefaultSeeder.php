@@ -48,7 +48,7 @@ class DefaultSeeder extends Seeder
             $users->random(rand(10, 20))->each(function ($user) use ($movie) {
                 MovieReport::factory()->create([
                     "user_id" => $user->id,
-                    "movie_id" => $movie->id
+                    // "movie_id" => $movie->id
                 ]);
             });
         });
