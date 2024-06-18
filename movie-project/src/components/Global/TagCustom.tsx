@@ -7,8 +7,8 @@ export interface ITagCustomProps {
 
 export default function TagCustom(props: ITagCustomProps) {
   return (
-    <Box bg="var(--bg-navbar)" px={3} rounded="full">
-      <Text color="var(--text-main)">{props.text}</Text>
+    <Box bg="var(--bg-navbar)" px={2} rounded="full">
+      <Text color="var(--text-main)" fontSize="0.8rem">{props.text}</Text>
     </Box>
   );
 }

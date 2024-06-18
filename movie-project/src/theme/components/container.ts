@@ -10,14 +10,15 @@ const baseStyle = {
 const sizes = {
     sm: defineStyle({
         maxW: '45ch',
-        p: '4',
+        p: '2',
     }),
     md: defineStyle({
         maxW: '1500px',
+        p: '2',
     }),
     lg: defineStyle({
         maxW: '75ch',
-        p: '8',
+        p: '2',
         fontSize: 'xl',
     }),
 };

@@ -54,21 +54,20 @@ export const navbarList: Array<ISildeBar> = [
         ]
     },
     {
-        name: "Bình luận",
+        name: "Báo cáo",
         children: [
             {
-                name: "Danh sách",
-                link: "/admin/comments"
+                name: "Bình luận",
+                link: "/admin/rates"
+            },
+            {
+                name: "Phim",
+                link: "/admin/rates"
             },
         ]
     },
     {
-        name: "Đánh giá",
-        children: [
-            {
-                name: "Danh sách",
-                link: "/admin/rates"
-            },
-        ]
+        name: "Trở về client",
+        link: "/"
     },
 ];

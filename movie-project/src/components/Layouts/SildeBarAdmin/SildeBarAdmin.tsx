@@ -1,8 +1,25 @@
 "use client";
 
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, List, ListItem } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Flex,
+  List,
+  ListItem,
+} from "@chakra-ui/react";
 import Link from "next/link";
-import { FiBook, FiFilm, FiHome, FiMessageSquare, FiStar, FiUsers } from "react-icons/fi";
+import {
+  FiArrowLeft,
+  FiBook,
+  FiFilm,
+  FiFlag,
+  FiHome,
+  FiUsers,
+} from "react-icons/fi";
 import { navbarList } from "@/libs/const";
 
 const icons: { [key: string]: React.ReactElement } = {
@@ -10,8 +27,8 @@ const icons: { [key: string]: React.ReactElement } = {
   "Người dùng": <FiUsers />,
   "Thể loại": <FiBook />,
   "Quản lý phim": <FiFilm />,
-  "Bình luận": <FiMessageSquare />,
-  "Đánh giá": <FiStar />,
+  "Báo cáo": <FiFlag />,
+  "Trở về client": <FiArrowLeft />,
 };
 
 export default function SildeBarAdmin() {
@@ -38,23 +55,25 @@ export default function SildeBarAdmin() {
                     <AccordionIcon />
                   </AccordionButton>
                 ) : (
-                  <Flex
-                    p="1rem"
-                    alignItems="center"
-                    _hover={{ bg: "gray.100" }}
-                  >
-                    {icons[sildeItem.name]}
-                    <Box
-                      as="span"
-                      flex="1"
-                      textAlign="left"
-                      pl="10px"
-                      fontWeight={"500"}
-                      fontSize="15px"
+                  <Link href={sildeItem.link ?? ""}>
+                    <Flex
+                      p="1rem"
+                      alignItems="center"
+                      _hover={{ bg: "gray.100" }}
                     >
-                      {sildeItem.name}
-                    </Box>
-                  </Flex>
+                      {icons[sildeItem.name]}
+                      <Box
+                        as="span"
+                        flex="1"
+                        textAlign="left"
+                        pl="10px"
+                        fontWeight={"500"}
+                        fontSize="15px"
+                      >
+                        {sildeItem.name}
+                      </Box>
+                    </Flex>
+                  </Link>
                 )}
               </h2>
               <AccordionPanel p={0}>
