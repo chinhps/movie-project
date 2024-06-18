@@ -118,7 +118,7 @@ export default function Cinema({
         </CheckboxGroup>
       </ModalReport>
       <Box>
-        <AspectRatio rounded={10} overflow="hidden" ratio={16 / 9} bg="black">
+        <AspectRatio rounded={5} overflow="hidden" ratio={16 / 9} bg="black">
           <iframe
             src={sourceActive?.source_link}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -130,7 +130,7 @@ export default function Cinema({
           <Heading
             as="h1"
             textTransform="uppercase"
-            fontSize="1.5rem"
+            fontSize={{ base: "1rem", md: "1.5rem" }}
             lineHeight="2.8rem"
             fontWeight={700}
           >

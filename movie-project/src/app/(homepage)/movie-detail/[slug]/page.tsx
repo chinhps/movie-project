@@ -37,13 +37,13 @@ export default async function MovieDetailPage({
   return (
     <Stack gap={3}>
       <Grid
-        templateColumns="repeat(4,1fr)"
+        templateColumns="repeat(5,1fr)"
         gap={5}
         bg="white"
         rounded={5}
         p={5}
       >
-        <GridItem colSpan={{ base: 4, md: 1 }}>
+        <GridItem colSpan={{ base: 5, md: 1 }}>
           <Box rounded="md" overflow="hidden">
             <Image
               src={movieDetail.data.movie_image}
@@ -75,7 +75,7 @@ export default async function MovieDetailPage({
           as={Flex}
           flexDirection="column"
           gap={3}
-          colSpan={{ base: 4, md: 3 }}
+          colSpan={{ base: 5, md: 4 }}
         >
           <Heading as="h1" fontSize="30px">
             {movieDetail.data.movie_name}
