@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'level' => rand(1, 500),
             'login_type' => "account",
             'provider_id' => fake()->unique()->numberBetween(1000000000, 9999999999),
-
+            'block' => rand(0, 1)
         ];
     }
 
