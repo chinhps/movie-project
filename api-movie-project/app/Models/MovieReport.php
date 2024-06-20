@@ -19,6 +19,11 @@ class MovieReport extends Model
         return $this->belongsTo(User::class, "user_id");
     }
 
+    public function reportable(): MorphTo
+    {
+        return $this->morphTo("reportable");
+    }
+
     public function movie(): MorphOne
     {
         return $this->morphOne(Movie::class, "reportable");

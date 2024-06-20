@@ -8,6 +8,7 @@ export default function ActionList({
   onClickExits,
   actions,
   isLoading,
+  handleCustom,
   icon,
 }: {
   linkUpdate?: string;
@@ -15,6 +16,7 @@ export default function ActionList({
   actions?: Array<"EDIT" | "DELETE" | "CUSTOM">;
   isLoading?: boolean;
   icon?: React.ReactElement;
+  handleCustom?: () => void;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -63,10 +65,10 @@ export default function ActionList({
             return (
               <IconButton
                 key={action}
-                aria-label="refund"
+                aria-label="custom"
                 colorScheme="pink"
                 variant="outline"
-                onClick={onOpen}
+                onClick={handleCustom}
                 icon={icon}
               />
             );

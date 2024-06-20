@@ -19,6 +19,13 @@ class UserRepository implements UserInterface
             ->exists();
     }
 
+    public function blockUser(User $user, bool $block)
+    {
+        $user->block = $block ? 1 : 0;
+        $user->save();
+        return $user;
+    }
+
     public function updateOrInsert(float|null $id, array $params)
     {
         $user = new User();

@@ -26,6 +26,13 @@ class CommentRepository implements CommentInterface
         })->with('user')->orderBy('id','desc')->paginate($limit);
     }
 
+    public function statusComment(Comment $comment, string $status)
+    {
+        $comment->status = $status;
+        $comment->save();
+        return $comment;
+    }
+
     public function updateOrInsert(float|null $id, array $params, User $user, Movie $movie)
     {
         $comment = new Comment();

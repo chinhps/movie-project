@@ -28,7 +28,8 @@ class User extends Authenticatable
         'level',
         'login_type',
         'provider_id',
-        'role'
+        'role',
+        'block'
     ];
 
     /**

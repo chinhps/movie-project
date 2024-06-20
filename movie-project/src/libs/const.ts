@@ -58,11 +58,11 @@ export const navbarList: Array<ISildeBar> = [
         children: [
             {
                 name: "Bình luận",
-                link: "/admin/rates"
+                link: "/admin/reports/comments"
             },
             {
                 name: "Phim",
-                link: "/admin/rates"
+                link: "/admin/reports/movies"
             },
         ]
     },

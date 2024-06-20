@@ -17,6 +17,18 @@ class BaseResource extends JsonResource
             }
         });
     }
+
+    public function userCustom($user)
+    {
+        return [
+            "id" => $user->id,
+            "name" => $user->name,
+            "email" => $user->email,
+            "username" => $user->username,
+            "level" => $user->level,
+            "provider_id" => $user->provider_id,
+        ];
+    }
 }
 
 class CustomResourceCollection extends AnonymousResourceCollection

@@ -8,6 +8,10 @@ use App\Models\User;
 
 interface ReportInterface
 {
+    public function detail(float $id);
+    public function commentList(float $limit = 15);
+    public function movieList(float $limit = 15);
+    public function updateStatus(float $id, string $status);
     public function updateOrInsert(
         float|null $id,
         array $params,

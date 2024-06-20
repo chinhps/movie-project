@@ -13,3 +13,12 @@ export interface IUserAdmin {
     role: "USER" | "ADMIN",
     comments_count: number
 }
+
+export interface IUserAdminCustom {
+    id: number,
+    name: string,
+    email: string,
+    username: string,
+    level: number,
+    provider_id: string
+}

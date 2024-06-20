@@ -50,6 +50,11 @@ Route::middleware(['decryptToken:sanctum'])
             Route::get('/{idMovie}', [EpisodeController::class, 'episodeDetailAdmin']);
             Route::post('upsert', [EpisodeController::class, 'episodeUpsertAdmin']);
         });
+        Route::prefix('reports')->group(function () {
+            Route::get('comments', [ReportController::class, 'commentList']);
+            Route::get('movies', [ReportController::class, 'movieList']);
+            Route::post('report-action', [ReportController::class, 'reportActionAdmin']);
+        });
 
         Route::get('users', [UserController::class, 'userListAdmin']);
     });
