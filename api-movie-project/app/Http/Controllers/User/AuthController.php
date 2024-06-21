@@ -62,6 +62,7 @@ class AuthController extends Controller
                 "status" => "inactive",
                 "level" => 1,
                 "email" => $validated['email'] ?? null,
+                "block" => 0
             ]);
 
             DB::commit();
