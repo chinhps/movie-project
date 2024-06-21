@@ -13,11 +13,11 @@ export function StatsCard(props: StatsCardProps) {
       py={"5"}
       border={"1px solid"}
       bg="var(--bg-white)"
-      borderColor="gray.300"
+      borderColor="gray.200"
       rounded={"lg"}
     >
-      <Flex justifyContent={"space-between"}>
-        <Box pl={{ base: 2, md: 4 }}>
+      <Flex justifyContent={"space-between"} px={{ base: 2, md: 4 }}>
+        <Box>
           <StatLabel fontWeight={"medium"} isTruncated>
             {title}
           </StatLabel>

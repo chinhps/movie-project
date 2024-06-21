@@ -8,10 +8,10 @@ export const navbarList: Array<ISildeBar> = [
                 name: "Trang chủ",
                 link: "/admin"
             },
-            {
-                name: "Thống kê",
-                link: "/admin/statisticals"
-            },
+            // {
+            //     name: "Thống kê",
+            //     link: "/admin/statisticals"
+            // },
         ]
     },
     {
