@@ -58,7 +58,7 @@ export function CommentItem({ name, level, message, createdAt, onClick }: IComme
   return (
     <HStack spacing={2} mt={1} width="100%" alignItems="start">
       <Box rounded="full" overflow="hidden">
-        <Image src="/images/avatar.png" alt="avatar" width={60} height={60} />
+        <Image src="/images/avatar.png" alt="avatar" width={50} height={50} />
       </Box>
       <VStack align="normal" gap={0} width="100%">
         <Box bg="white" width="fit-content" p="1rem" rounded="xl">

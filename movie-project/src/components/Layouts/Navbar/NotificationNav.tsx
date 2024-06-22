@@ -39,7 +39,11 @@ export default function NotificationNav({ token }: INotificationNavProps) {
   return (
     <Popover>
       <PopoverTrigger>
-        <IconButton aria-label="Notification" icon={<FiBell />} />
+        <IconButton
+          variant="transparentButton"
+          aria-label="Notification"
+          icon={<FiBell />}
+        />
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />

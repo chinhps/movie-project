@@ -66,6 +66,7 @@ export default function BookmarkButton({
       ) : (
         <IconButton
           onClick={handleBookmark}
+          variant="cinemaButton"
           aria-label="bookmark"
           icon={
             isBookmark ? (

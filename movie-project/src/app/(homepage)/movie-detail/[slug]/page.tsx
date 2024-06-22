@@ -4,7 +4,6 @@ import TagCustom from "@/components/Global/TagCustom";
 import {
   Box,
   Button,
-  Divider,
   Flex,
   Grid,
   GridItem,
@@ -145,7 +144,6 @@ export default async function MovieDetailPage({
         </Heading>
         <Text>{movieDetail.data.description}</Text>
       </VStack>
-      <Divider mt={2} color="gray.100" />
       <Comments slug={movieDetail.data.slug} />
     </Stack>
   );

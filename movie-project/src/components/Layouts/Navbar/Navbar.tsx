@@ -43,7 +43,6 @@ export default async function Navbar() {
           display={{ base: "none", lg: "block" }}
           bg="var(--bg-navbar)"
           backdropFilter="saturate(180%) blur(5px)"
-          py={3}
           boxShadow="base"
         >
           <Container size="md">
@@ -96,19 +95,25 @@ export default async function Navbar() {
                 <NotificationNav token={session?.user.token} />
                 <Link href="/watch-history">
                   <IconButton
+                    variant="transparentButton"
                     aria-label="history watch"
                     icon={<FiRotateCw />}
                   />
                 </Link>
                 <Link href="/bookmarks">
                   <IconButton
+                    variant="transparentButton"
                     aria-label="bookmark movie"
                     icon={<FiBookmark />}
                   />
                 </Link>
                 {session ? (
                   <Menu>
-                    <MenuButton as={Button} rightIcon={<FiChevronDown />}>
+                    <MenuButton
+                      as={Button}
+                      variant="transparentButton"
+                      rightIcon={<FiChevronDown />}
+                    >
                       {session.user.name} | Lv. {session.user.level}
                     </MenuButton>
                     <MenuList>

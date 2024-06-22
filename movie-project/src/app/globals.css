@@ -11,15 +11,17 @@
   --text-black: #111111;
   --text-gray: #3b3b3b;
   --text-btn: var(--bg-section);
-  --bg-navbar: #14213df1;
-  --bg-main-second: #14213d;
-  --bg-section: #fca311;
+  --bg-navbar: #20242c;
+  --bg-main-second: #20242c;
+  --bg-section: #f7ac33;
   --bg-header: #ef233c;
   --bg-main: #edf2f4;
   --bg-footer: #111111;
   --bg-white: #ffffff;
-  --bg-gray: #757474;
+  --bg-gray: #696969;
   --bg-tag: #3182ce;
+
+  --bg-transparent: #00000000;
   
   /* Movie */
   --gradient-movie: linear-gradient(#11111100, #111111c1);

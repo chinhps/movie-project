@@ -11,7 +11,7 @@ export default function Banner() {
   const settings: Settings = {
     dots: false,
     autoplay: true,
-    arrows: false
+    arrows: false,
   };
   return (
     <Box className="image-slider-container" boxShadow="md">
@@ -27,11 +27,11 @@ export default function Banner() {
 
 export function BannerItem() {
   return (
-    <Box position="relative" maxH="350px">
+    <Box position="relative" h={{ base: "200px", md: "350px" }}>
       <Image
+        objectFit="cover"
         src="/images/banner.png"
-        width={1500}
-        height={300}
+        fill
         alt="banner for anime"
       />
       <VStack

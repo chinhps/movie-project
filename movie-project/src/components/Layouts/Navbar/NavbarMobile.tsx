@@ -32,7 +32,6 @@ export default function NavbarMobile() {
   return (
     <>
       <Box
-        py={3}
         display={{ base: "block", lg: "none" }}
         bg="var(--bg-navbar)"
         backdropFilter="saturate(180%) blur(5px)"

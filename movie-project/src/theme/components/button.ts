@@ -14,7 +14,7 @@ const episode = defineStyle({
     _active: {
         border: "solid 1px red !important",
     }
-})
+});
 
 const customIconButton = defineStyle({
     background: 'var(--bg-section)',
@@ -23,7 +23,7 @@ const customIconButton = defineStyle({
         background: 'var(--bg-main)',
         color: 'var(--bg-navbar)',
     }
-})
+});
 
 const mainButton = defineStyle({
     background: 'var(--bg-section)',
@@ -32,7 +32,7 @@ const mainButton = defineStyle({
         background: 'var(--bg-main)',
         color: 'var(--bg-navbar)',
     }
-})
+});
 
 const secondButton = defineStyle({
     background: 'var(--bg-navbar)',
@@ -41,11 +41,47 @@ const secondButton = defineStyle({
         background: 'var(--bg-main)',
         color: 'var(--bg-navbar)',
     }
-})
+});
+
+const transparentButton = defineStyle({
+    background: 'var(--bg-transparent)',
+    color: 'var(--text-main)',
+    border: "solid 1px var(--bg-gray)",
+    rounded: "full",
+    _hover: {
+        background: 'var(--bg-main)',
+        color: 'var(--bg-navbar)',
+    }
+});
+
+const transparentCinemaButton = defineStyle({
+    background: 'var(--bg-transparent)',
+    color: 'var(--text-black)',
+    border: "solid 1px var(--bg-gray)",
+    rounded: "full",
+    _hover: {
+        background: 'var(--bg-main)',
+        color: 'var(--bg-navbar)',
+    }
+});
+
+const cinemaButton = defineStyle({
+    background: 'var(--bg-section)',
+    color: 'var(--text-main)',
+    rounded: "full",
+    _hover: {
+        background: 'var(--bg-white)',
+        color: 'var(--bg-navbar)',
+    }
+});
 
 export const buttonTheme = defineStyleConfig({
     defaultProps: {
-        variant: "customIconButton"
+        // variant: "customIconButton"
     },
-    variants: { customIconButton, mainButton, secondButton, episode }
+    variants: {
+        customIconButton, mainButton, secondButton,
+        episode, transparentButton, cinemaButton,
+        transparentCinemaButton
+    }
 })

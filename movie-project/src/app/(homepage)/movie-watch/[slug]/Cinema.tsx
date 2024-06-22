@@ -151,7 +151,7 @@ export default function Cinema({
             {movieSource.map((source) => (
               <Button
                 key={source.source_link}
-                variant={sourceActive == source ? "mainButton" : "secondButton"}
+                variant={sourceActive == source ? "cinemaButton" : "transparentCinemaButton"}
                 onClick={() => setSourceActive(source)}
               >
                 {source.server_name}
@@ -163,10 +163,15 @@ export default function Cinema({
             <BookmarkButton slug={movieSlug} />
             <IconButton
               icon={<FiFlag />}
+              variant="cinemaButton"
               aria-label="report video"
               onClick={() => onOpenData(movieSlug)}
             />
-            <Button rightIcon={<FiChevronsRight />} onClick={handleNextMovie}>
+            <Button
+              rightIcon={<FiChevronsRight />}
+              variant="cinemaButton"
+              onClick={handleNextMovie}
+            >
               Tiếp theo
             </Button>
           </HStack>
