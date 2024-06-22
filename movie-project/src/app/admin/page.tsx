@@ -4,6 +4,7 @@ import statisticalApi from "@/apis/admin/adminStatistical";
 import CardCollection from "@/components/Global/Card/CardCollection";
 import Chart from "@/components/Global/Chart";
 import { StatsCard } from "@/components/Global/Statistical";
+import { numberFormat } from "@/libs/function";
 import { SimpleGrid, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -27,17 +28,17 @@ export default function AdminPage() {
       <SimpleGrid columns={{ base: 1, md: 4 }} spacing="3" mb={3}>
         <StatsCard
           title={"Người dùng"}
-          stat={"5,000"}
+          stat={numberFormat(chartsQuery.data?.data.user_counts ?? 0, false)}
           icon={<BsPerson size="2em" />}
         />
         <StatsCard
           title={"Bình luận hôm nay"}
-          stat={"1,000"}
+          stat={numberFormat(chartsQuery.data?.data.comment_in_day ?? 0, false)}
           icon={<FiMessageSquare size="2em" />}
         />
         <StatsCard
           title={"Tổng phim"}
-          stat={"7"}
+          stat={numberFormat(chartsQuery.data?.data.movie_counts ?? 0, false)}
           icon={<FiFilm size="2em" />}
         />
         <StatsCard
@@ -50,7 +51,7 @@ export default function AdminPage() {
         <CardCollection title="Biểu đồ người dùng mới" fontSize="0.8rem">
           <Chart
             name="Người"
-            data={[5, 6, 7, 8, 9, 10, 11, 12]}
+            data={chartsQuery.data?.data.user_in_week ?? []}
             labels={new Array(7)
               .fill(0)
               .map((_, index) => (index === 6 ? "CN" : `Thứ ${index + 2}`))}
@@ -59,7 +60,7 @@ export default function AdminPage() {
         <CardCollection title="Biểu đồ lượt bình luận" fontSize="0.8rem">
           <Chart
             name="Bình luận"
-            data={[5, 6, 7, 8, 9, 10, 11, 12]}
+            data={chartsQuery.data?.data.comment_in_week ?? []}
             labels={new Array(7)
               .fill(0)
               .map((_, index) => (index === 6 ? "CN" : `Thứ ${index + 2}`))}
@@ -67,20 +68,20 @@ export default function AdminPage() {
         </CardCollection>
         <CardCollection title="Biểu đồ lượt báo cáo" fontSize="0.8rem">
           <Chart
-            name="Bình luận"
-            data={[5, 6, 7, 8, 9, 10, 11, 12]}
+            name="Báo cáo"
+            data={chartsQuery.data?.data.report_in_week ?? []}
             labels={new Array(7)
               .fill(0)
               .map((_, index) => (index === 6 ? "CN" : `Thứ ${index + 2}`))}
           />
         </CardCollection>
         <CardCollection
-          title="Tỷ lệ người dùng quay lại sử dụng"
+          title="Tỷ lệ người dùng quay lại sử dụng (Comming soon)"
           fontSize="0.8rem"
         >
           <Chart
-            name="Bình luận"
-            data={[5, 6, 7, 8, 9, 10, 11, 12]}
+            name="Người dùng"
+            data={[0]}
             labels={new Array(7)
               .fill(0)
               .map((_, index) => (index === 6 ? "CN" : `Thứ ${index + 2}`))}

@@ -5,7 +5,7 @@ import { IStatisticalCharts } from "@/types/response/statistical.type";
 const statisticalApi = {
 
     charts: async ({ token }: { token: string }) => {
-        const url = "/admin/reports/movies";
+        const url = "/admin/statisticals";
         const res: IBaseResponseDetail<IStatisticalCharts> = await fetchC.get(url, {
             cache: "no-store",
             headers: {

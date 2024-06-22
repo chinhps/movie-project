@@ -10,6 +10,7 @@ use App\Http\Controllers\Movie\MovieController;
 use App\Http\Controllers\Movie\MovieHistoryController;
 use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\Report\ReportController;
+use App\Http\Controllers\Statistical\StatisticalController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\User\UserController;
@@ -55,7 +56,7 @@ Route::middleware(['decryptToken:sanctum'])
             Route::get('movies', [ReportController::class, 'movieList']);
             Route::post('report-action', [ReportController::class, 'reportActionAdmin']);
         });
-
+        Route::get('statisticals', [StatisticalController::class, 'list']);
         Route::get('users', [UserController::class, 'userListAdmin']);
     });
 
