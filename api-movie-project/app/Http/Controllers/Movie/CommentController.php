@@ -34,9 +34,16 @@ class CommentController extends Controller
 
         $this->commentRepository->updateOrInsert(null, [
             "message" => $validated['message'],
-            "status" => "on"
+            "status" => "on",
+            "parent_id" => $validated['parentId']
         ], $user, $movie);
 
         return BaseResponse::msg("Thêm bình luận thành công!");
+    }
+
+    public function replies($idComment)
+    {
+        $data = $this->commentRepository->replies($idComment, limit: 15);
+        return CommentResource::collection($data);
     }
 }

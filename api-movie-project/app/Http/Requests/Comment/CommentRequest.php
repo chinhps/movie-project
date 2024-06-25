@@ -23,7 +23,8 @@ class CommentRequest extends BaseRequest
     {
         return [
             "message" => "required|max:450",
-            "slug" => "required|exists:movies,slug"
+            "slug" => "required|exists:movies,slug",
+            "parentId" => "nullable|exists:comments,id"
         ];
     }
 
@@ -32,6 +33,7 @@ class CommentRequest extends BaseRequest
         return [
             "message.required" => 'Bạn cần phải nhập bình luận gì đó',
             "message.min" => 'Bạn bình luận hơi dài quá rồi :(',
+            "parentId.exists" => "Bình luận bạn đang trả lời không còn tồn tại!",
             "slug.*" => "Lỗi liên quan đến slug"
         ];
     }

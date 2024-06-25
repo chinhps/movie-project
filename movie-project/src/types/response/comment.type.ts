@@ -5,5 +5,6 @@ export interface ICommentResponse {
         name: string,
         level: number
     },
-    created_at: string
+    created_at: string,
+    replies_count: number
 }

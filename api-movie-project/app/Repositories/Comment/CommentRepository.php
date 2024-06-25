@@ -23,7 +23,13 @@ class CommentRepository implements CommentInterface
     {
         return $this->model->whereHas('movie', function ($query) use ($slug) {
             $query->where('slug', $slug);
-        })->with('user')->orderBy('id','desc')->paginate($limit);
+        })->with(['user'])->withCount('replies')->whereNull("parent_id")->orderBy('id', 'desc')->paginate($limit);
+    }
+
+    public function replies(float $idComment, float $limit = 15)
+    {
+        $data = $this->model->with('replies')->findOrFail($idComment);
+        return $data->replies()->paginate();
     }
 
     public function statusComment(Comment $comment, string $status)

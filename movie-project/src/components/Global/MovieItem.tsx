@@ -58,7 +58,12 @@ export default function MovieItem({ movie }: { movie: IMovieResponse }) {
 
 export function MovieItemV3({ movie }: { movie: IMovieResponse }) {
   return (
-    <Box rounded="xl" position="relative" height={{base: "250px", md:"320px"}} overflow="hidden">
+    <Box
+      rounded="xl"
+      position="relative"
+      height={{ base: "250px", md: "320px" }}
+      overflow="hidden"
+    >
       <Box position="absolute" right={3} top={0}>
         <MovieBookmarkItem slug={movie.slug} />
       </Box>
@@ -137,12 +142,13 @@ export function MovieItemV2({
             top: 0,
             left: 0,
             backgroundImage: `url(${movie.movie_image})`,
-            filter: "blur(3px)",
+            filter: "blur(2px)",
             zIndex: -1,
+            borderRadius: "0.5rem"
           }}
           _groupHover={{
             _after: {
-              filter: "blur(10px)",
+              filter: "blur(5px)",
             },
           }}
         >
@@ -150,8 +156,14 @@ export function MovieItemV2({
             <MovieBookmarkItem slug={movie.slug} />
           </Box>
           <Link href={"/movie-detail/" + movie.slug}>
-            <Box height={{base: "190px", md:"280px"}}>
-              <Image fill={true} src={movie.movie_image} alt="#" loading="lazy" />
+            <Box height={{ base: "210px", md: "300px" }}>
+              <Image
+                style={{ borderRadius: "0.5rem" }}
+                fill={true}
+                src={movie.movie_image}
+                alt="#"
+                loading="lazy"
+              />
             </Box>
           </Link>
         </Box>

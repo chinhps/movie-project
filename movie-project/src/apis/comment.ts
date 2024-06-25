@@ -13,14 +13,24 @@ const commentApi = {
         });
         return res;
     },
-    createComment: async ({ movieSlug, token, message }: { movieSlug: string, token: string, message: string }) => {
+    createComment: async ({ params, token }: { params: object, token: string }) => {
         const url = "/comments/movie";
-        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, { message: message, slug: movieSlug }, {
+        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, { ...params }, {
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
                 "content-type": "application/json",
                 "Authorization": "Bearer " + token
             },
+        });
+        return res;
+    },
+    replies: async ({ idComment, page }: { idComment: number, page: number }) => {
+        const url = "/comments/replies/" + idComment;
+        const res: IBaseResponse<ICommentResponse> = await fetchC.get(url, {
+            cache: "no-store",
+            params: {
+                page: page.toString()
+            }
         });
         return res;
     },

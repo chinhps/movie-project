@@ -121,6 +121,7 @@ Route::prefix("movies")->group(function () {
 });
 
 Route::prefix("comments")->group(function () {
+    Route::get("replies/{idComment}", [CommentController::class, 'replies']);
     Route::get("movie/{slug}", [CommentController::class, 'commentMovie']);
     Route::middleware(['decryptToken:sanctum'])->group(function () {
         Route::post("movie", [CommentController::class, 'addCommentMovie']);

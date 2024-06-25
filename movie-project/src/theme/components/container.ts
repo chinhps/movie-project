@@ -13,7 +13,7 @@ const sizes = {
         p: '2',
     }),
     md: defineStyle({
-        maxW: '1500px',
+        maxW: '1400px',
         p: '2',
     }),
     lg: defineStyle({

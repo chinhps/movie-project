@@ -21,6 +21,7 @@ class CommentResource extends BaseResource
                 "name" => $this->user->name,
                 "level" => $this->user->level,
             ],
+            "replies_count" => $this->replies_count,
             "created_at" => $this->created_at
         ];
     }

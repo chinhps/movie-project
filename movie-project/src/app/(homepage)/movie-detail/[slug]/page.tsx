@@ -138,8 +138,8 @@ export default async function MovieDetailPage({
           </VStack>
         </GridItem>
       </Grid>
-      <VStack spacing={3} align="start" bg="white" rounded={5} p={5}>
-        <Heading as="h2" fontSize="23px">
+      <VStack spacing={3} align="start" bg="var(--bg-white)" rounded={5} p={5}>
+        <Heading as="h2" fontSize="18px">
           Thông tin phim
         </Heading>
         <Text>{movieDetail.data.description}</Text>
