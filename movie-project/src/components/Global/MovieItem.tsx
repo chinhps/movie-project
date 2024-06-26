@@ -156,7 +156,7 @@ export function MovieItemV2({
             <MovieBookmarkItem slug={movie.slug} />
           </Box>
           <Link href={"/movie-detail/" + movie.slug}>
-            <Box height={{ base: "210px", md: "300px" }}>
+            <Box height={{ base: "190px", md: "300px" }}>
               <Image
                 style={{ borderRadius: "0.5rem" }}
                 fill={true}
