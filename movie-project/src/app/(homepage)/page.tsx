@@ -9,7 +9,7 @@ export default async function Home() {
   const moviesLatest = await moviesApi.latest({});
   const moviesRanking = await moviesApi.rankings();
 
-  // const moviesList = await moviesApi.list({ page: 1, params: {}});
+  // const moviesList = await moviesApi.list({ page: 1, params: {} });
 
   return (
     <>
@@ -40,7 +40,7 @@ export default async function Home() {
       </Header>
       <HomeLayout>
         {moviesList.data.map((movie, index) => (
-          <MovieItem key={movie.id} movie={movie} />
+          <MovieItemV3 key={movie.id} movie={movie} />
         ))}
       </HomeLayout> */}
     </>

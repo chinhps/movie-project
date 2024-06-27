@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IBaseResponse } from "@/types/base.type";
 import { IMovieResponse } from "@/types/response/movies.type";
-import { Box, HStack, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Heading, Skeleton, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import { FiChevronRight, FiFilm, FiStar } from "react-icons/fi";
 import Link from "next/link";
@@ -31,6 +31,14 @@ export default function SlickNext({
     </Box>
   );
 }
+
+export const SlickNextSkeleton = () => {
+  return (
+    <>
+      <Skeleton w="100%" h={{ base: "200px", md: "350px" }} />
+    </>
+  );
+};
 
 export function BannerItem(data: IMovieResponse) {
   return (
