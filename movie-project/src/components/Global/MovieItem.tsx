@@ -23,7 +23,12 @@ export default function MovieItem({ movie }: { movie: IMovieResponse }) {
         </Box>
         <Link href={"/movie-detail/" + movie.slug}>
           <Box userSelect="none">
-            <Image src={movie.movie_image} alt="movie item" fill={true} />
+            <Image
+              style={{ objectFit: "cover" }}
+              src={movie.movie_image}
+              alt={movie.movie_name}
+              fill={true}
+            />
           </Box>
           <Box
             bg="var(--gradient-movie)"
@@ -70,6 +75,7 @@ export function MovieItemV3({ movie }: { movie: IMovieResponse }) {
       <Link href={"/movie-detail/" + movie.slug}>
         <Box userSelect="none" boxShadow="md">
           <Image
+            style={{ objectFit: "cover" }}
             src={movie.movie_image}
             alt="movie item"
             fill={true}
@@ -144,7 +150,7 @@ export function MovieItemV2({
             backgroundImage: `url(${movie.movie_image})`,
             filter: "blur(2px)",
             zIndex: -1,
-            borderRadius: "0.5rem"
+            borderRadius: "0.5rem",
           }}
           _groupHover={{
             _after: {
@@ -158,7 +164,7 @@ export function MovieItemV2({
           <Link href={"/movie-detail/" + movie.slug}>
             <Box height={{ base: "190px", md: "300px" }}>
               <Image
-                style={{ borderRadius: "0.5rem" }}
+                style={{ borderRadius: "0.5rem", objectFit: "cover" }}
                 fill={true}
                 src={movie.movie_image}
                 alt="#"
