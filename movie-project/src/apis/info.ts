@@ -2,7 +2,7 @@ import fetchC from "@/libs/fetchC";
 import { IBaseResponse } from "@/types/base.type";
 import { IMovieResponse } from "@/types/response/movies.type";
 
-const inforApi = {
+const infoApi = {
     banners: async () => {
         const url = "/informations/banners";
         const res: IBaseResponse<IMovieResponse> = await fetchC.get(url);
@@ -10,4 +10,4 @@ const inforApi = {
     },
 }
 
-export default inforApi;
+export default infoApi;
