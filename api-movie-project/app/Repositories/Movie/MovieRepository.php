@@ -12,6 +12,16 @@ class MovieRepository implements MovieInterface
     ) {
     }
 
+    public function autoBannerMovie()
+    {
+        $query = $this->model
+            ->with('movieEpisodeLaster')
+            ->withAvg("movieRate", "rate")
+            ->whereNotNull("banner_image")
+            ->orderBy("id", "desc");
+        return $query->limit(5)->get();
+    }
+
     public function list(array $filter = [], float $limit = 15)
     {
         $query = $this->model

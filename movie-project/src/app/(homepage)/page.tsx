@@ -1,19 +1,14 @@
-import bookmarkApi from "@/apis/bookmark";
 import moviesApi from "@/apis/movie";
-import { auth } from "@/auth";
 import Banner from "@/components/Global/Banner";
 import Header from "@/components/Global/Header";
-import MovieItem, {
-  MovieItemV2,
-  MovieItemV3,
-} from "@/components/Global/MovieItem";
+import { MovieItemV2, MovieItemV3 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import Link from "next/link";
-// import Bookmarks from "./Bookmarks";
 
 export default async function Home() {
   const moviesLatest = await moviesApi.latest({});
   const moviesRanking = await moviesApi.rankings();
+
   // const moviesList = await moviesApi.list({ page: 1, params: {}});
 
   return (

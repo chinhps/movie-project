@@ -1,69 +1,15 @@
-"use client";
+import inforApi from "@/apis/infor";
+import dynamic from "next/dynamic";
+const SlickNext = dynamic(() => import("./SlickNext/SlickNext"), {
+  ssr: false,
+});
 
-import Slider, { Settings } from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Image from "next/image";
-import { Box, HStack, Heading, Text, VStack } from "@chakra-ui/react";
-import { FiChevronRight, FiFilm, FiStar } from "react-icons/fi";
+export default async function Banner() {
+  const banners = await inforApi.banners();
 
-export default function Banner() {
-  const settings: Settings = {
-    dots: false,
-    autoplay: true,
-    arrows: false,
-  };
   return (
-    <Box className="image-slider-container" boxShadow="md">
-      <Slider {...settings}>
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
-      </Slider>
-    </Box>
-  );
-}
-
-export function BannerItem() {
-  return (
-    <Box position="relative" h={{ base: "200px", md: "350px" }}>
-      <Image
-        objectFit="cover"
-        src="/images/banner.png"
-        fill
-        alt="banner for anime"
-      />
-      <VStack
-        align="stretch"
-        position="absolute"
-        p={5}
-        bottom={0}
-        left={0}
-        bg="var(--banner-description)"
-        color="var(--text-main)"
-      >
-        <Heading as="h1" fontSize="1rem">
-          Kimetsu no Yaiba Hashira Training Arc, Thanh Gươm Diệt Quỷ Phần 4: Đặc
-          biệt
-        </Heading>
-        <HStack justifyContent="space-between">
-          <HStack spacing="3rem">
-            <HStack>
-              <FiFilm />
-              <Text>20/25</Text>
-            </HStack>
-            <HStack>
-              <FiStar />
-              <Text>4.5</Text>
-            </HStack>
-          </HStack>
-          <HStack fontSize="15px">
-            <Text>Xem thêm</Text>
-            <FiChevronRight />
-          </HStack>
-        </HStack>
-      </VStack>
-    </Box>
+    <>
+      <SlickNext data={banners} />
+    </>
   );
 }
