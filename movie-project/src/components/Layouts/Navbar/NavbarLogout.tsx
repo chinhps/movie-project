@@ -18,7 +18,7 @@ export default function NavbarLogout() {
 
   return (
     <>
-      <Link onClick={onSignOut}>Đăng xuất</Link>
+      <MenuItem onClick={onSignOut}>Đăng xuất</MenuItem>
     </>
   );
 }

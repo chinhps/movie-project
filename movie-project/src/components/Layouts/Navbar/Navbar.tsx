@@ -131,14 +131,16 @@ export default async function Navbar() {
                       <MenuItem as={Link} href="/bookmarks">
                         Phim của tôi
                       </MenuItem>
-                      <MenuItem>
-                        <NavbarLogout />
-                      </MenuItem>
+                      <NavbarLogout />
                     </MenuList>
                   </Menu>
                 ) : (
                   <Link href="/user-register">
-                    <IconButton aria-label="login" icon={<FiLogIn />} />
+                    <IconButton
+                      variant="transparentButton"
+                      aria-label="login"
+                      icon={<FiLogIn />}
+                    />
                   </Link>
                 )}
               </HStack>
