@@ -59,6 +59,12 @@ export default function InputComment({
       handleSuccess();
       setValue("message", "");
     },
+    onError: (data) => {
+      toast({
+        status: "error",
+        description: data.message,
+      });
+    },
   });
 
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
