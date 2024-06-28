@@ -1,6 +1,8 @@
 import fetchC from "@/libs/fetchC";
+import { objectToFormData } from "@/libs/function";
 import { IBaseResponseDetail, IResponseWithMessage } from "@/types/base.type";
-import { IUserChangePassword } from "@/types/user.type";
+import { IUserAuth } from "@/types/response/auth.type";
+import { IChangeInfo, IUserChangePassword } from "@/types/user.type";
 
 const userApi = {
     signOut: async (token: string) => {
@@ -13,11 +15,15 @@ const userApi = {
         });
         return res;
     },
-    info: async () => {
-        const url = "/api/auth/session";
-        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.post(url, {}, {
+    info: async (token: string) => {
+        const url = "/user/infor";
+        const res: IBaseResponseDetail<IUserAuth> = await fetchC.get(url, {
             cache: "no-store",
-            BaseURL: "http://localhost:3000"
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "content-type": "application/json",
+                "Authorization": "Bearer " + token
+            }
         });
         return res;
     },
@@ -36,7 +42,20 @@ const userApi = {
             }
         });
         return res;
-    }
+    },
+    changeInfo: async ({ params, token }: IChangeInfo) => {
+        const formData = new FormData();
+        objectToFormData(formData, params);
+        const url = "/user/change-info";
+        const res: IBaseResponseDetail<IResponseWithMessage> = await fetchC.postFormData(url, formData, {
+            cache: "no-store",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Authorization": "Bearer " + token
+            }
+        });
+        return res;
+    },
 }
 
 export { userApi }

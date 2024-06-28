@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import authApi from "./apis/auth";
 import { LoginSchema } from "./schemas";
 import { JWT } from "next-auth/jwt";
+import { userApi } from "./apis/user";
 class CustomAuthorizeError extends CredentialsSignin {
     code = "custom"
 }
@@ -26,7 +27,17 @@ export default {
         })
     ],
     callbacks: {
-        jwt: async ({ token, user }) => {
+        jwt: async ({ token, user, trigger }) => {
+            console.log(trigger);
+
+            if (trigger === "update" && token.token) {
+                const { data: newInfo } = await userApi.info(token.token);
+                if (typeof newInfo.name !== "undefined") {
+                    token.name = newInfo.name;
+                    token.avatar_url = newInfo.avatar_url;
+                }
+            }
+
             if (user) {
                 return {
                     ...token,
@@ -34,7 +45,8 @@ export default {
                     username: user.username,
                     providerId: user.providerId,
                     token: user.token,
-                    role: user.role
+                    role: user.role,
+                    avatar_url: user.avatar_url
                 }
             }
             return token;
@@ -48,7 +60,8 @@ export default {
                     providerId: token.providerId,
                     created_at: token.created_at,
                     token: token.token,
-                    role: token.role
+                    role: token.role,
+                    avatar_url: token.avatar_url
                 }
             }
             return session;

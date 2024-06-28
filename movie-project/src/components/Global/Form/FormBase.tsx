@@ -159,7 +159,7 @@ export default function FormBase({
               variant="outline"
               fontSize="sm"
               fontWeight="500"
-              // size="lg"
+              disabled={form.disable}
               {...register(form.name, {
                 value: form.default ?? null,
                 ...(form.validate ?? null),

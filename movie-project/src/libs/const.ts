@@ -71,3 +71,43 @@ export const navbarList: Array<ISildeBar> = [
         link: "/"
     },
 ];
+
+
+
+export const navbarListUser: Array<ISildeBar> = [
+    {
+        name: "Hồ sơ",
+        children: [
+            {
+                name: "Thông tin",
+                link: "/user",
+            },
+            {
+                name: "Cập nhật thông tin",
+                link: "/user/change-info",
+            },
+        ],
+    },
+    {
+        name: "Mật khẩu",
+        children: [
+            {
+                name: "Đổi mật khẩu",
+                link: "/user/change-password",
+            },
+        ],
+    },
+    {
+        name: "Nạp xu",
+        children: [
+            {
+                name: "Paypal/Visa",
+                link: "/user/recharge",
+            },
+            {
+                name: "Thẻ cào",
+                link: "/user/recharge",
+            },
+        ],
+    },
+];

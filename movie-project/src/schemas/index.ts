@@ -41,6 +41,11 @@ export const ChangePasswordSchema = z.object({
 export const CreateCategorySchema = z.object({
     name: z.string().min(1).max(5000),
     description: z.string()
+});
+
+export const ChangeInfoSchema = z.object({
+    name: z.string().min(1).max(200),
+    description: z.string().max(500).nullable().optional()
 })
 
 export const CreateMovieSchema = z.object({
@@ -53,4 +58,4 @@ export const CreateMovieSchema = z.object({
     description: z.string().min(1),
     banner_image: z.array(z.union([z.instanceof(File), z.string()])).nonempty(),
     movie_image: z.array(z.union([z.instanceof(File), z.string()])).nonempty(),
-})
+});

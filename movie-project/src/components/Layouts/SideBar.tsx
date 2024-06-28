@@ -1,3 +1,4 @@
+import { navbarListUser } from "@/libs/const";
 import {
   Accordion,
   AccordionButton,
@@ -10,51 +11,7 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import {
-  FiBarChart2,
-  FiHome,
-  FiLayers,
-  FiLock,
-  FiPhone,
-  FiRepeat,
-  FiServer,
-  FiStopCircle,
-  FiUsers,
-} from "react-icons/fi";
-
-const navbarList = [
-  {
-    name: "Hồ sơ",
-    children: [
-      {
-        name: "Thông tin",
-        link: "/user",
-      },
-    ],
-  },
-  {
-    name: "Mật khẩu",
-    children: [
-      {
-        name: "Đổi mật khẩu",
-        link: "/user/change-password",
-      },
-    ],
-  },
-  {
-    name: "Nạp xu",
-    children: [
-      {
-        name: "Paypal/Visa",
-        link: "/user/recharge",
-      },
-      {
-        name: "Thẻ cào",
-        link: "/user/recharge",
-      },
-    ],
-  },
-];
+import { FiLock, FiStopCircle, FiUsers } from "react-icons/fi";
 
 const icons: { [key: string]: React.ReactElement } = {
   "Hồ sơ": <FiUsers />,
@@ -65,7 +22,7 @@ const icons: { [key: string]: React.ReactElement } = {
 export default function SideBar() {
   return (
     <Accordion defaultIndex={[0, 1, 2]} allowMultiple>
-      {navbarList.map((sildeItem, index) => (
+      {navbarListUser.map((sildeItem, index) => (
         <AccordionItem border="none" key={index}>
           <h2>
             {(sildeItem.children?.length ?? 0) > 0 ? (
@@ -103,15 +60,7 @@ export default function SideBar() {
             <List>
               {sildeItem.children?.map((vl, index2) => (
                 <Link key={index2} href={vl.link}>
-                  <ListItem
-                    py="1rem"
-                    px="2.5rem"
-                    // fontWeight={
-                    //   location.pathname == vl.link ? "500" : "normal"
-                    // }
-                    // bg={location.pathname == vl.link ? "gray.100" : "none"}
-                    _hover={{ bg: "gray.100" }}
-                  >
+                  <ListItem py="1rem" px="2.5rem" _hover={{ bg: "gray.100" }}>
                     {vl.name}
                   </ListItem>
                 </Link>

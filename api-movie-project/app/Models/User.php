@@ -29,7 +29,8 @@ class User extends Authenticatable
         'login_type',
         'provider_id',
         'role',
-        'block'
+        'block',
+        'avatar_url'
     ];
 
     /**

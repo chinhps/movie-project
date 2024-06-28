@@ -1,6 +1,8 @@
 <?php
 
+use App\Jobs\UploadAvatarImgur;
 use App\Jobs\UploadFileAPI;
+use App\Models\User;
 
 if (!function_exists('uploadImageQueue')) {
     function uploadImageQueue($image)
@@ -14,6 +16,19 @@ if (!function_exists('uploadImageQueue')) {
             $image->getClientOriginalName()
         );
         return env('API_SERVER_IMAGE_STORAGE') . '/' . $name . '.' . $image->getClientOriginalExtension();
+    };
+}
+
+if (!function_exists('uploadAvatar')) {
+    function uploadAvatar($image, User $user)
+    {
+        # UPLOAD IMAGE QUEUE
+        $name = generateRandomFileName();
+        $path = $image->storeAs(
+            'avatars',
+            $name
+        );
+        UploadAvatarImgur::dispatch($path, $user, $name);
     };
 }
 

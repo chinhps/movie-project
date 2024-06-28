@@ -3,3 +3,8 @@ export interface IUserChangePassword {
     newPassowrd: string,
     token: string
 }
+
+export interface IChangeInfo {
+    params: object;
+    token: string;
+}

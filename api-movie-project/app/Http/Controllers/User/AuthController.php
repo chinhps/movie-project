@@ -33,6 +33,7 @@ class AuthController extends Controller
             "level" => $user->level,
             "role" => $user->role,
             "created_at" => $user->created_at,
+            "avatar_url" => $user->avatar_url
         ];
     }
 

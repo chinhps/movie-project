@@ -22,7 +22,7 @@ export default function UserLayout({
           colSpan={{ base: 12, md: 9 }}
           bg="var(--bg-auth-from)"
           rounded="md"
-          p={{ base: 0, md: "2rem" }}
+          p={{ base: "0.5rem", md: "1rem" }}
         >
           {children}
         </GridItem>

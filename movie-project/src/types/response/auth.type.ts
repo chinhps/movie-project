@@ -12,4 +12,5 @@ export interface IUserAuth {
     created_at: string,
     token?: string,
     role: "ADMIN" | "USER",
+    avatar_url: string
 }

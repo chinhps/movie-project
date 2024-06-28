@@ -70,7 +70,7 @@ Route::middleware(['decryptToken:sanctum'])->prefix('user')->group(function () {
     # Get infor current user
     Route::get('/infor', [AuthController::class, 'getCurrentInfo']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
-    Route::get("notification", []);
+    Route::post('change-info', [UserController::class, 'changeInfo']);
     # Logout
     Route::prefix('logout')->group(function () {
         # Logout current device
