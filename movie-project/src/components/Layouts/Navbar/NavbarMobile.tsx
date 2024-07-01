@@ -24,7 +24,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import NavbarLogout from "./NavbarLogout";
 
-export default function NavbarMobile() {
+export default function NavbarMobile({ logoURL }: { logoURL: string }) {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const session = useSession();
@@ -91,7 +91,7 @@ export default function NavbarMobile() {
               <>
                 <Link href="/">
                   <Image
-                    src="/images/logo.png"
+                    src={logoURL}
                     alt="logo website"
                     width={120}
                     height={100}

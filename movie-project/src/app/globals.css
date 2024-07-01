@@ -13,7 +13,7 @@
   --text-btn: var(--bg-section);
   --bg-navbar: #20242c;
   --bg-main-second: #20242c;
-  --bg-section: #f7ac33;
+  --bg-section: linear-gradient(45deg, #2C8CC2, #0BC4E2);
   --bg-header: #ef233c;
   --bg-main: #edf2f4;
   --bg-footer: #111111;
@@ -109,4 +109,8 @@ html {
       justify-content: center;
     }
   }
+}
+
+button {
+  line-height: unset !important;
 }

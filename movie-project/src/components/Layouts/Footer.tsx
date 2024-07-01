@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-export default function Footer() {
+export default function Footer({ data }: { data: { [key: string]: string } }) {
   return (
     <>
       <Box
@@ -27,15 +27,18 @@ export default function Footer() {
           >
             <GridItem as={Flex} flexDirection="column" colSpan={3} gap={3}>
               <Heading as="h2" fontSize="23px">
-                BRAND NAME
+                {data["BRAND"]} -{" "}
+                <Text as="span" textTransform="uppercase">
+                  {data["DOMAIN"]}
+                </Text>
               </Heading>
+              <Text fontWeight="normal">{data["DESCRIPTION"]}</Text>
               <Text fontWeight="normal">
-                BRANDNAME.Com - Trang web xem Anime HD trực tuyến. Kho Anime
-                phong phú nhiều thể loại, cập nhật mới liên tục mỗi ngày.
-              </Text>
-              <Text fontWeight="normal">
-                Mọi dữ liệu trên BRANDNAME.Com đều được tổng hợp và re-upload từ
-                internet.
+                Mọi dữ liệu trên{" "}
+                <Text as="span" textTransform="uppercase">
+                  {data["DOMAIN"]}
+                </Text>{" "}
+                đều được tổng hợp và re-upload từ internet.
               </Text>
             </GridItem>
             <GridItem as={Flex} flexDirection="column" colSpan={2} gap={3}>
@@ -43,11 +46,11 @@ export default function Footer() {
                 Liên hệ
               </Heading>
               <Text fontWeight="normal">
-                Liên hệ quảng cáo: <Text as="b">abc@gmail.com</Text>
+                Liên hệ quảng cáo: <Text as="b">{data["EMAIL"]}</Text>
               </Text>
               <Text fontWeight="normal">
                 The advertisements on the page are powered by another platform,
-                so be careful with the ad content. BRANDNAME will not assume any
+                so be careful with the ad content. {data["BRAND"]} will not assume any
                 responsibility for advertisements.
               </Text>
             </GridItem>
@@ -56,7 +59,11 @@ export default function Footer() {
       </Box>
       <Center as="footer" py={2} bg="var(--bg-footer)">
         <Text fontSize="13px" color="var(--text-main)">
-          Copyright © 2024. BRANDNAME.Com. All Rights Reserved.
+          Copyright © 2024.{" "}
+          <Text as="span" textTransform="uppercase">
+            {data["DOMAIN"]}
+          </Text>
+          . All Rights Reserved.
         </Text>
       </Center>
     </>

@@ -30,7 +30,7 @@ import { auth } from "@/auth";
 import NotificationNav from "./NotificationNav";
 import NavbarMobile from "./NavbarMobile";
 
-export default async function Navbar() {
+export default async function Navbar({ logoURL }: { logoURL: string }) {
   const categories = await categoryApi.list();
   const session = await auth();
 
@@ -38,7 +38,7 @@ export default async function Navbar() {
     <>
       <Box as="header" position="fixed" top={0} right={0} left={0} zIndex={5}>
         <input type="checkbox" id="dropbox" defaultChecked={false} hidden />
-        <NavbarMobile />
+        <NavbarMobile logoURL={logoURL} />
         <Box
           display={{ base: "none", lg: "block" }}
           bg="var(--bg-navbar)"
@@ -49,7 +49,7 @@ export default async function Navbar() {
             <Flex as="nav" justifyContent="space-between" alignItems="center">
               <Link href="/">
                 <Image
-                  src="/images/logo.png"
+                  src={logoURL}
                   alt="logo website"
                   width={120}
                   height={100}
