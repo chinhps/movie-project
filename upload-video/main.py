@@ -358,17 +358,26 @@ def handleUpload(FILEUPLOAD, creds, serverName, source, serverName2, source2):
     # upload all file to drive
     results = list(executor.map(lambda file: UploadToLinkDrive(creds=creds, filename=file, folderId=folderId), filesToProcess))
   
+  print("update link by thread")
   # update link by thread
   for filename, link in results:
         mapM3u8[filename] = link
+        print("m3u8", filename, link)
 
-  for key, value in mapM3u8.items():
-    # get number in file output
-    number = key.split('-')[1].split('.')[0]
-    with fileinput.FileInput("./assets/output/output.m3u8", inplace=True) as file:
-      for line in file:
-          sys.stdout.write(line.replace(f"output{number}.ts", value))
+  print("create output.m3u8")
+  with open("./assets/output/output.m3u8", 'r+', encoding='utf-8') as file:
+    contentOld = file.read()
+    for key, value in mapM3u8.items():
+      # get number in file output
+      number = key.split('-')[1].split('.')[0]
+      contentOld = contentOld.replace(f"output{number}.ts", value)
+
+    file.seek(0)
+    file.write(contentOld)
+    file.truncate()
   
+  
+  print("upload m3u8 to server")
   # upload m3u8 to server
   linkM3u8 = UploadM3u8("./assets/output/output.m3u8")
   if not linkM3u8 is None:
@@ -398,6 +407,7 @@ def uploadToHydra(pathFile, serverName2, source2):
       source2.config(state='readonly')
       serverName2.insert(0, "HDY")
       serverName2.config(state='readonly')
+      print("hydra slug")
       print(response['slug'])
   except requests.exceptions.RequestException as e:
     print(f'HTTP Request failed: {e}')
