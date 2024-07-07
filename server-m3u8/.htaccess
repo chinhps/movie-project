@@ -1,5 +1,6 @@
 AddType application/vnd.apple.mpegurl .m3u8
 AddType video/mp2t .ts
+AddType text/vtt;charset=UTF-8 .vtt
 
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"
