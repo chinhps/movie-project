@@ -28,8 +28,6 @@ export default {
     ],
     callbacks: {
         jwt: async ({ token, user, trigger }) => {
-            console.log(trigger);
-
             if (trigger === "update" && token.token) {
                 const { data: newInfo } = await userApi.info(token.token);
                 if (typeof newInfo.name !== "undefined") {

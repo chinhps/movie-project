@@ -32,14 +32,6 @@ export default function SlickNext({
   );
 }
 
-export const SlickNextSkeleton = () => {
-  return (
-    <>
-      <Skeleton w="100%" h={{ base: "200px", md: "350px" }} />
-    </>
-  );
-};
-
 export function BannerItem(data: IMovieResponse) {
   return (
     <Box position="relative" h={{ base: "200px", md: "350px" }}>

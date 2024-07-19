@@ -3,6 +3,7 @@ import Banner from "@/components/Global/Banner";
 import Header from "@/components/Global/Header";
 import { MovieItemV2, MovieItemV3 } from "@/components/Global/MovieItem";
 import HomeLayout from "@/components/Layouts/HomeLayout";
+import { Box } from "@chakra-ui/react";
 import Link from "next/link";
 
 export default async function Home() {
@@ -14,7 +15,9 @@ export default async function Home() {
   return (
     <>
       {/* <Bookmarks /> */}
-      <Banner />
+      <Box h={{ base: "200px", md: "350px" }} bg="gray">
+        <Banner />
+      </Box>
       <Header
         mb={3}
         mt={5}
@@ -46,7 +49,7 @@ export default async function Home() {
         {moviesList.data.map((movie, index) => (
           <MovieItemV3 key={movie.id} movie={movie} />
         ))}
-      </HomeLayout> 
+      </HomeLayout>
     </>
   );
 }
