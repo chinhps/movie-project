@@ -16,7 +16,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiChevronsRight, FiEyeOff, FiFlag } from "react-icons/fi";
 import BookmarkButton from "../../movie-detail/[slug]/BookmarkButton";
 import Link from "next/link";
@@ -25,8 +25,9 @@ import ModalReport from "@/components/Global/Model/ModalReport";
 import { useMutation } from "@tanstack/react-query";
 import reportApi from "@/apis/report";
 import { useSession } from "next-auth/react";
+import DualSubtitlePlayer from "@/components/Global/VideoPlayer/VideoPlayerDualCaption";
 
-export default function Cinema({
+const Cinema = ({
   movieSource,
   episodes,
   currentEpisodeSlug,
@@ -40,7 +41,7 @@ export default function Cinema({
   movieName: string;
   episodeName: string;
   movieSlug: string;
-}) {
+}) => {
   const router = useRouter();
   const toast = useToast();
   const { data: session } = useSession();
@@ -119,12 +120,20 @@ export default function Cinema({
       </ModalReport>
       <Box>
         <AspectRatio rounded={5} overflow="hidden" ratio={16 / 9} bg="black">
-          <iframe
-            src={sourceActive?.source_link}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen={true}
-          ></iframe>
+          {sourceActive ? (
+            <>
+              {sourceActive.is_m3u8 === true ? (
+                <DualSubtitlePlayer src={sourceActive.source_link} />
+              ) : (
+                <iframe
+                  src={sourceActive.source_link}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen={true}
+                ></iframe>
+              )}
+            </>
+          ) : null}
         </AspectRatio>
         <Box my={2} textAlign={{ base: "center", md: "left" }}>
           <Heading
@@ -151,7 +160,11 @@ export default function Cinema({
             {movieSource.map((source) => (
               <Button
                 key={source.source_link}
-                variant={sourceActive == source ? "cinemaButton" : "transparentCinemaButton"}
+                variant={
+                  sourceActive == source
+                    ? "cinemaButton"
+                    : "transparentCinemaButton"
+                }
                 onClick={() => setSourceActive(source)}
               >
                 {source.server_name}
@@ -179,4 +192,6 @@ export default function Cinema({
       </Box>
     </>
   );
-}
+};
+
+export default React.memo(Cinema);

@@ -75,6 +75,15 @@ const cinemaButton = defineStyle({
     }
 });
 
+const buttonPlayer = defineStyle({
+    color: 'white',
+    fontSize: "1.2rem",
+    _hover: {
+        background: 'black',
+        color: 'gray',
+    }
+});
+
 export const buttonTheme = defineStyleConfig({
     defaultProps: {
         // variant: "customIconButton"
@@ -82,6 +91,6 @@ export const buttonTheme = defineStyleConfig({
     variants: {
         customIconButton, mainButton, secondButton,
         episode, transparentButton, cinemaButton,
-        transparentCinemaButton
+        transparentCinemaButton, buttonPlayer
     }
 })

@@ -22,4 +22,9 @@ class MovieEpisode extends Model
     {
         return $this->hasMany(MovieSource::class, 'movie_episode_id');
     }
+
+    public function movieSubtitles(): HasMany
+    {
+        return $this->hasMany(MovieSubtitle::class, "movie_episode_id");
+    }
 }

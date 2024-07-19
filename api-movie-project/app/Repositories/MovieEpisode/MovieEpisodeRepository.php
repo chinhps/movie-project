@@ -36,12 +36,12 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
             ->with(['movieSources' => function ($query) {
                 $query->where("status", "on");
             }, 'movie' => function ($query) {
-                $query->with(['movieEpisodeLaster', 'movieEpisodes' => function ($query) {
+                $query->with(['movieEpisodes' => function ($query) {
                     $query->where('status', 'on');
                 }])
                     ->withCount('movieEpisodes')
                     ->withAvg("movieRate", "rate");
-            }]);
+            }, 'movieSubtitles']);
         return $query->firstOrFail();
     }
 

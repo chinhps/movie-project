@@ -2,7 +2,7 @@ import { Box, HStack, Heading, StackProps } from "@chakra-ui/react";
 
 export interface IHeaderProps extends StackProps {
   children: React.ReactNode;
-  rightLink?: React.ReactNode | null;
+  rightLink?: () => React.ReactNode;
 }
 
 export default function Header({ rightLink, ...props }: IHeaderProps) {
@@ -26,7 +26,7 @@ export default function Header({ rightLink, ...props }: IHeaderProps) {
           {props.children}
         </Heading>
       </Box>
-      {rightLink}
+      {rightLink && rightLink()}
     </HStack>
   );
 }

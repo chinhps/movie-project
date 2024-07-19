@@ -23,6 +23,14 @@ class EpisodeDetailResource extends MovieResource
                 return [
                     "server_name" => $source->server_name,
                     "source_link" => $source->source_link,
+                    "is_m3u8" => $source->is_m3u8 === 1,
+                ];
+            }),
+            "subtitles" => $this->movieSubtitles->map(function ($subtitle) {
+                return [
+                    "language_label" => $subtitle->language_label,
+                    "language" => $subtitle->language,
+                    "vtt_link" => $subtitle->vtt_link,
                 ];
             }),
             "movie" => [...$this->customEpisode()],

@@ -35,7 +35,12 @@ export interface IEpisodeResponse {
     episode_name: string,
     created_at: string,
     slug: string,
-    movie_sources: Array<IEpisodeSource>
+    movie_sources: Array<IEpisodeSource>,
+    subtitles: Array<{
+        language_label: string;
+        language: string;
+        vtt_link: string
+    }>
 }
 
 export interface IEpisodeSource {
@@ -43,6 +48,7 @@ export interface IEpisodeSource {
     server_name: string,
     source_link: string,
     status: "on" | "off",
+    is_m3u8: boolean
 }
 
 export interface IEpisode {

@@ -7,9 +7,9 @@ import Link from "next/link";
 
 export default async function Home() {
   const moviesLatest = await moviesApi.latest({});
-  // const moviesRanking = await moviesApi.rankings();
+  const moviesRanking = await moviesApi.rankings();
 
-  // const moviesList = await moviesApi.list({ page: 1, params: {} });
+  const moviesList = await moviesApi.list({ page: 1, params: {} });
 
   return (
     <>
@@ -18,7 +18,7 @@ export default async function Home() {
       <Header
         mb={3}
         mt={5}
-        rightLink={<Link href="/movie-latest">Xem tất cả</Link>}
+        rightLink={() => <Link href="/movie-latest">Xem tất cả</Link>}
       >
         ANIME MỚI CẬP NHẬT
       </Header>
@@ -27,22 +27,26 @@ export default async function Home() {
           <MovieItemV2 key={movie.id} movie={movie} />
         ))}
       </HomeLayout>
-      {/* <Header mb={3} mt={5}>
+      <Header mb={3} mt={5}>
         BẢNG XẾP HẠNG
       </Header>
       <HomeLayout>
         {moviesRanking.data.map((movie, index) => (
           <MovieItemV3 key={movie.id} movie={movie} />
         ))}
-      </HomeLayout> */}
-      {/* <Header mb={3} mt={5} rightLink={<Link href="/movies">Xem tất cả</Link>}>
+      </HomeLayout>
+      <Header
+        mb={3}
+        mt={5}
+        rightLink={() => <Link href="/movies">Xem tất cả</Link>}
+      >
         TẤT CẢ PHIM
       </Header>
       <HomeLayout>
         {moviesList.data.map((movie, index) => (
           <MovieItemV3 key={movie.id} movie={movie} />
         ))}
-      </HomeLayout> */}
+      </HomeLayout> 
     </>
   );
 }

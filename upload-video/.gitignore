@@ -4,3 +4,4 @@ token.json
 /ffmpeg/ffplay.exe
 /ffmpeg/ffprobe.exe
 /build
+/vtts
