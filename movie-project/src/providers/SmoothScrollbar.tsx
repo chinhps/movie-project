@@ -8,6 +8,7 @@ import { ScrollbarOptions } from "smooth-scrollbar/interfaces";
 const options: Partial<ScrollbarOptions> = {
   damping: 0.08,
   alwaysShowTracks: false,
+  continuousScrolling: false,
 };
 
 export default function SmoothScrollbarProvider({
