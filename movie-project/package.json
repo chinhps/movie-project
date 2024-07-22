@@ -32,6 +32,7 @@
     "sass": "^1.75.0",
     "sharp": "^0.33.4",
     "slick-carousel": "^1.8.1",
+    "smooth-scrollbar": "^8.8.4",
     "zod": "^3.23.0"
   },
   "devDependencies": {

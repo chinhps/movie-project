@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ChakraUIProviders } from "@/providers/Chakra";
 import { SessionProvider } from "next-auth/react";
 import TanstackProvider from "@/providers/Tanstack";
+import SmoothScrollbarProvider from "@/providers/SmoothScrollbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,11 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          <TanstackProvider>
-            <ChakraUIProviders>{children}</ChakraUIProviders>
-          </TanstackProvider>
-        </SessionProvider>
+        <SmoothScrollbarProvider>
+          <SessionProvider>
+            <TanstackProvider>
+              <ChakraUIProviders>{children}</ChakraUIProviders>
+            </TanstackProvider>
+          </SessionProvider>
+        </SmoothScrollbarProvider>
       </body>
     </html>
   );

@@ -41,6 +41,7 @@
 body {
   background-color: var(--bg-main) !important;
   scroll-behavior: smooth;
+  height: 100vh;
 }
 
 html {
@@ -49,7 +50,7 @@ html {
   line-height: normal !important;
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: #F5F5F5;
 }
@@ -61,7 +62,7 @@ html {
 
 ::-webkit-scrollbar-thumb {
 	background-color: var(--bg-navbar);
-}
+} */
 
 .navigate {
   display: flex;
