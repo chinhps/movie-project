@@ -2,21 +2,13 @@ import moviesApi from "@/apis/movie";
 import { notFound } from "next/navigation";
 import Cinema from "./Cinema";
 import {
-  Box,
-  Divider,
   GridItem,
-  Heading,
   SimpleGrid,
-  Stack,
   Tab,
   TabList,
-  TabPanel,
   TabPanels,
   Tabs,
-  Text,
 } from "@chakra-ui/react";
-import Image from "next/image";
-import { EpisodeWithImage } from "@/components/Global/Episode";
 import Comments from "../../movie-detail/[slug]/Comments";
 import EpisodeList from "./EpisodeList";
 
@@ -47,6 +39,7 @@ export default async function MovieWatchPage({
           <Tabs>
             <TabList fontSize="1rem">
               <Tab as="h2">DANH SÁCH TẬP</Tab>
+              <Tab as="h2">TỪ VỰNG</Tab>
               <Tab>OVA</Tab>
             </TabList>
             <TabPanels>

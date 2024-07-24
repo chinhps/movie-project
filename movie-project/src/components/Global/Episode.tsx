@@ -52,12 +52,13 @@ const EpisodeWithImage = forwardRef<HTMLDivElement, IEpisodeWithImage>(
             p={1}
             alignItems="center"
             bg={active ? "var(--episode-hover)" : ""}
+            rounded="lg"
             _hover={{
               bg: "var(--episode-hover)",
             }}
           >
             <GridItem colSpan={5} position="relative">
-              <Box width="100%" height="65px" overflow="hidden">
+              <Box width="100%" height="65px" rounded="md" overflow="hidden">
                 <Image
                   src={episodeImage}
                   alt={`${movieName} - Tập ${episodeName}`}

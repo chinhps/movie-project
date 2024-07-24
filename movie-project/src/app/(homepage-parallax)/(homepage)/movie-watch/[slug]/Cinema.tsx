@@ -143,8 +143,7 @@ const Cinema = ({
             lineHeight="2.8rem"
             fontWeight={700}
           >
-            <Link href={"/movie-detail/" + movieSlug}>{movieName} </Link>- Tập{" "}
-            {episodeName}
+            {movieName} - Tập {episodeName}
           </Heading>
           <Text color="var(--color-gray)">
             {numberFormat(10000000, false)} Lượt xem
