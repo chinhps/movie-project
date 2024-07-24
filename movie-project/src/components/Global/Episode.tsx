@@ -58,12 +58,13 @@ const EpisodeWithImage = forwardRef<HTMLDivElement, IEpisodeWithImage>(
             }}
           >
             <GridItem colSpan={5} position="relative">
-              <Box width="100%" height="65px" rounded="md" overflow="hidden">
+              <Box width="100%" height="75px" rounded="md" overflow="hidden">
                 <Image
                   src={episodeImage}
                   alt={`${movieName} - Tập ${episodeName}`}
                   width={200}
                   height={140}
+                  style={{ objectFit: "cover" }}
                 />
               </Box>
             </GridItem>

@@ -18,7 +18,6 @@ import {
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FiChevronsRight, FiEyeOff, FiFlag } from "react-icons/fi";
-import BookmarkButton from "../../movie-detail/[slug]/BookmarkButton";
 import Link from "next/link";
 import useDisclosureData from "@/hooks/useDisclosureData";
 import ModalReport from "@/components/Global/Model/ModalReport";
@@ -26,6 +25,7 @@ import { useMutation } from "@tanstack/react-query";
 import reportApi from "@/apis/report";
 import { useSession } from "next-auth/react";
 import DualSubtitlePlayer from "@/components/Global/VideoPlayer/VideoPlayerDualCaption";
+import BookmarkButton from "../../(homepage)/movie-detail/[slug]/BookmarkButton";
 
 const Cinema = ({
   movieSource,

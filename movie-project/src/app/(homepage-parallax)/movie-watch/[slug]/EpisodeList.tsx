@@ -36,7 +36,7 @@ export default function EpisodeList({
         className="episode-list"
         as={Stack}
         gap={1}
-        maxH="650px"
+        maxH={{ base: "400px", md: "850px" }}
         overflow="auto"
         mt={2}
         p={0}
