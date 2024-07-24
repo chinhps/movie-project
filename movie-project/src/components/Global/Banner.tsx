@@ -35,7 +35,7 @@ function Banner() {
       <Container
         as={Flex}
         size="md"
-        mt={{ base: "7rem", md: "4rem" }}
+        mt="4rem"
         zIndex={2}
         position="relative"
         alignItems="flex-end"
@@ -84,7 +84,7 @@ function Banner() {
         backgroundImage="/images/1294117.png"
         backgroundSize="cover"
         backgroundPosition="center"
-        transform="scale(1.2)"
+        // transform="scale(1.2)"
         h={{ base: "500px", md: "650px" }}
         inset={0}
       >
