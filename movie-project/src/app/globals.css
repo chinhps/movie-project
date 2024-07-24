@@ -11,7 +11,7 @@
   --text-black: #111111;
   --text-gray: #3b3b3b;
   --text-btn: var(--bg-section);
-  --bg-navbar: #20242c;
+  --bg-navbar: #20242ceb;
   --bg-main-second: #20242c;
   --bg-section: linear-gradient(45deg, #2C8CC2, #0BC4E2);
   --bg-header: #ef233c;
@@ -50,8 +50,8 @@ html {
   line-height: normal !important;
 }
 
-/* ::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+::-webkit-scrollbar-track {
+	/* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
 	background-color: #F5F5F5;
 }
 
@@ -62,7 +62,23 @@ html {
 
 ::-webkit-scrollbar-thumb {
 	background-color: var(--bg-navbar);
-} */
+}
+
+.show-text {
+  animation-duration: 2500ms;
+  animation-delay: 0ms;
+  animation-name: showText;
+  animation-iteration-count: 1;
+}
+
+@keyframes showText {
+  0% {
+    clip-path: polygon(0% 0%, 0% 0%, 0% 0%);
+  }
+  100% {
+    clip-path: polygon(0% 0%, 200% 0%, 0% 200%);
+  }
+}
 
 .navigate {
   display: flex;
