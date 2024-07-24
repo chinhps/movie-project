@@ -34,8 +34,8 @@ export default function NavbarMobile({ logoURL }: { logoURL: string }) {
       <Box
         display={{ base: "block", lg: "none" }}
         bg="var(--bg-navbar)"
-        backdropFilter="saturate(180%) blur(5px)"
-        boxShadow="base"
+        // backdropFilter="saturate(180%) blur(5px)"
+        // boxShadow="base"
       >
         <Container size="md">
           <Flex

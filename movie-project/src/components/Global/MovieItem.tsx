@@ -207,7 +207,7 @@ MovieItemV2.skeleton = () => {
         maxW="330px"
         w="full"
         bg="gray.200"
-        boxShadow="sm"
+        // boxShadow="sm"
         rounded="lg"
         pos="relative"
         zIndex={1}

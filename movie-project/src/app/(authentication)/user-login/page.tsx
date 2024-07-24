@@ -52,7 +52,7 @@ export default function UserLoginPage() {
         p={{ base: 4, sm: 6, md: 8 }}
         spacing={5}
         maxW={{ lg: "lg" }}
-        shadow="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;"
+        // shadow="box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;"
       >
         <Stack spacing={4} my="2rem">
           <Heading color="gray.800" fontSize="3xl" textAlign="center">

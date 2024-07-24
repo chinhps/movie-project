@@ -42,8 +42,8 @@ export default async function Navbar({ logoURL }: { logoURL: string }) {
         <Box
           display={{ base: "none", lg: "block" }}
           bg="var(--bg-navbar)"
-          backdropFilter="saturate(180%) blur(5px)"
-          boxShadow="base"
+          // backdropFilter="blur(10px)"
+          // boxShadow="base"
         >
           <Container size="md">
             <Flex as="nav" justifyContent="space-between" alignItems="center">
@@ -150,7 +150,7 @@ export default async function Navbar({ logoURL }: { logoURL: string }) {
         <Container id="dropdown-menu" size="md" position="relative">
           <SimpleGrid
             as={List}
-            boxShadow="0px 25px 80px 0px rgba(0,0,0,0.3)"
+            // boxShadow="0px 25px 80px 0px rgba(0,0,0,0.3)"
             borderTop="solid"
             borderColor="var(--bg-section)"
             borderTopWidth="2px"
