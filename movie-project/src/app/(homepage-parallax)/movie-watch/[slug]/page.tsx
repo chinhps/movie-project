@@ -36,6 +36,9 @@ export default async function MovieWatchPage({
               movieSlug={episodeDetail.data.movie.slug}
               movieName={episodeDetail.data.movie.movie_name}
               episodeName={episodeDetail.data.episode_name}
+              vtts={episodeDetail.data.subtitles.map(
+                (caption) => caption.vtt_link
+              )}
             />
           </GridItem>
           <GridItem colSpan={{ base: 12, md: 3 }}>

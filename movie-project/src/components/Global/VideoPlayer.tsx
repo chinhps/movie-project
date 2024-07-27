@@ -1,36 +1,31 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { MutableRefObject, useEffect, useRef } from "react";
 import Hls from "hls.js";
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
-import { AspectRatio } from "@chakra-ui/react";
 
-export default function VideoPlayer({ src }: { src: string }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+const VideoPlayer = React.forwardRef<
+  HTMLVideoElement,
+  { src: string; playerRef: MutableRefObject<Plyr | null> }
+>(({ src, playerRef }, ref) => {
   const hlsRef = useRef<Hls | null>(null);
-  const playerRef = useRef<Plyr | null>(null);
 
   useEffect(() => {
-    const video = videoRef.current;
+    const video = (ref as MutableRefObject<HTMLVideoElement | null>).current;
     if (!video) return;
 
-    const initializePlayer = () => {
+    const initializePlayer = async () => {
       video.controls = true;
-
       if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        // This will run in Safari, where HLS is supported natively
         video.src = src;
       } else if (Hls.isSupported()) {
-        // This will run in all other modern browsers
+        const PlyrDynamic = await import("plyr");
         hlsRef.current = new Hls();
         hlsRef.current.loadSource(src);
         hlsRef.current.attachMedia(video);
-        playerRef.current = new Plyr(video, {});
-      } else {
-        console.error(
-          "This is an old browser that does not support MSE https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API"
-        );
+        const Plyr2 = PlyrDynamic.default;
+        playerRef.current = new Plyr2(video, { captions: { active: true } });
       }
     };
 
@@ -41,7 +36,6 @@ export default function VideoPlayer({ src }: { src: string }) {
       }
       if (playerRef.current) {
         playerRef.current.destroy();
-        playerRef.current = null;
       }
     };
 
@@ -50,11 +44,12 @@ export default function VideoPlayer({ src }: { src: string }) {
     return () => {
       cleanUpPlayer();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src]);
 
-  return (
-    <AspectRatio height="100vh" _before={{}}>
-      <video ref={videoRef} />
-    </AspectRatio>
-  );
-}
+  return <video ref={ref} />;
+});
+
+VideoPlayer.displayName = "VideoPlayer";
+
+export default VideoPlayer;
