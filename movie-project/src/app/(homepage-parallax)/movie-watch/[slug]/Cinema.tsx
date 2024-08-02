@@ -25,6 +25,7 @@ import reportApi from "@/apis/report";
 import { useSession } from "next-auth/react";
 import BookmarkButton from "../../(homepage)/movie-detail/[slug]/BookmarkButton";
 import PlyrDualCaption from "@/components/Global/VideoPlayer/PlyrDualCaption";
+import dayjs from "dayjs";
 
 const Cinema = ({
   movieSource,
@@ -34,6 +35,7 @@ const Cinema = ({
   episodeName,
   movieSlug,
   vtts,
+  createdAt,
 }: {
   movieSource: Array<IEpisodeSource>;
   episodes?: Array<IEpisode>;
@@ -42,6 +44,7 @@ const Cinema = ({
   episodeName: string;
   movieSlug: string;
   vtts: string[];
+  createdAt: string;
 }) => {
   const router = useRouter();
   const toast = useToast();
@@ -149,9 +152,12 @@ const Cinema = ({
           >
             {movieName} - Tập {episodeName}
           </Heading>
-          <Text color="var(--color-gray)">
-            {numberFormat(10000000, false)} Lượt xem
-          </Text>
+          <HStack spacing={1}>
+            <Text color="var(--color-gray)">
+              {numberFormat(10000000, false)} Lượt xem -
+            </Text>
+            <Text color="var(--color-gray)">{dayjs(createdAt).fromNow()}</Text>
+          </HStack>
         </Box>
 
         <HStack

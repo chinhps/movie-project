@@ -43,6 +43,7 @@ export default async function MovieWatchPage({
               vtts={episodeDetail.data.subtitles.map(
                 (caption) => caption.vtt_link
               )}
+              createdAt={episodeDetail.data.created_at}
             />
           </GridItem>
           <GridItem colSpan={{ base: 12, md: 3 }}>
@@ -67,10 +68,11 @@ export default async function MovieWatchPage({
                     {episodeDetail.data.vocabularies.map(
                       (vocabulary, index) => (
                         <Text key={index}>
-                          <Text as="b" mr={1}>{vocabulary.vocabulary}</Text>
-                          <Text as="i">
-                            ({vocabulary.part_of_speech})
-                          </Text>: {vocabulary.meaning}
+                          <Text as="b" mr={1}>
+                            {vocabulary.vocabulary}
+                          </Text>
+                          <Text as="i">({vocabulary.part_of_speech})</Text>:{" "}
+                          {vocabulary.meaning}
                         </Text>
                       )
                     )}
