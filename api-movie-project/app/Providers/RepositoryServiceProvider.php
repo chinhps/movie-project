@@ -22,6 +22,8 @@ use App\Repositories\MovieHistory\MovieHistoryInterface;
 use App\Repositories\MovieHistory\MovieHistoryRepository;
 use App\Repositories\Notification\NotificationInterface;
 use App\Repositories\Notification\NotificationRepository;
+use App\Repositories\Plugin\PluginInterface;
+use App\Repositories\Plugin\PluginRepository;
 use App\Repositories\Report\ReportInterface;
 use App\Repositories\Report\ReportRepository;
 use App\Repositories\User\UserInterface;
@@ -44,5 +46,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(MovieHistoryInterface::class, MovieHistoryRepository::class);
         $this->app->bind(EpisodeSourceInterface::class, EpisodeSourceRepository::class);
         $this->app->bind(HLSInterface::class, HLSRepository::class);
+        $this->app->bind(PluginInterface::class, PluginRepository::class);
     }
 }

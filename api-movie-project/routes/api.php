@@ -9,6 +9,7 @@ use App\Http\Controllers\Movie\EpisodeController;
 use App\Http\Controllers\Movie\MovieController;
 use App\Http\Controllers\Movie\MovieHistoryController;
 use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\Plugin\PluginController;
 use App\Http\Controllers\Report\ReportController;
 use App\Http\Controllers\Statistical\StatisticalController;
 use App\Http\Controllers\User\AuthController;
@@ -55,6 +56,11 @@ Route::middleware(['decryptToken:sanctum'])
             Route::get('comments', [ReportController::class, 'commentList']);
             Route::get('movies', [ReportController::class, 'movieList']);
             Route::post('report-action', [ReportController::class, 'reportActionAdmin']);
+        });
+        Route::prefix('plugins')->group(function () {
+            Route::get('/', [PluginController::class, 'pluginListAdmin']);
+            Route::get('/{id}', [PluginController::class, 'pluginDetailAdmin']);
+            Route::post('upsert', [PluginController::class, 'pluginUpsertAdmin']);
         });
         Route::get('statisticals', [StatisticalController::class, 'list']);
         Route::get('users', [UserController::class, 'userListAdmin']);
