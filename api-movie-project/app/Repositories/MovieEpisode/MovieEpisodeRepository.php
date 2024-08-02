@@ -41,7 +41,7 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
                 }])
                     ->withCount('movieEpisodes')
                     ->withAvg("movieRate", "rate");
-            }, 'movieSubtitles']);
+            }, 'movieSubtitles', 'vocabulary']);
         return $query->firstOrFail();
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class MovieEpisode extends Model
 {
@@ -26,5 +27,10 @@ class MovieEpisode extends Model
     public function movieSubtitles(): HasMany
     {
         return $this->hasMany(MovieSubtitle::class, "movie_episode_id");
+    }
+
+    public function vocabulary(): HasOne
+    {
+        return $this->hasOne(EpisodeVocabulary::class, "movie_episode_id");
     }
 }

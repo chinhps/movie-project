@@ -40,6 +40,11 @@ export interface IEpisodeResponse {
         language_label: string;
         language: string;
         vtt_link: string
+    }>,
+    vocabularies: Array<{
+        meaning: string,
+        vocabulary: string,
+        part_of_speech: "noun" | "verb" | "adjective"
     }>
 }
 

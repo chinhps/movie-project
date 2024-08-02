@@ -6,10 +6,14 @@ import {
   Container,
   GridItem,
   SimpleGrid,
+  Stack,
   Tab,
   TabList,
+  TabPanel,
   TabPanels,
   Tabs,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import EpisodeList from "./EpisodeList";
 import Comments from "../../(homepage)/movie-detail/[slug]/Comments";
@@ -44,8 +48,8 @@ export default async function MovieWatchPage({
           <GridItem colSpan={{ base: 12, md: 3 }}>
             <Tabs>
               <TabList fontSize="1rem">
-                <Tab as="h2">DANH SÁCH TẬP</Tab>
-                <Tab as="h2">TỪ VỰNG</Tab>
+                <Tab>DANH SÁCH TẬP</Tab>
+                <Tab>TỪ VỰNG</Tab>
                 <Tab>OVA</Tab>
               </TabList>
               <TabPanels>
@@ -55,6 +59,23 @@ export default async function MovieWatchPage({
                   episodeImage={episodeDetail.data.movie.movie_image}
                   movieName={episodeDetail.data.movie.movie_name}
                 />
+                <TabPanel>
+                  <Text>
+                    Từ vựng trong tập {episodeDetail.data.episode_name}
+                  </Text>
+                  <Stack mt={2}>
+                    {episodeDetail.data.vocabularies.map(
+                      (vocabulary, index) => (
+                        <Text key={index}>
+                          <Text as="b" mr={1}>{vocabulary.vocabulary}</Text>
+                          <Text as="i">
+                            ({vocabulary.part_of_speech})
+                          </Text>: {vocabulary.meaning}
+                        </Text>
+                      )
+                    )}
+                  </Stack>
+                </TabPanel>
               </TabPanels>
             </Tabs>
           </GridItem>

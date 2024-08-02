@@ -33,6 +33,7 @@ class EpisodeDetailResource extends MovieResource
                     "vtt_link" => $subtitle->vtt_link,
                 ];
             }),
+            "vocabularies" => json_decode($this->vocabulary?->vocabulary_list, true),
             "movie" => [...$this->customEpisode()],
         ];
     }

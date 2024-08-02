@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(DefaultSeeder::class);
         $this->call(WebsiteInfoSeeder::class);
+        $this->call(EpisodeVocabularySeeder::class);
     }
 }
