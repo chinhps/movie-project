@@ -51,4 +51,24 @@ class PluginController extends Controller
         }
         return $result;
     }
+
+    public function infor()
+    {
+        $logoUrl = $this->pluginRepository->getByKey("LOGO")['logo'] ?? "";
+        $brandName = $this->pluginRepository->getByKey("BRAND")['brand_name'] ?? "Không xác định";
+        $domain = $this->pluginRepository->getByKey("DOMAIN")['domain'] ?? "example.com";
+        $description = $this->pluginRepository->getByKey("SEO")['description'] ?? "Mô tả";
+        $email = $this->pluginRepository->getByKey("EMAIL")['email'] ?? "admin@example.com";
+        $keyword =  $this->pluginRepository->getByKey("SEO")['keyword'] ?? "";
+
+        $response = [
+            "LOGO" => $logoUrl,
+            "BRAND" => $brandName,
+            "DOMAIN" => $domain,
+            "DESCRIPTION" => $description,
+            "EMAIL" => $email,
+            "KEYWORD" => $keyword
+        ];
+        return BaseResponse::data($response);
+    }
 }

@@ -1,4 +1,4 @@
-import infoApi from "@/apis/info";
+import pluginApi from "@/apis/plugin";
 import "@/app/globals.css";
 import Footer from "@/components/Layouts/Footer";
 import Navbar from "@/components/Layouts/Navbar/Navbar";
@@ -9,15 +9,14 @@ export default async function BannerParallaxLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const infos = await infoApi.infos();
-
+  const infors = await pluginApi.infor();
   return (
     <>
-      <Navbar logoURL={infos.data["LOGO"]} />
+      <Navbar logoURL={infors.data["LOGO"]} />
       <Box mt="4rem" minH="90vh">
         {children}
       </Box>
-      <Footer data={infos.data} />
+      <Footer data={infors.data} />
     </>
   );
 }

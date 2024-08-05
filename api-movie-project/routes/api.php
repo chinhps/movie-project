@@ -139,7 +139,6 @@ Route::prefix("categories")->group(function () {
     Route::get("{slug}", [CategoryController::class, 'detail']);
 });
 
-Route::prefix("informations")->group(function () {
-    Route::get('/', [InforController::class, 'list']);
-    Route::get('banners', [InforController::class, 'homeBanners']);
+Route::prefix("plugins")->group(function () {
+    Route::get('/infor', [PluginController::class, 'infor']);
 });
