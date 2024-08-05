@@ -15,6 +15,7 @@ import Link from "next/link";
 import {
   FiArrowLeft,
   FiBook,
+  FiCodesandbox,
   FiFilm,
   FiFlag,
   FiHome,
@@ -29,6 +30,7 @@ const icons: { [key: string]: React.ReactElement } = {
   "Quản lý phim": <FiFilm />,
   "Báo cáo": <FiFlag />,
   "Trở về client": <FiArrowLeft />,
+  "Plugins": <FiCodesandbox />,
 };
 
 export default function SildeBarAdmin() {

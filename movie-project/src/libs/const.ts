@@ -15,6 +15,15 @@ export const navbarList: Array<ISildeBar> = [
         ]
     },
     {
+        name: "Plugins",
+        children: [
+            {
+                name: "Danh sách",
+                link: "/admin/plugins"
+            },
+        ]
+    },
+    {
         name: "Thể loại",
         children: [
             {
