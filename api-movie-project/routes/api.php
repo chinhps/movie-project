@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\HLS\HLSController;
-use App\Http\Controllers\Information\InforController;
 use App\Http\Controllers\Movie\BookmarkController;
 use App\Http\Controllers\Movie\CommentController;
 use App\Http\Controllers\Movie\EpisodeController;

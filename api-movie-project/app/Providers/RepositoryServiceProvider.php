@@ -40,7 +40,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CategoryInterface::class, CategoryRepository::class);
         $this->app->bind(UserInterface::class, UserRepository::class);
         $this->app->bind(NotificationInterface::class, NotificationRepository::class);
-        $this->app->bind(InformationInterface::class, InformationRepository::class);
         $this->app->bind(ReportInterface::class, ReportRepository::class);
         $this->app->bind(BookmarkInterface::class, BookmarkRepository::class);
         $this->app->bind(MovieHistoryInterface::class, MovieHistoryRepository::class);
