@@ -139,24 +139,24 @@ export function MovieItemV2({
           rounded="xl"
           mt={-5}
           position="relative"
-          _after={{
-            transition: "all .3s ease",
-            content: '""',
-            w: "full",
-            h: "full",
-            pos: "absolute",
-            top: 0,
-            left: 0,
-            backgroundImage: `url(${movie.movie_image})`,
-            filter: "blur(2px)",
-            zIndex: -1,
-            borderRadius: "0.5rem",
-          }}
-          _groupHover={{
-            _after: {
-              filter: "blur(5px)",
-            },
-          }}
+          // _after={{
+          //   transition: "all .3s ease",
+          //   content: '""',
+          //   w: "full",
+          //   h: "full",
+          //   pos: "absolute",
+          //   top: 0,
+          //   left: 0,
+          //   backgroundImage: `url(${movie.movie_image})`,
+          //   filter: "blur(2px)",
+          //   zIndex: -1,
+          //   borderRadius: "0.5rem",
+          // }}
+          // _groupHover={{
+          //   _after: {
+          //     filter: "blur(5px)",
+          //   },
+          // }}
         >
           <Box position="absolute" right={3} top={0} zIndex={5}>
             <MovieBookmarkItem slug={movie.slug} />
