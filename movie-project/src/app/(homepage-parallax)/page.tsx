@@ -34,7 +34,7 @@ export default async function Home() {
         </Header>
         <HomeLayout>
           {moviesRanking.data.map((movie, index) => (
-            <MovieItemV3 key={movie.id} movie={movie} />
+            <MovieItemV2 key={movie.id} movie={movie} />
           ))}
         </HomeLayout>
         <Header
@@ -46,7 +46,7 @@ export default async function Home() {
         </Header>
         <HomeLayout>
           {moviesList.data.map((movie, index) => (
-            <MovieItemV3 key={movie.id} movie={movie} />
+            <MovieItemV2 key={movie.id} movie={movie} />
           ))}
         </HomeLayout>
       </Container>

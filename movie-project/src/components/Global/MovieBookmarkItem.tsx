@@ -1,18 +1,18 @@
 "use client";
 
 import bookmarkApi from "@/apis/bookmark";
-import { checkBookmark, saveBookmark } from "@/libs/function";
+import { checkBookmark, removeBookmark, saveBookmark } from "@/libs/function";
 import { Box, BoxProps, useToast } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiBookmark } from "react-icons/fi";
 
 interface IMovieBookmark extends BoxProps {
   slug: string;
 }
 
-export default function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
+function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
   const session = useSession();
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
 
@@ -28,16 +28,14 @@ export default function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
     if (session.data?.user.token) {
       bookmarkMutation.mutate();
     }
-    saveBookmark({ slug: slug });
-    setIsBookmark((prev) => !prev);
+    setIsBookmark((prev) => {
+      prev ? removeBookmark({ slug: slug }) : saveBookmark({ slug: slug });
+      return !prev;
+    });
   };
 
   useEffect(() => {
-    if (checkBookmark({ slug })) {
-      setIsBookmark(true);
-      return;
-    }
-    setIsBookmark(false);
+    setIsBookmark(!!checkBookmark({ slug }));
   }, [slug]);
 
   return (
@@ -55,3 +53,5 @@ export default function MovieBookmarkItem({ slug, ...props }: IMovieBookmark) {
     </Box>
   );
 }
+
+export default React.memo(MovieBookmarkItem);
