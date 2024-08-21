@@ -12,12 +12,12 @@ class Crypto
         $encrypted = openssl_encrypt($data, $cipher, $key, OPENSSL_RAW_DATA, $iv);
         $hmac = hash_hmac('sha256', $encrypted, $key, true);
         $encryptedData = base64_encode($iv . $hmac . $encrypted);
-        return $encryptedData;
+        return strtr($encryptedData, '+/', '-_');
     }
 
     public static function decrypt(string $encryptedData, string $key)
     {
-        $data = base64_decode($encryptedData);
+        $data = base64_decode(strtr($encryptedData, '-_', '+/'));
         $cipher = "AES-256-CBC";
         $ivLength = openssl_cipher_iv_length($cipher);
         $iv = substr($data, 0, $ivLength);

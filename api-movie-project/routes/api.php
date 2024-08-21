@@ -9,6 +9,7 @@ use App\Http\Controllers\Movie\MovieController;
 use App\Http\Controllers\Movie\MovieHistoryController;
 use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\Plugin\PluginController;
+use App\Http\Controllers\Proxy\ProxyController;
 use App\Http\Controllers\Report\ReportController;
 use App\Http\Controllers\Statistical\StatisticalController;
 use App\Http\Controllers\User\AuthController;
@@ -140,4 +141,9 @@ Route::prefix("categories")->group(function () {
 
 Route::prefix("plugins")->group(function () {
     Route::get('/infor', [PluginController::class, 'infor']);
+});
+
+Route::prefix("proxy")->group(function () {
+    Route::get('/get', [ProxyController::class, 'get']);
+    Route::post('/convert', [ProxyController::class, 'convert']);
 });
