@@ -118,7 +118,6 @@ class Crawler:
 
             # Thêm dữ liệu vào danh sách
             movieInfo = {
-            movieInfo = {
                 'ID Movie': movieId,
                 'Image URL': image_url,
                 'Title': title,
@@ -133,10 +132,7 @@ class Crawler:
                 'URL Movie': urlMovie,
                 'URL Trailer': urlTrailer
             }
-            data.append(movieInfo)
-            with open('episodes.json', 'a', encoding='utf-8') as f:
-                f.write(json.dumps(movieInfo, ensure_ascii=False) + '\n')
-            }
+
             data.append(movieInfo)
             with open('episodes.json', 'a', encoding='utf-8') as f:
                 f.write(json.dumps(movieInfo, ensure_ascii=False) + '\n')
