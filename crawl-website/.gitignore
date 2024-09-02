@@ -1,2 +1,4 @@
 /*.json
+/*.xlsx
 .venv
+config.ini
