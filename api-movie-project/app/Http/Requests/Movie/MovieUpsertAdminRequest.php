@@ -32,7 +32,7 @@ class MovieUpsertAdminRequest extends BaseRequest
             "release" => "required|string",
             "status" => "boolean",
             "categories.*" => "required|string|exists:categories,name",
-            "episodes_counter" => "required|numeric",
+            "episodes_counter" => "nullable|numeric",
             "description" => "required|string",
             "banner_image.*" =>  ["nullable", new UrlOrFileImage],
             "movie_image.*" =>  ["nullable", new UrlOrFileImage],
