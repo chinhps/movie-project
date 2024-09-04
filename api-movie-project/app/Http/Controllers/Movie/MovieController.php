@@ -25,8 +25,7 @@ class MovieController extends Controller
         private MovieInterface $movieRepository,
         private MovieEpisodeInterface $movieEpisodeRepository,
         private CategoryInterface $categoryRepository
-    ) {
-    }
+    ) {}
 
     # ADMIN
     public function movieListAdmin()
@@ -58,7 +57,7 @@ class MovieController extends Controller
             $categoryIdss = $this->categoryRepository->listIn($validated['categories'])
                 ->toArray();
 
-            $this->movieRepository->updateOrInsert($validated["id"] ?? null, [
+            $movie = $this->movieRepository->updateOrInsert($validated["id"] ?? null, [
                 "movie_name" => $validated["movie_name"],
                 "movie_name_other" => $validated["movie_name_other"],
                 "release" => $validated["release"],
@@ -73,7 +72,8 @@ class MovieController extends Controller
             ], $categoryIdss);
 
             DB::commit();
-            return BaseResponse::msg("Thao tác thành công!");
+            // return BaseResponse::msg("Thao tác thành công!");
+            return BaseResponse::data(["id" => $movie->id, "msg" => "Thao tác thành công!"], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return BaseResponse::msg($e->getMessage(), 422);
