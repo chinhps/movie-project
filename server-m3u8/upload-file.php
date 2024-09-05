@@ -1,6 +1,5 @@
 <?php
 $target_dir = "uploads/";
-$target_file = $target_dir . md5(uniqid(rand(), true)) . '.m3u8';
 $uploadOk = 1;
 $fileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
 
@@ -35,11 +34,19 @@ if ($uploadOk == 0) {
     echo json_encode($response_data);
 } else {
     // Verify the file and move it to the final directory
+    $id = $_POST['id'];
+    $folder = $target_dir . "$id/";
+    $target_file = $folder . md5(uniqid(rand(), true)) . '.m3u8';
+    if (!file_exists($folder)) {
+        mkdir($folder, 0777, true);
+    }
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         $response_data = array(
             'status' => 200,
+            'id' => $_POST['id'],
             'message' => 'File uploaded successfully',
-            'fileName' => getCurrentLink() . "/" . $target_file
+            'server_url' => getCurrentLink(),
+            'fileName' => "/" . $target_file
         );
         echo json_encode($response_data);
     } else {
