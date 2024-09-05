@@ -84,7 +84,7 @@ class Crawler:
     def crawl(self, url):
         html = self.download_url(url)
         soup = BeautifulSoup(html, 'html.parser')
-        page = int(self.getTotalPage(soup)) / 24 # 6 * 4
+        page = (int(self.getTotalPage(soup)) / 24) + 1 # 6 * 4
         currentPage = int(self.getCurrentPage(soup)) + 1
         if page > currentPage:
             self.add_url_to_visit(f"https://vuighe3.com/anime/trang-{currentPage}")
@@ -108,18 +108,28 @@ class Crawler:
             views = int(view_string_clean)
 
             responseDetail = requests.get(f"https://vuighe3.com{urlMovie}").content
+            responseDetail2 = requests.get(f"https://vuighe3.com{urlMovie}", headers={
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0"
+            }).content
+            movieDetail2 = BeautifulSoup(responseDetail2, 'html.parser')
+            banner_url = movieDetail2.find('img', class_="w-full rounded").get('src')
             movieDetail = BeautifulSoup(responseDetail, 'html.parser')
             genres = [a.text for a in movieDetail.select('.film-info-genre a')]
-            other_name = movieDetail.find_all('div', class_='film-info-genre')[1].text.strip()
+            
+            try:
+                other_name = movieDetail.find_all('div', class_='film-info-genre')[1].text.strip()
+            except IndexError:
+                other_name = title
+                
             description = movieDetail.find('div', class_='film-info-description').text.strip()
             div_tag = movieDetail.find('div', class_='container play')
             movieId = div_tag['data-id'] if div_tag else None
             urlTrailer = div_tag['data-trailer'] if div_tag else None
-
             # Thêm dữ liệu vào danh sách
             movieInfo = {
                 'ID Movie': movieId,
                 'Image URL': image_url,
+                'Banner URL': banner_url,
                 'Title': title,
                 'Movie name other': other_name,
                 'Genres': genres,
@@ -134,7 +144,7 @@ class Crawler:
             }
 
             data.append(movieInfo)
-            with open('episodes.json', 'a', encoding='utf-8') as f:
+            with open('movies.json', 'a', encoding='utf-8') as f:
                 f.write(json.dumps(movieInfo, ensure_ascii=False) + '\n')
             currentEpisode = None
             totalEpisodes = None
