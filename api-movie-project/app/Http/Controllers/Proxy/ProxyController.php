@@ -19,9 +19,12 @@ class ProxyController extends Controller
         if (!$data) {
             return abort(404);
         }
-        $dataExplode = explode("|", $data);
-        $url = $dataExplode[0];
-        $data = Http::withHeaders(json_decode($dataExplode[1], true))->get(($url));
+        // $dataExplode = explode("|", $data);
+        // $url = $dataExplode[0];
+        $data = Http::withHeaders([
+            "Origin" => "https://vuighe3.com/",
+            "Referer" => "https://vuighe3.com/"
+        ])->get(($data));
         return response($data->body())
             ->header('Content-Type', 'video/mp2t');
     }
@@ -43,7 +46,8 @@ class ProxyController extends Controller
             foreach ($lines as $line) {
                 if (strpos($line, 'video') === 0 && substr($line, -3) === '.ts') {
                     $video_file = trim($line);
-                    $code = Crypto::encrypt(implode("/", $m3u8Array) . "/" . $video_file . "|" . json_encode($validated['header_custom']), $this->KEY);
+                    $code = Crypto::encrypt(implode("/", $m3u8Array) . "/" . $video_file # . "|" . json_encode($validated['header_custom'])
+                    , $this->KEY);
                     $proxy_link = 'http://localhost:8000/api/proxy/get?code=' . $code;
                     echo $proxy_link . "\n";
                 } else {
