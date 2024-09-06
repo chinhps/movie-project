@@ -33,6 +33,7 @@ export interface IEpisodeResponse {
     movie: IMovieResponse,
     id: number,
     episode_name: string,
+    episode_image: string,
     created_at: string,
     slug: string,
     movie_sources: Array<IEpisodeSource>,
@@ -58,6 +59,8 @@ export interface IEpisodeSource {
 
 export interface IEpisode {
     episode_name: string,
+    episode_image: string,
+    views: number,
     slug: string,
 }
 

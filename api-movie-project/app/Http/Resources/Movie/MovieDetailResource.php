@@ -29,6 +29,7 @@ class MovieDetailResource extends MovieResource
             "movie_episodes" => $data->movieEpisodes?->map(function ($episode) {
                 return [
                     "episode_name" => $episode->episode_name,
+                    "episode_image" => $episode->episode_image,
                     "slug" => $episode->slug
                 ];
             }),

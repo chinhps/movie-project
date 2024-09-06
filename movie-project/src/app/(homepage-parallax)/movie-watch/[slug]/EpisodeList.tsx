@@ -7,12 +7,10 @@ import { useEffect, useRef } from "react";
 
 export default function EpisodeList({
   episodeList,
-  episodeImage,
   movieName,
   currentSlug,
 }: {
   episodeList?: Array<IEpisode>;
-  episodeImage: string;
   movieName: string;
   currentSlug: string;
 }) {
@@ -46,11 +44,11 @@ export default function EpisodeList({
             ref={episode.slug === currentSlug ? activeRef : null}
             key={episode.slug}
             active={episode.slug === currentSlug}
-            episodeImage={episodeImage}
+            episodeImage={episode.episode_image}
             episodeName={episode.episode_name}
             movieName={movieName}
             slug={episode.slug}
-            views={1000000}
+            views={episode.views}
           />
         ))}
       </TabPanel>

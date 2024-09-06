@@ -94,31 +94,31 @@ class M3u8:
 
         return updated_link
 
+def upload_image(image_url):
+    global ImageApiUrl
+    # Tải hình ảnh từ liên kết
+    image_response = requests.get(image_url)
+    if image_response.status_code == 200:
+        # Lưu hình ảnh tạm thời
+        with open("temp_image.jpg", "wb") as temp_image:
+            temp_image.write(image_response.content)
+        
+        # Upload hình ảnh lên server
+        with open("temp_image.jpg", "rb") as image_file:
+            files = {'fileToUpload': image_file}
+            response = requests.post(ImageApiUrl, files=files)
 
+        # remove temp
+        os.remove("temp_image.jpg")
+        # Kiểm tra kết quả
+        if response.status_code == 200:
+            res = response.json()
+            return f"{res['server_url']}/{res['link']}"
+        
+    return None
 class ImportDataMovie:
     
-    def upload_image(self, image_url):
-        global ImageApiUrl
-        # Tải hình ảnh từ liên kết
-        image_response = requests.get(image_url)
-        if image_response.status_code == 200:
-            # Lưu hình ảnh tạm thời
-            with open("temp_image.jpg", "wb") as temp_image:
-                temp_image.write(image_response.content)
-            
-            # Upload hình ảnh lên server
-            with open("temp_image.jpg", "rb") as image_file:
-                files = {'fileToUpload': image_file}
-                response = requests.post(ImageApiUrl, files=files)
 
-            # remove temp
-            os.remove("temp_image.jpg")
-            # Kiểm tra kết quả
-            if response.status_code == 200:
-                res = response.json()
-                return f"{res['server_url']}/{res['link']}"
-            
-        return None
 
     def handleData(self, dataFactory):
         
@@ -131,8 +131,8 @@ class ImportDataMovie:
             "categories": dataFactory['Genres'],
             "episodes_counter": None if dataFactory.get('Episodes max') == "???" or dataFactory.get('Episodes max') == "??" else dataFactory.get('Episodes max'),
             "description": dataFactory.get('Description') or "Chưa có thông tin",
-            "banner_image[0]": self.upload_image(dataFactory['Image URL']),
-            "movie_image[0]": self.upload_image(dataFactory['Image URL']) if dataFactory['Banner URL'] == "" else self.upload_image(dataFactory['Banner URL']),
+            "banner_image[0]": upload_image(dataFactory['Image URL']),
+            "movie_image[0]": upload_image(dataFactory['Image URL']) if dataFactory['Banner URL'] == "" else upload_image(dataFactory['Banner URL']),
         }
         data['dataDefault'] = json.dumps(data, ensure_ascii=False)
         data.update({f'categories[{i}]': category for i, category in enumerate(dataFactory['Genres'])})
@@ -179,6 +179,7 @@ class ImportDetailMovie:
                     "id": 0,
                     "idEpisode": None,
                     "episode_name": data['Episode name'],
+                    "episode_image": upload_image(data['Thumbnail medium']),
                     "status": True,
                     "servers": [
                         {

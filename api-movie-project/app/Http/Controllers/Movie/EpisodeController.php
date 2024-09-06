@@ -44,6 +44,8 @@ class EpisodeController extends Controller
                 $episode = $this->movieEpisodeRepository->updateOrInsert($episodeData['idEpisode'] ?? null, [
                     "episode_name" => $episodeData['episode_name'],
                     "status" => $episodeData['status'] ? "on" : "off",
+                    "episode_image" => $episodeData['episode_image'],
+                    "views" => 1,
                     "slug" => Str::slug($movie->movie_name . " " . $episodeData['episode_name'])
                 ], $movie);
 
@@ -51,6 +53,7 @@ class EpisodeController extends Controller
                     $this->episodeSourceRepository->updateOrInsert($source['idSource'] ?? null, [
                         "server_name" => $source['server_name'],
                         "source_link" => $source['server_source'],
+                        "is_m3u8" => 1,
                         "status" => $source['status'] ? "on" : "off"
                     ], $episode);
                 }
