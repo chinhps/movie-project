@@ -65,7 +65,7 @@ export default async function MovieWatchPage({
                     Từ vựng trong tập {episodeDetail.data.episode_name}
                   </Text>
                   <Stack mt={2}>
-                    {episodeDetail.data.vocabularies.map(
+                    {episodeDetail.data.vocabularies?.map(
                       (vocabulary, index) => (
                         <Text key={index}>
                           <Text as="b" mr={1}>

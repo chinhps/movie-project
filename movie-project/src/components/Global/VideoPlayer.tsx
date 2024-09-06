@@ -21,9 +21,15 @@ const VideoPlayer = React.forwardRef<
         video.src = src;
       } else if (Hls.isSupported()) {
         const PlyrDynamic = await import("plyr");
-        hlsRef.current = new Hls();
+        hlsRef.current = new Hls({
+          maxBufferLength: 30, // Độ dài bộ đệm tối đa (giây)
+          maxMaxBufferLength: 60, // Độ dài bộ đệm tối đa trong quá trình phát lại (giây)
+          maxBufferSize: 60 * 1000 * 1000, // Kích thước bộ đệm tối đa (byte)
+          maxBufferHole: 0.5, // Kích thước lỗ hổng bộ đệm tối đa (giây)
+        });
         hlsRef.current.loadSource(src);
         hlsRef.current.attachMedia(video);
+
         const Plyr2 = PlyrDynamic.default;
         playerRef.current = new Plyr2(video, { captions: { active: true } });
       }

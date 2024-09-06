@@ -17,7 +17,7 @@ function SubtitlesDesktop({
 
   const getCaptionForTime = (captions: Array<ISubtitle>, time: number) => {
     return (
-      captions.find(
+      captions?.find(
         (caption) => time >= caption.startTime && time <= caption.endTime
       )?.text || ""
     );
