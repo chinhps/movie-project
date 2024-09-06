@@ -18,6 +18,7 @@ class EpisodeDetailResource extends MovieResource
             "id" => $this->id,
             "episode_name" => $this->episode_name,
             "episode_image" => $this->episode_image,
+            "views" => $this->views,
             "created_at" => $this->created_at,
             "slug" => $this->slug,
             "movie_sources" => $this->movieSources->map(function ($source) {

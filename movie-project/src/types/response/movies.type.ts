@@ -34,6 +34,7 @@ export interface IEpisodeResponse {
     id: number,
     episode_name: string,
     episode_image: string,
+    views: number,
     created_at: string,
     slug: string,
     movie_sources: Array<IEpisodeSource>,

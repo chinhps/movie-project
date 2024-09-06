@@ -40,6 +40,7 @@ export default async function MovieWatchPage({
               movieSlug={episodeDetail.data.movie.slug}
               movieName={episodeDetail.data.movie.movie_name}
               episodeName={episodeDetail.data.episode_name}
+              views={episodeDetail.data.views}
               vtts={episodeDetail.data.subtitles.map(
                 (caption) => caption.vtt_link
               )}

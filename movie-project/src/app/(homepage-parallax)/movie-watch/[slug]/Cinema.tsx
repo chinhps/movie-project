@@ -36,6 +36,7 @@ const Cinema = ({
   movieSlug,
   vtts,
   createdAt,
+  views
 }: {
   movieSource: Array<IEpisodeSource>;
   episodes?: Array<IEpisode>;
@@ -45,6 +46,7 @@ const Cinema = ({
   movieSlug: string;
   vtts: string[];
   createdAt: string;
+  views: number
 }) => {
   const router = useRouter();
   const toast = useToast();
@@ -154,7 +156,7 @@ const Cinema = ({
           </Heading>
           <HStack spacing={1}>
             <Text color="var(--color-gray)">
-              {numberFormat(10000000, false)} Lượt xem -
+              {numberFormat(views, false)} Lượt xem -
             </Text>
             <Text color="var(--color-gray)">{dayjs(createdAt).fromNow()}</Text>
           </HStack>
