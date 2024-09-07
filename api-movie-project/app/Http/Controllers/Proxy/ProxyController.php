@@ -44,7 +44,7 @@ class ProxyController extends Controller
             // Tách từng dòng và in ra
             $lines = explode("\n", $data);
             foreach ($lines as $line) {
-                if (strpos($line, 'video') === 0 && substr($line, -3) === '.ts') {
+                if (substr($line, -3) === '.ts') {
                     $video_file = trim($line);
                     $code = Crypto::encrypt(implode("/", $m3u8Array) . "/" . $video_file # . "|" . json_encode($validated['header_custom'])
                     , $this->KEY);
