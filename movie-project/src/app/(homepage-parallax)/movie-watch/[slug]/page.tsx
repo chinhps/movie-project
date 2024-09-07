@@ -27,7 +27,7 @@ export default async function MovieWatchPage({
   if (typeof episodeDetail.data === "undefined") {
     return notFound();
   }
-  console.log(episodeDetail)
+
   return (
     <>
       <Box mx={{ base: "0.5rem", md: "2rem" }} mt="6rem">

@@ -26,6 +26,11 @@ import { useSession } from "next-auth/react";
 import BookmarkButton from "../../(homepage)/movie-detail/[slug]/BookmarkButton";
 import PlyrDualCaption from "@/components/Global/VideoPlayer/PlyrDualCaption";
 import dayjs from "dayjs";
+import "dayjs/locale/vi";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.locale("vi");
+dayjs.extend(relativeTime);
 
 const Cinema = ({
   movieSource,
@@ -147,9 +152,9 @@ const Cinema = ({
         <Box my={2} textAlign={{ base: "center", md: "left" }}>
           <Heading
             as="h1"
+            py={2}
             textTransform="uppercase"
-            fontSize={{ base: "1rem", md: "1.5rem" }}
-            lineHeight="2.8rem"
+            fontSize={{ base: "1rem", md: "1.3rem" }}
             fontWeight={700}
           >
             {movieName} - Tập {episodeName}
