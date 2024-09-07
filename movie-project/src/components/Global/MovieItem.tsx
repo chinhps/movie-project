@@ -153,14 +153,22 @@ export function MovieItemV2({
         </Box>
         <Stack pb={3} pt={5} align="center">
           <Stack direction="row" align="center" spacing={5}>
-            <Text fontSize="15px">{`${movie.movie_episode_laster?.episode_name}/${movie.episodes_counter}`}</Text>
+            <Stack direction="row" spacing={5} align="center" divider={<Text>/</Text>}>
+              <Text maxW="60px" noOfLines={1}>
+                {movie.movie_episode_laster?.episode_name ?? "Updating"}
+              </Text>
+              <Text fontSize="15px" noOfLines={1}>
+                {movie.episodes_counter ?? "??"}
+              </Text>
+            </Stack>
+
             <HStack spacing={1}>
               <FiStar />
               <Text color="gray.600">{movie.movie_rate_avg_rate ?? "N/A"}</Text>
             </HStack>
           </Stack>
           <Link href={"/movie-detail/" + movie.slug}>
-            <Heading fontSize="16px" fontWeight={800} noOfLines={1}>
+            <Heading fontSize="16px" fontWeight={800} noOfLines={1} maxW="180px">
               {movie.movie_name}
             </Heading>
           </Link>
