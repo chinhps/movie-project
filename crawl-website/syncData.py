@@ -201,20 +201,37 @@ class ImportDetailMovie:
         }).json()
         return response
     
+    def process_episode(self, line):
+        # Xử lý từng tập phim
+        data = json.loads(line.strip())
+        movieIdSync = self.getIdSync(data['ID Movie'])
+        print(movieIdSync)
+        if data['Sources m3u8'] is None:
+            with open("nonsource.json", 'a', encoding='utf-8') as file:
+                file.write(json.dumps({"movie_id": data['ID Movie'], "movie_sync_id": movieIdSync}, ensure_ascii=False) + '\n')
+        else:
+            try:
+                m3u8Url = M3u8(id=movieIdSync).run(source_url=data['Sources m3u8'], upload_url=M3u8ApiUrl)
+            except requests.exceptions.RequestException:
+                m3u8Url = "http://localhost:80"
+                
+            payload = self.handleData(movieIdSync, data=data, m3u8Url=m3u8Url)
+            res = self.uploadEpisode(payload)
+            print(res)
+    
     def run(self):
-        global M3u8ApiUrl
+        # Đọc file và xử lý từng dòng tập phim
         with open('episodes4.json', 'r', encoding='utf-8') as file:
-            for line in file:
-                data = json.loads(line.strip())
-                movieIdSync = self.getIdSync(data['ID Movie'])
-                if data['Sources m3u8'] is None:
-                    with open("nonsource.json", 'a', encoding='utf-8') as file:
-                        file.write(json.dumps({"movie_id": data['ID Movie'], "movie_sync_id": movieIdSync}, ensure_ascii=False) + '\n')
-                else:
-                    m3u8Url = M3u8(id=movieIdSync).run(source_url=data['Sources m3u8'],upload_url=M3u8ApiUrl)
-                    payload = self.handleData(movieIdSync, data=data, m3u8Url=m3u8Url)
-                    res = self.uploadEpisode(payload)
-                    print(res)
+            lines = file.readlines()
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
+            # Sử dụng đa luồng để xử lý nhiều tập phim cùng lúc
+            futures = [executor.submit(self.process_episode, line) for line in lines]
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    future.result()
+                except Exception as e:
+                    print(f"Lỗi xảy ra: {e}")
 
 if __name__ == '__main__':
     # ImportDataMovie().run()
