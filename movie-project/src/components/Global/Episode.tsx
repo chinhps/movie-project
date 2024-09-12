@@ -26,7 +26,7 @@ export default function Episode(props: IEpisodeProps) {
       variant="episode"
       isActive={props.active}
     >
-      {props.text}
+      {props.text.toString().split("-")[0] ?? props.text}
     </Button>
   );
 }

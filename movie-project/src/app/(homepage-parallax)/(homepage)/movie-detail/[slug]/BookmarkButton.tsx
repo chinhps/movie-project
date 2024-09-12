@@ -1,13 +1,13 @@
 "use client";
 import bookmarkApi from "@/apis/bookmark";
 import { checkBookmark, removeBookmark, saveBookmark } from "@/libs/function";
-import { Button, Icon, IconButton } from "@chakra-ui/react";
+import { Button, ButtonProps, Icon, IconButton } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 
-export interface IBookmarkButtonProps {
+export interface IBookmarkButtonProps extends ButtonProps {
   children?: React.ReactNode;
   slug: string;
 }
@@ -15,6 +15,7 @@ export interface IBookmarkButtonProps {
 export default function BookmarkButton({
   children,
   slug,
+  ...res
 }: IBookmarkButtonProps) {
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
   const session = useSession();
@@ -48,9 +49,7 @@ export default function BookmarkButton({
     <>
       {children ? (
         <Button
-          variant="secondButton"
-          w="100%"
-          padding="23px 0"
+          {...res}
           isLoading={bookmarkMutation.isPending}
           leftIcon={
             isBookmark ? (

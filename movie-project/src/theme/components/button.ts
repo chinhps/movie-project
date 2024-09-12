@@ -27,19 +27,27 @@ const customIconButton = defineStyle({
 
 const mainButton = defineStyle({
     background: 'var(--bg-section)',
-    color: 'var(--text-main)',
+    color: 'var(--anti-text-main)',
+    fontWeight: '600',
+    _disabled: {
+        background: 'var(--bg-gray)',
+    },
     _hover: {
-        background: 'var(--bg-main)',
+        background: 'var(--bg-section-hover)',
         color: 'var(--bg-navbar)',
     }
 });
 
 const secondButton = defineStyle({
-    background: 'var(--bg-navbar)',
+    display: "flex",
+    flexDirection: "column",
+    padding: "2rem",
+    gap: "0.5rem",
+    // background: 'var(--bg-section)',
     color: 'var(--text-main)',
     _hover: {
-        background: 'var(--bg-main)',
-        color: 'var(--bg-navbar)',
+        // background: 'var(--bg-main)',
+        color: 'var(--bg-section-hover)',
     }
 });
 

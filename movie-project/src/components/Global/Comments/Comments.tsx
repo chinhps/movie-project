@@ -30,7 +30,7 @@ export default function Comments({ slug }: ICommentsProps) {
   return (
     <>
       <VStack spacing={3} align="start">
-        <Text as="b" ml={2}>
+        <Text as="b">
           Bình luận (
           {numberFormat(
             commentsQuery.data?.pages[0]?.paginate?.total ?? 0,

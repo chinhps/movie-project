@@ -16,7 +16,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import EpisodeList from "./EpisodeList";
-import Comments from "../../(homepage)/movie-detail/[slug]/Comments";
+import Comments from "../../../../components/Global/Comments/Comments";
 
 export default async function MovieWatchPage({
   params,

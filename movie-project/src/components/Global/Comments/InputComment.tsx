@@ -77,20 +77,20 @@ export default function InputComment({
         <HStack
           rounded="xl"
           position="relative"
+          alignItems="end"
           bg="var(--bg-white)"
           height="100%"
-          p={5}
         >
           <FormControl isInvalid={!!errors.message}>
             <FormErrorMessage>
-              <Text ml={3}>{errors.message?.message}</Text>
+              <Text>{errors.message?.message}</Text>
             </FormErrorMessage>
             <Textarea
-              p={0}
+              p={5}
               rows={3}
               resize="none"
               placeholder="Viết gì đó tại đây..."
-              bg="var(--bg-white)"
+              border="1px solid var(--bg-tag)"
               variant="pill"
               defaultValue={value}
               {...register("message")}

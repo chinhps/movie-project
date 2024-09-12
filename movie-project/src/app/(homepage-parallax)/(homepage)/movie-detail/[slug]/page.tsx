@@ -14,12 +14,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { FiHeart } from "react-icons/fi";
-import Comments from "./Comments";
+import { FiFilm, FiMessageCircle, FiPlay } from "react-icons/fi";
 import WatchNow from "./WatchNow";
 import BookmarkButton from "./BookmarkButton";
 import { auth } from "@/auth";
 import { notFound } from "next/navigation";
+import Comments from "@/components/Global/Comments/Comments";
 
 export default async function MovieDetailPage({
   params,
@@ -36,14 +36,13 @@ export default async function MovieDetailPage({
   return (
     <Stack gap={3}>
       <Grid
-        templateColumns="repeat(5,1fr)"
-        gap={5}
-        bg="white"
+        templateColumns="repeat(12,1fr)"
+        gap={{ base: 0, md: 10 }}
+        width="100%"
         rounded={5}
-        p={5}
       >
-        <GridItem colSpan={{ base: 5, md: 1 }}>
-          <Box rounded="md" overflow="hidden">
+        <GridItem colSpan={{ base: 12, md: 3 }}>
+          <Box rounded="2xl" overflow="hidden">
             <Image
               src={movieDetail.data.movie_image}
               alt="movie avatar"
@@ -51,35 +50,57 @@ export default async function MovieDetailPage({
               height={700}
             />
           </Box>
-          <VStack spacing={2} mt={2}>
-            <WatchNow
-              slug={movieDetail.data.movie_episodes?.at(-1)?.slug ?? ""}
+          <HStack spacing={2} mt={5}>
+            <BookmarkButton
+              flex={1}
+              variant="secondButton"
+              slug={movieDetail.data.slug}
             >
-              XEM NGAY
-            </WatchNow>
-            <BookmarkButton slug={movieDetail.data.slug}>
               BOOKMARK
             </BookmarkButton>
             <Button
+              flex={1}
               variant="secondButton"
-              w="100%"
-              padding="23px 0"
-              leftIcon={<FiHeart />}
+              leftIcon={<FiMessageCircle />}
             >
               ĐÁNH GIÁ
             </Button>
-          </VStack>
+          </HStack>
         </GridItem>
         <GridItem
           as={Flex}
           flexDirection="column"
           gap={3}
-          colSpan={{ base: 5, md: 4 }}
+          colSpan={{ base: 12, md: 9 }}
         >
-          <Heading as="h1" fontSize="30px">
+          <Heading as="h1" fontSize="30px" py={3}>
             {movieDetail.data.movie_name}
           </Heading>
-          <VStack spacing={4} align="start">
+          <HStack w="100%">
+            <WatchNow
+              flex={1}
+              variant="mainButton"
+              leftIcon={<FiPlay />}
+              padding="1.5rem"
+              rounded="full"
+              maxWidth="350px"
+              slug={movieDetail.data.movie_episodes?.at(-1)?.slug ?? ""}
+            >
+              XEM NGAY
+            </WatchNow>
+            <Button
+              flex={1}
+              variant="mainButton"
+              leftIcon={<FiFilm />}
+              padding="1.5rem"
+              isDisabled={true}
+              rounded="full"
+              maxWidth="350px"
+            >
+              Trailer
+            </Button>
+          </HStack>
+          <VStack spacing={5} align="start">
             <Flex gap={4}>
               <Text as="b">Tên khác</Text> {movieDetail.data.movie_name}
             </Flex>
@@ -125,8 +146,8 @@ export default async function MovieDetailPage({
             <Text as="b">
               Danh sách tập ({movieDetail.data.movie_episodes?.length} tập)
             </Text>
-            <HStack wrap="wrap" maxH="150px" overflowY="auto">
-              {movieDetail.data.movie_episodes?.map((episode, index) => (
+            <HStack w="100%" wrap="wrap" maxH="150px" overflowY="auto">
+              {movieDetail.data.movie_episodes?.map((episode) => (
                 <Episode
                   key={episode.slug}
                   text={episode.episode_name}
@@ -138,7 +159,7 @@ export default async function MovieDetailPage({
           </VStack>
         </GridItem>
       </Grid>
-      <VStack spacing={3} align="start" bg="var(--bg-white)" rounded={5} p={5}>
+      <VStack spacing={3} align="start" bg="var(--bg-white)" rounded={5} my={5}>
         <Heading as="h2" fontSize="18px">
           Thông tin phim
         </Heading>
