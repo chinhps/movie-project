@@ -63,7 +63,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--bg-navbar);
+  background-color: var(--bg-main-second);
 }
 
 .show-text {
