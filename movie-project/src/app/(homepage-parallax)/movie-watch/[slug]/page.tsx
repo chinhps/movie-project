@@ -30,7 +30,7 @@ export default async function MovieWatchPage({
 
   return (
     <>
-      <Box mx={{ base: "0.5rem", md: "2rem" }} mt="6rem">
+      <Box mx={{ base: "0.5rem", md: "2rem" }}>
         <SimpleGrid columns={12} spacing="1rem" mb="1rem">
           <GridItem colSpan={{ base: 12, md: 9 }}>
             <Cinema

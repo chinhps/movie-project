@@ -64,22 +64,24 @@ const transparentButton = defineStyle({
 
 const transparentCinemaButton = defineStyle({
     background: 'var(--bg-transparent)',
-    color: 'var(--text-black)',
+    color: 'var(--anti-text-main)',
     border: "solid 1px var(--bg-gray)",
     rounded: "full",
     _hover: {
         background: 'var(--bg-main)',
-        color: 'var(--bg-navbar)',
+        border: "solid 1px var(--bg-gray)",
+        color: 'var(--bg-section-hover)',
     }
 });
 
 const cinemaButton = defineStyle({
     background: 'var(--bg-section)',
-    color: 'var(--text-main)',
+    color: 'var(--anti-text-main)',
     rounded: "full",
     _hover: {
-        background: 'var(--bg-white)',
-        color: 'var(--bg-navbar)',
+        background: 'var(--bg-main)',
+        border: "solid 1px var(--bg-gray)",
+        color: 'var(--bg-section-hover)',
     }
 });
 
