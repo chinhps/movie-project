@@ -114,8 +114,8 @@ html {
   }
   .active {
     border-radius: 5px;
-    color: var(--text-main) !important;
-    background-color: var(--bg-navbar);
+    color: var(--anti-text-main) !important;
+    background-color: var(--bg-main-second);
     &:hover {
       color: initial;
     }

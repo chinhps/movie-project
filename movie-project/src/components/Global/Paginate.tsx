@@ -94,7 +94,7 @@ export default function Paginate({
 function PaginatedItems({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Box as="li" color="white.100" className="page-paginate">
+      <Box as="li" className="page-paginate">
         {children}
       </Box>
     </>

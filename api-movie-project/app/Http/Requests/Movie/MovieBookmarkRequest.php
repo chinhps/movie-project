@@ -23,7 +23,8 @@ class MovieBookmarkRequest extends BaseRequest
     {
         return [
             "data" => "array",
-            "data.*.slug" => "exists:movies,slug",
+            "data.*.slug" => "required|string",
+            // "data.*.slug" => "exists:movies,slug",
         ];
     }
 
@@ -31,7 +32,7 @@ class MovieBookmarkRequest extends BaseRequest
     {
         return [
             "data" => "Dữ liệu phải dạng mảng",
-            "data.*.slug" => "Có tập phim không tồn tại",
+            // "data.*.slug" => "Có tập phim không tồn tại",
         ];
     }
 }

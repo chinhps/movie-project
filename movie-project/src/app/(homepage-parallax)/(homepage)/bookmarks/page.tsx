@@ -5,6 +5,7 @@ import Header from "@/components/Global/Header";
 import { MovieItemV2 } from "@/components/Global/MovieItem";
 import Paginate from "@/components/Global/Paginate";
 import HomeLayout from "@/components/Layouts/HomeLayout";
+import { Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
@@ -34,6 +35,9 @@ export default function BookmarkPage() {
   return (
     <>
       <Header>BOOKMARK CỦA BẠN</Header>
+      <Text fontSize="15px" my={2}>
+        Những phim bị xoá có thể không xuất hiện lại tại đây!
+      </Text>
       <HomeLayout mt={5}>
         {bookmarkQuery.isLoading &&
           new Array(10)
