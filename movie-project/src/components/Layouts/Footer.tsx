@@ -14,9 +14,13 @@ export default function Footer({ data }: { data: { [key: string]: string } }) {
     <>
       <Box
         as="footer"
+        position="relative"
         bg="var(--bg-main-second)"
-        color="var(--text-main)"
+        color="var(--anti-text-main)"
+        // height="400px"
+        overflow="hidden"
         mt={10}
+        pb={{base: 0, md: "10rem"}}
         py={8}
       >
         <Container size="md">
@@ -50,22 +54,34 @@ export default function Footer({ data }: { data: { [key: string]: string } }) {
               </Text>
               <Text fontWeight="normal">
                 The advertisements on the page are powered by another platform,
-                so be careful with the ad content. {data["BRAND"]} will not assume any
-                responsibility for advertisements.
+                so be careful with the ad content. {data["BRAND"]} will not
+                assume any responsibility for advertisements.
               </Text>
             </GridItem>
           </Grid>
+          <Box as="footer" py={2}>
+            <Text fontSize="13px" color="var(--anti-text-main)">
+              Copyright © 2024.{" "}
+              <Text as="span" textTransform="uppercase">
+                {data["DOMAIN"]}
+              </Text>
+              . All Rights Reserved.
+            </Text>
+          </Box>
         </Container>
+        <Heading
+          display={{ base: "none", md: "block" }}
+          position="absolute"
+          textTransform="uppercase"
+          fontSize="20rem"
+          textAlign="center"
+          left={0}
+          top="30%"
+          right={0}
+        >
+          {data["BRAND"]}
+        </Heading>
       </Box>
-      <Center as="footer" py={2} bg="var(--bg-footer)">
-        <Text fontSize="13px" color="var(--text-main)">
-          Copyright © 2024.{" "}
-          <Text as="span" textTransform="uppercase">
-            {data["DOMAIN"]}
-          </Text>
-          . All Rights Reserved.
-        </Text>
-      </Center>
     </>
   );
 }
