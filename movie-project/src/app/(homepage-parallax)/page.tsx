@@ -1,7 +1,7 @@
 import moviesApi from "@/apis/movie";
-import Banner from "@/components/Global/Banner";
 import Header from "@/components/Global/Header";
-import { MovieItemV2, MovieItemV3 } from "@/components/Global/MovieItem";
+import { MovieItemV2 } from "@/components/Global/MovieItem";
+import HeaderV2 from "@/components/Layouts/Header/HeaderV2";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import { Container } from "@chakra-ui/react";
 import Link from "next/link";
@@ -15,7 +15,8 @@ export default async function Home() {
   return (
     <>
       {/* <Bookmarks /> */}
-      <Banner />
+      {/* <Banner /> */}
+      <HeaderV2 />
       <Container size="md">
         <Header
           mb={3}

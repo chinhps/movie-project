@@ -125,20 +125,19 @@ export function MovieItemV2({
   return (
     <Center py={3}>
       <Box
-        role="group"
         p={2}
         w="full"
-        bg="white"
-        boxShadow="sm"
+        // bg="white"
+        // boxShadow="sm"
         rounded="lg"
         pos="relative"
         zIndex={1}
         px={3}
       >
         <Box rounded="xl" mt={-5} position="relative">
-          <Box position="absolute" right={3} top={0} zIndex={5}>
+          {/* <Box position="absolute" right={3} top={0} zIndex={5}>
             <MovieBookmarkItem slug={movie.slug} />
-          </Box>
+          </Box> */}
           <Link href={"/movie-detail/" + movie.slug}>
             <Box height={{ base: "190px", md: "300px" }}>
               <Image
@@ -153,7 +152,12 @@ export function MovieItemV2({
         </Box>
         <Stack pb={3} pt={5} align="center">
           <Stack direction="row" align="center" spacing={5}>
-            <Stack direction="row" spacing={5} align="center" divider={<Text>/</Text>}>
+            <Stack
+              direction="row"
+              spacing={5}
+              align="center"
+              divider={<Text>/</Text>}
+            >
               <Text maxW="60px" noOfLines={1}>
                 {movie.movie_episode_laster?.episode_name ?? "Updating"}
               </Text>
@@ -168,7 +172,12 @@ export function MovieItemV2({
             </HStack>
           </Stack>
           <Link href={"/movie-detail/" + movie.slug}>
-            <Heading fontSize="16px" fontWeight={800} noOfLines={1} maxW="180px">
+            <Heading
+              fontSize="16px"
+              fontWeight={800}
+              noOfLines={1}
+              maxW="180px"
+            >
               {movie.movie_name}
             </Heading>
           </Link>

@@ -1,0 +1,6 @@
+.word {
+    display: inline-block;
+    will-change: transform, filter, opacity;
+    margin-left: 0.5rem;
+    padding: 0.4rem 0;
+}

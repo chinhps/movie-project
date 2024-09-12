@@ -50,7 +50,7 @@ const transparentButton = defineStyle({
     rounded: "full",
     _hover: {
         background: 'var(--bg-main)',
-        color: 'var(--bg-navbar)',
+        color: 'var(--text-main)',
     }
 });
 

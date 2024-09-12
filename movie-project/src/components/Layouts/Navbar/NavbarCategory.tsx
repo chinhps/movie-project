@@ -63,11 +63,11 @@ export function CategoryItem({ text, href }: { text: string; href: string }) {
   return (
     <ListItem
       as="li"
-      color="var(--bg-navbar)"
+      color="var(--text-main)"
       my="auto"
       _hover={{
         backgroundColor: "var(--bg-main-second)",
-        color: "var(--text-main)",
+        color: "var(--anti-text-main)",
       }}
     >
       <Box

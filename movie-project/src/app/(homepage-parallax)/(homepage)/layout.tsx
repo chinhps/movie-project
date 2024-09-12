@@ -7,7 +7,7 @@ export default async function HomeLayout({
 }>) {
   return (
     <>
-      <Container size="md" mt="5rem" minH="90vh">
+      <Container size="md" minH="90vh">
         {children}
       </Container>
     </>

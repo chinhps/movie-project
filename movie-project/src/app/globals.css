@@ -7,15 +7,16 @@
   --bg-navbar-admin: #03033f;
   
   /* USER */
-  --text-main: #edf2f4;
+  --text-main: #1c1c1c;
+  --anti-text-main: #f1f1f1;
   --text-black: #111111;
   --text-gray: #3b3b3b;
   --text-btn: var(--bg-section);
-  --bg-navbar: #20242ceb;
+  --bg-navbar: #ffffff;
   --bg-main-second: #20242c;
   --bg-section: linear-gradient(45deg, #2C8CC2, #0BC4E2);
   --bg-header: #ef233c;
-  --bg-main: #edf2f4;
+  --bg-main: #ffffff;
   --bg-footer: #111111;
   --bg-white: #ffffff;
   --bg-gray: #696969;

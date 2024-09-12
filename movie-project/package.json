@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.3.4",
+    "@react-spring/web": "^9.7.4",
     "@tanstack/react-query": "^5.32.1",
     "chart.js": "^4.4.3",
     "dayjs": "^1.11.11",
