@@ -1,0 +1,66 @@
+services:    
+  mysql-movie:
+    image: mysql:8.0
+    container_name: mysql-movie-container
+    ports:
+      - 3308:3306
+    env_file:
+      - .env.docker
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    networks:
+      - movie_network
+
+  movie-laravel-backend:
+    container_name: movie-laravel-backend-container
+    build:
+      context: ./api-movie-project
+      dockerfile: prod.Dockerfile
+    env_file:
+      - .env.docker
+    environment:
+      - DB_HOST=mysql-movie
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=root
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - mysql-movie
+    command: 
+    - sh -c "while ! nc -z mysql-movie 3306; do sleep 2; done; php artisan migrate && php-fpm"
+    networks:
+      - movie_network
+
+  nginx-movie-laravel-backend:
+    build:
+      context: ./api-movie-project
+      dockerfile: nginx.Dockerfile
+    ports:
+      - 8000:80
+    depends_on:
+      - movie-laravel-backend
+    networks:
+      - movie_network
+
+  movie-nextjs-fronted:
+    container_name: movie-nextjs-fronted-container
+    build:
+      context: ./movie-project
+      dockerfile: prod.Dockerfile
+    env_file:
+      - .env.docker
+    depends_on:
+      - movie-laravel-backend
+    ports:
+      - 3000:3000
+    networks:
+      - movie_network
+
+networks:
+  movie_network:
+    name: movie_network
+    driver: bridge
+volumes:
+  mysql-movie-volume:
+  mysql-movie-volume-config:
