@@ -1,0 +1,88 @@
+services:    
+  mysql-movie:
+    image: mysql:8.0
+    container_name: mysql-movie-container
+    ports:
+      - 3308:3306
+    environment:
+      - MYSQL_DATABASE=movie
+      - MYSQL_ROOT_PASSWORD=Chinh@12345
+    volumes:
+      - mysql-movie-volume:/var/lib/mysql
+      - mysql-movie-volume-config:/etc/mysql
+    networks:
+      - movie_network
+
+  movie-laravel-backend:
+    container_name: movie-laravel-backend-container
+    build:
+      context: ./api-movie-project
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./api-movie-project/app:/var/www/app
+      - ./api-movie-project/bootstrap:/var/www/bootstrap
+      - ./api-movie-project/config:/var/www/config
+      - ./api-movie-project/database:/var/www/database
+      - ./api-movie-project/public:/var/www/public
+      - ./api-movie-project/resources:/var/www/resources
+      - ./api-movie-project/routes:/var/www/routes
+      - ./api-movie-project/storage:/var/www/storage
+      - ./api-movie-project/stubs:/var/www/stubs
+      - ./api-movie-project/tests:/var/www/tests
+      - ./api-movie-project/.env:/var/www/.env
+      # #
+      # - ./api-movie-project/vendor:/var/www/vendor
+
+    environment:
+      - DB_HOST=mysql-movie
+      - DB_PORT=3306
+      - DB_DATABASE=movie
+      - DB_USERNAME=root
+      - DB_PASSWORD=Chinh@12345
+    depends_on:
+      - mysql-movie
+    command: sh -c "while ! nc -z mysql-movie 3306; do sleep 2; done; php artisan migrate && php-fpm"
+    # ports:
+    #   - 9000:9000
+    networks:
+      - movie_network
+
+  nginx-movie-laravel-backend:
+    image: nginx:stable-alpine3.20-perl
+    volumes:
+      - ./api-movie-project/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./api-movie-project:/var/www
+    ports:
+      - 8000:80
+    depends_on:
+      - movie-laravel-backend
+    networks:
+      - movie_network
+
+  movie-nextjs-fronted:
+    container_name: movie-nextjs-fronted-container
+    build:
+      context: ./movie-project
+      dockerfile: dev.Dockerfile
+    env_file:
+      - .env.docker
+    volumes:
+      - ./movie-project/src:/app/src
+      - ./movie-project/public:/app/public
+      # #
+      # - ./movie-project/node_modules:/app/node_modules
+
+    depends_on:
+      - movie-laravel-backend
+    ports:
+      - 3000:3000
+    networks:
+      - movie_network
+
+networks:
+  movie_network:
+    name: movie_network
+    driver: bridge
+volumes:
+  mysql-movie-volume:
+  mysql-movie-volume-config:
