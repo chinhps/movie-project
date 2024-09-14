@@ -51,7 +51,7 @@ services:
     image: nginx:stable-alpine3.20-perl
     volumes:
       - ./api-movie-project/nginx/conf.d/:/etc/nginx/conf.d/
-      - ./api-movie-project:/var/www
+      - ./api-movie-project/public:/var/www/public
     ports:
       - 8000:80
     depends_on:
