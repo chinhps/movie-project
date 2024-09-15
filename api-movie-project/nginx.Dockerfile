@@ -1,6 +1,6 @@
 FROM nginx:stable-alpine3.20-perl
 
-COPY ./nginx /etc/nginx/conf.d/
+COPY ./nginx /etc/nginx
 COPY ./public /var/www
 
 WORKDIR /var/www

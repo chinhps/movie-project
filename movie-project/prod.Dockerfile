@@ -2,11 +2,6 @@ FROM node:22-alpine as base
 
 FROM base as builder
 WORKDIR /app
-
-# SETUP ENV
-ARG AUTH_SECRET
-ENV AUTH_SECRET=${AUTH_SECRET}
-
 COPY package*.json ./
 RUN npm ci
 
@@ -19,16 +14,27 @@ COPY next.config.mjs .
 COPY tailwind.config.ts .
 COPY postcss.config.js .
 
-RUN npm run build
+# # SETUP ENV
+COPY .env.production .
+# ARG AUTH_SECRET
+# ENV AUTH_SECRET=${AUTH_SECRET}
 
-FROM base AS runner
-WORKDIR /app
+# ARG API_BACKEND_CONTAINER
+# ENV API_BACKEND_CONTAINER=${API_BACKEND_CONTAINER}
 
-# CREATE NEW USER
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# ARG NEXT_PUBLIC_API_BACKEND
+# ENV NEXT_PUBLIC_API_BACKEND=${NEXT_PUBLIC_API_BACKEND}
 
-COPY --from=builder --chown=nextjs:nodejs . .
+# RUN npm run build
 
-CMD ["npm", "start"]
+# FROM base AS runner
+# WORKDIR /app
+
+# # CREATE NEW USER
+# RUN addgroup --system --gid 1001 nodejs
+# RUN adduser --system --uid 1001 nextjs
+# USER nextjs
+
+# COPY --from=builder --chown=nextjs:nodejs . .
+
+# CMD ["npm", "start"]

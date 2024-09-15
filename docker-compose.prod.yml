@@ -9,6 +9,9 @@ services:
     environment:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - mysql-movie-production-volume:/var/lib/mysql
+      - mysql-movie-production-volume-config:/etc/mysql
     networks:
       - movie_network
 
@@ -27,15 +30,16 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - mysql-movie
-    command: 
-    - sh -c "while ! nc -z mysql-movie 3306; do sleep 2; done; php artisan migrate && php-fpm"
+    command: >
+      sh -c "while ! nc -z mysql-movie 3306; do sleep 2; done; php artisan migrate && php-fpm"
     networks:
       - movie_network
 
   nginx-movie-laravel-backend:
-    build:
-      context: ./api-movie-project
-      dockerfile: nginx.Dockerfile
+    image: nginx:stable-alpine3.20-perl
+    volumes:
+      - ./api-movie-project/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./api-movie-project/public:/var/www/public
     ports:
       - 8000:80
     depends_on:
@@ -50,8 +54,10 @@ services:
       dockerfile: prod.Dockerfile
     env_file:
       - .env.docker
+    command: >
+      sh -c "while ! nc -z nginx-movie-laravel-backend 80; do sleep 2; done; npm run build && npm start"
     depends_on:
-      - movie-laravel-backend
+      - nginx-movie-laravel-backend
     ports:
       - 3000:3000
     networks:
@@ -62,5 +68,5 @@ networks:
     name: movie_network
     driver: bridge
 volumes:
-  mysql-movie-volume:
-  mysql-movie-volume-config:
+  mysql-movie-production-volume:
+  mysql-movie-production-volume-config:
