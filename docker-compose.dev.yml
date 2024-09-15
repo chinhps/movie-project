@@ -79,6 +79,32 @@ services:
     networks:
       - movie_network
 
+  media-server:
+    build:
+      context: ./server-m3u8
+      dockerfile: Dockerfile
+    container_name: media-server-container
+    volumes:
+      - ./server-m3u8/uploads:/var/www/uploads
+      - ./server-m3u8/uploads-images:/var/www/uploads-images
+      - ./server-m3u8/index.php:/var/www/index.php
+      - ./server-m3u8/upload-file.php:/var/www/upload-file.php
+      - ./server-m3u8/upload-image.php:/var/www/upload-image.php
+    networks:
+      - movie_network
+
+  nginx-media-server:
+    build:
+      context: ./server-m3u8
+      dockerfile: nginx.Dockerfile
+    container_name: nginx-media-server-container
+    volumes:
+      - ./server-m3u8/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 8080:80
+    networks:
+      - movie_network
+
 networks:
   movie_network:
     name: movie_network
