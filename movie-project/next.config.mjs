@@ -19,6 +19,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
       },
+      {
+        protocol: "http",
+        hostname: "nginx-media-server"
+      }
     ],
   },
 };

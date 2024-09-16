@@ -1,6 +1,6 @@
 FROM nginx:stable-alpine3.20-perl
 
-COPY ./nginx /etc/nginx
+COPY ./nginx/conf.d /etc/nginx/conf.d
 COPY ./public /var/www
 
 RUN chown -R nginx:nginx /var/www

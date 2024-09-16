@@ -34,6 +34,7 @@ services:
       # - ./api-movie-project/vendor:/var/www/vendor
 
     environment:
+      - API_SERVER_IMAGE=${API_SERVER_IMAGE}
       - DB_HOST=mysql-movie
       - DB_PORT=3306
       - DB_DATABASE=movie
@@ -59,26 +60,6 @@ services:
     networks:
       - movie_network
 
-  movie-nextjs-fronted:
-    container_name: movie-nextjs-fronted-container
-    build:
-      context: ./movie-project
-      dockerfile: dev.Dockerfile
-    env_file:
-      - .env.docker
-    volumes:
-      - ./movie-project/src:/app/src
-      - ./movie-project/public:/app/public
-      # #
-      # - ./movie-project/node_modules:/app/node_modules
-
-    depends_on:
-      - movie-laravel-backend
-    ports:
-      - 3000:3000
-    networks:
-      - movie_network
-
   media-server:
     build:
       context: ./server-m3u8
@@ -100,8 +81,34 @@ services:
     container_name: nginx-media-server-container
     volumes:
       - ./server-m3u8/nginx/conf.d:/etc/nginx/conf.d
+      - ./server-m3u8/uploads:/var/www/uploads
+      - ./server-m3u8/uploads-images:/var/www/uploads-images
+    depends_on:
+      - media-server
     ports:
       - 8080:80
+    networks:
+      - movie_network
+
+  movie-nextjs-fronted:
+    container_name: movie-nextjs-fronted-container
+    build:
+      context: ./movie-project
+      dockerfile: dev.Dockerfile
+    env_file:
+      - .env.docker
+    volumes:
+      - ./movie-project/src:/app/src
+      - ./movie-project/public:/app/public
+      - ./movie-project/next.config.mjs:/app/next.config.mjs
+      # #
+      # - ./movie-project/node_modules:/app/node_modules
+
+    depends_on:
+      - movie-laravel-backend
+      - nginx-media-server
+    ports:
+      - 3000:3000
     networks:
       - movie_network
 

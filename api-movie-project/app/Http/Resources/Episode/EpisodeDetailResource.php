@@ -24,7 +24,7 @@ class EpisodeDetailResource extends MovieResource
             "movie_sources" => $this->movieSources->map(function ($source) {
                 return [
                     "server_name" => $source->server_name,
-                    "source_link" => $source->source_link,
+                    "source_link" => $this->replaceDefault($source->source_link),
                     "is_m3u8" => $source->is_m3u8 === 1,
                 ];
             }),
@@ -38,6 +38,15 @@ class EpisodeDetailResource extends MovieResource
             "vocabularies" => json_decode($this->vocabulary?->vocabulary_list, true),
             "movie" => [...$this->customEpisode()],
         ];
+    }
+
+    private function replaceDefault($input) {
+        $prefix = "default";
+        $replacement = env("API_SERVER_IMAGE");
+        if (strpos($input, $prefix) === 0) {
+            return $replacement . substr($input, strlen($prefix));
+        }
+        return $input;
     }
 
     public function customEpisode()

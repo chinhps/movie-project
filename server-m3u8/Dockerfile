@@ -10,6 +10,8 @@ RUN apk update && apk add --no-cache \
 
 RUN docker-php-ext-install mbstring exif pcntl bcmath gd zip
 
+COPY ./nginx/conf.d /etc/nginx/conf.d
+
 WORKDIR /var/www
 
 COPY . .

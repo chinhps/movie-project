@@ -1,12 +1,12 @@
 FROM nginx:stable-alpine3.20-perl
 
-COPY ./nginx /etc/nginx
-COPY ./uploads /var/www/uploads
-COPY ./uploads-images /var/www/uploads-images
+COPY ./nginx/conf.d /etc/nginx/conf.d
+# COPY ./uploads /var/www/uploads
+# COPY ./uploads-images /var/www/uploads-images
 
 # COPY ./upload-file.php /var/www
 # COPY ./upload-image.php /var/www
-COPY ./index.php /var/www
+COPY ./index.php /var/www/
 
 RUN chown -R nginx:nginx /var/www
 

@@ -23,6 +23,7 @@ services:
     env_file:
       - .env.docker
     environment:
+      - API_SERVER_IMAGE=${API_SERVER_IMAGE}
       - DB_HOST=mysql-movie
       - DB_PORT=3306
       - DB_DATABASE=${DB_DATABASE}
@@ -36,14 +37,42 @@ services:
       - movie_network
 
   nginx-movie-laravel-backend:
-    image: nginx:stable-alpine3.20-perl
+    build:
+      context: ./api-movie-project
+      dockerfile: nginx.Dockerfile
     volumes:
-      - ./api-movie-project/nginx/conf.d/:/etc/nginx/conf.d/
-      - ./api-movie-project/public:/var/www/public
+      - ./api-movie-project/nginx/conf.d:/etc/nginx/conf.d
     ports:
       - 8000:80
     depends_on:
       - movie-laravel-backend
+    networks:
+      - movie_network
+
+  media-server:
+    build:
+      context: ./server-m3u8
+      dockerfile: Dockerfile
+    container_name: media-server-container
+    volumes:
+      - ./server-m3u8/uploads:/var/www/uploads
+      - ./server-m3u8/uploads-images:/var/www/uploads-images
+    networks:
+      - movie_network
+
+  nginx-media-server:
+    build:
+      context: ./server-m3u8
+      dockerfile: nginx.Dockerfile
+    container_name: nginx-media-server-container
+    volumes:
+      - ./server-m3u8/nginx/conf.d:/etc/nginx/conf.d
+      - ./server-m3u8/uploads:/var/www/uploads
+      - ./server-m3u8/uploads-images:/var/www/uploads-images
+    depends_on:
+      - media-server
+    ports:
+      - 8080:80
     networks:
       - movie_network
 
@@ -55,29 +84,16 @@ services:
     env_file:
       - .env.docker
     command: >
-      sh -c "while ! nc -z nginx-movie-laravel-backend 80; do sleep 2; done; npm run build && npm start"
+      sh -c "
+        while ! nc -z nginx-movie-laravel-backend 80; do sleep 2; done;
+        while ! nc -z nginx-media-server 80; do sleep 2; done;
+        npm run build && npm start
+      "
     depends_on:
       - nginx-movie-laravel-backend
+      - nginx-media-server
     ports:
       - 3000:3000
-    networks:
-      - movie_network
-
-  media-server:
-    build:
-      context: ./server-m3u8
-      dockerfile: Dockerfile
-    container_name: media-server-container
-    networks:
-      - movie_network
-
-  nginx-media-server:
-    build:
-      context: ./server-m3u8
-      dockerfile: nginx.Dockerfile
-    container_name: nginx-media-server-container
-    ports:
-      - 8080:80
     networks:
       - movie_network
 
