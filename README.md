@@ -9,6 +9,9 @@ Nginx
 Docker Frontend
 Nodejs v22.0
 
+CREATE .env.docker
+
+Generate auth secret: openssl rand -base64 32
 
 docker-compose --env-file .env.docker -f docker-compose.dev.yml up --build
 
