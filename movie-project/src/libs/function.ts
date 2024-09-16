@@ -60,8 +60,7 @@ export const removeBookmark = (bookmark: IBookmark) => {
   );
   const index = localBookmarks.findIndex((elm) => elm.slug === bookmark.slug);
   localBookmarks.splice(index, 1);
-  console.log(localBookmarks, index);
-  
+    
   localStorage.setItem("movie-bookmarks", JSON.stringify(localBookmarks));
 };
 

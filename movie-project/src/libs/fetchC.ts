@@ -19,9 +19,7 @@ interface Option extends RequestInit {
 }
 
 const fetchC = {
-    get: async (url: string, init?: Option) => {
-        console.log(process.env.API_BACKEND_CONTAINER, process.env.NEXT_PUBLIC_API_BACKEND, 'API_BACKEND_CONTAINER');
-        
+    get: async (url: string, init?: Option) => {        
         const queryString = "?" + (init?.params ? new URLSearchParams(init?.params).toString() : "");
         const data = await fetch((init?.BaseURL ?? initialFetch.BaseURL ?? process.env.NEXT_PUBLIC_API_BACKEND) + url + queryString, {
             headers: {

@@ -255,7 +255,6 @@ const VideoControlTimeline = ({
       };
     }
   }, [setIsFullScreen, videoRef]);
-  // console.log("timeline");
 
   return (
     <>

@@ -29,7 +29,6 @@ export default function PluginListPage() {
   /****----------------
    *      END-HOOK
   ----------------****/
-  console.log(session.data);
 
   return (
     <CardCollection title="Danh sách Plugin">

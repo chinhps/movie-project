@@ -63,7 +63,6 @@ export default function PluginUpsertPage({
    *      END-HOOK
   ----------------****/
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log("data", data);
     pluginMutation.mutate({ id: Number(id), data: data });
   };
 
