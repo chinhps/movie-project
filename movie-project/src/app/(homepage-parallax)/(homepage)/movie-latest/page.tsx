@@ -1,6 +1,6 @@
 import moviesApi from "@/apis/movie";
 import Header from "@/components/Global/Header";
-import { MovieItemV3 } from "@/components/Global/MovieItem";
+import { MovieItemV2 } from "@/components/Global/MovieItem";
 import Paginate from "@/components/Global/Paginate";
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import { Heading, Text } from "@chakra-ui/react";
@@ -23,7 +23,7 @@ export default async function MovieLatestPage({
       </Text>
       <HomeLayout>
         {moviesLatest.data.map((movie) => (
-          <MovieItemV3 key={movie.id} movie={movie} />
+          <MovieItemV2 key={movie.id} movie={movie} />
         ))}
       </HomeLayout>
       {moviesLatest.paginate && (
