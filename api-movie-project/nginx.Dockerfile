@@ -1,9 +1,12 @@
 FROM nginx:stable-alpine3.20-perl
 
-COPY ./nginx/conf.d /etc/nginx/conf.d
-COPY ./public /var/www
+COPY ./nginx/conf.d/ /etc/nginx/conf.d/
 
-RUN chown -R nginx:nginx /var/www
+RUN cd /etc/nginx/conf.d && rm -f default.conf
+
+COPY ./public /var/www/
+
+RUN chown -R nginx:nginx /var/www/
 
 WORKDIR /var/www
 

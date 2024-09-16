@@ -1,6 +1,9 @@
 FROM nginx:stable-alpine3.20-perl
 
-COPY ./nginx/conf.d /etc/nginx/conf.d
+COPY ./nginx/conf.d/ /etc/nginx/conf.d/
+
+RUN cd /etc/nginx/conf.d && rm -f default.conf
+
 # COPY ./uploads /var/www/uploads
 # COPY ./uploads-images /var/www/uploads-images
 
@@ -8,7 +11,7 @@ COPY ./nginx/conf.d /etc/nginx/conf.d
 # COPY ./upload-image.php /var/www
 COPY ./index.php /var/www/
 
-RUN chown -R nginx:nginx /var/www
+RUN chown -R nginx:nginx /var/www/
 
 WORKDIR /var/www
 
