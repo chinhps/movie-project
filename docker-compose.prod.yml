@@ -23,6 +23,9 @@ services:
     env_file:
       - .env.docker
     environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=${NEXT_PUBLIC_API_BACKEND}
       - API_SERVER_IMAGE=${API_SERVER_IMAGE}
       - DB_HOST=mysql-movie
       - DB_PORT=3306
@@ -31,8 +34,6 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - mysql-movie
-    command: >
-      sh -c "while ! nc -z mysql-movie 3306; do sleep 2; done; php artisan migrate && php-fpm"
     networks:
       - movie_network
 
@@ -82,12 +83,6 @@ services:
       dockerfile: prod.Dockerfile
     env_file:
       - .env.docker
-    command: >
-      sh -c "
-        while ! nc -z nginx-movie-laravel-backend 80; do sleep 2; done;
-        while ! nc -z nginx-media-server 80; do sleep 2; done;
-        npm run build && npm start
-      "
     depends_on:
       - nginx-movie-laravel-backend
       - nginx-media-server
