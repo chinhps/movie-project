@@ -21,9 +21,14 @@ jobs:
       uses: docker/setup-buildx-action@v3.6.1
       id: buildx
       
-    - name: Check repo
-      run: ls -la
-      
+    - name: Cache Docker layers
+      uses: actions/cache@v4.0.2
+      with: 
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+        
     - name: Build and push Docker movie-laravel-backend image
       uses: docker/build-push-action@v6.7.0
       id: docker_laravel_build
@@ -33,6 +38,8 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/movie-api-laravel:latest
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
         
     - name: Build and push Docker nginx-movie-laravel-backend image
       uses: docker/build-push-action@v6.7.0
@@ -43,6 +50,8 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-laravel:latest
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
 
     - name: Build and push Docker movie-media-server image
       uses: docker/build-push-action@v6.7.0
@@ -53,6 +62,8 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/movie-media-server:latest
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
 
     - name: Build and push Docker nginx-media-server image
       uses: docker/build-push-action@v6.7.0
@@ -63,6 +74,8 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-media-server:latest
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
 
     - name: Build and push Docker movie-nextjs-fronted image
       uses: docker/build-push-action@v6.7.0
@@ -73,6 +86,8 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/movie-nextjs-fronted:latest
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache
         
     - name: Verify
       run: |
