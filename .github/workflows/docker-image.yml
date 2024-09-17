@@ -43,8 +43,42 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-laravel:latest
+
+    - name: Build and push Docker movie-media-server image
+      uses: docker/build-push-action@v6.7.0
+      id: docker_media_server_build
+      with:
+        context: ./server-m3u8
+        file: ./server-m3u8/Dockerfile
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/movie-media-server:latest
+
+    - name: Build and push Docker nginx-media-server image
+      uses: docker/build-push-action@v6.7.0
+      id: docker_nginx_media_server_build
+      with:
+        context: ./server-m3u8
+        file: ./server-m3u8/nginx.Dockerfile
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-media-server:latest
+
+    - name: Build and push Docker movie-nextjs-fronted image
+      uses: docker/build-push-action@v6.7.0
+      id: docker_movie_nextjs_fontend
+      with:
+        context: ./movie-project
+        file: ./movie-project/prod.Dockerfile
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/movie-nextjs-fronted:latest
         
     - name: Verify
       run: |
         echo ${{ steps.docker_laravel_build.outputs.digest }} \
-        && echo ${{ steps.docker_nginx_laravel_build.outputs.digest }}
+        && echo ${{ steps.docker_nginx_laravel_build.outputs.digest }} \
+        && echo ${{ steps.docker_media_server_build.outputs.digest }} \
+        && echo ${{ steps.docker_nginx_media_server_build.outputs.digest }} \
+        && echo ${{ steps.docker_movie_nextjs_fontend.outputs.digest }}
+        
