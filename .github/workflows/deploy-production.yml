@@ -16,6 +16,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy & re-build in server
+      - name: Down&Remove container
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'mkdir chinhtest'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml down'
+
+      - name: Up container & re-build in server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml up --build -d'
