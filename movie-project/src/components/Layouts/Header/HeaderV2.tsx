@@ -25,7 +25,7 @@ function HeaderV2() {
       >
         <Heading as="h1" fontSize={{ base: "1.5rem", md: "2rem" }}>
           <BlurText text={"ANIMEFU NƠI VỪA ĐỂ GIẢI TRÍ"} delay={20} />
-          <BlurText text={"VÀ LÀ NỀN TẢNG HỌC TẬP TIẾNG ANH"} delay={40} />
+          <BlurText text={"VÀ LÀ NỀN TẢNG HỌC TẬP TIẾNG ANH 123"} delay={40} />
         </Heading>
         <GradientText
           colors={["#111111", "#2C8CC2"]} // Custom gradient colors
