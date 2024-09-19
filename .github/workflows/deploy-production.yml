@@ -15,6 +15,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Pull new code
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && git pull'
 
       - name: Down&Remove container
         run: |
