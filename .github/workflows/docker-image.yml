@@ -37,7 +37,7 @@ jobs:
           file: ./api-movie-project/prod.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-api-laravel:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -50,7 +50,7 @@ jobs:
           file: ./api-movie-project/nginx.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-laravel:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -63,7 +63,7 @@ jobs:
           file: ./server-m3u8/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-media-server:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -76,7 +76,7 @@ jobs:
           file: ./server-m3u8/nginx.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-media-server:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -89,7 +89,7 @@ jobs:
           file: ./movie-project/prod.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nextjs-fronted:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
