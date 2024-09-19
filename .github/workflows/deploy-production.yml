@@ -24,6 +24,10 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml down'
 
-      - name: Up container & re-build in server
+      - name: re-build in server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml up --build --no-cache -d'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml build --no-cache'
+
+      - name: Up container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml up -d'
