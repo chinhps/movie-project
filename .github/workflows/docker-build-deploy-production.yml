@@ -102,6 +102,10 @@ jobs:
           && echo ${{ steps.docker_nginx_media_server_build.outputs.digest }} \
           && echo ${{ steps.docker_movie_nextjs_fontend.outputs.digest }}
 
+  prebuild-container:
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
