@@ -1,4 +1,5 @@
 FROM node:22-alpine as base
+LABEL group=movie-image
 
 FROM base as builder
 WORKDIR /app

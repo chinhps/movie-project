@@ -1,4 +1,5 @@
 FROM nginx:stable-alpine3.20-perl
+LABEL group=movie-image
 
 COPY ./nginx/conf.d/ /etc/nginx/conf.d/
 

@@ -1,4 +1,5 @@
 FROM php:8.1.29-fpm-alpine
+LABEL group=movie-image
 
 RUN apk update && apk add --no-cache \
     libpng-dev \
