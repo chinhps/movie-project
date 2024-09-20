@@ -35,7 +35,7 @@ function HeaderV2() {
           maxWidth="550px"
           w="100%"
         >
-          Không chỉ là 234523423423 một nền tảng học tập mà còn là nơi mang lại niềm vui và
+          Không chỉ là 45 một nền tảng học tập mà còn là nơi mang lại niềm vui và
           động lực cho người dùng thông qua các bộ anime hấp dẫn.
         </GradientText>
         <Magnet padding={50} disabled={false}>

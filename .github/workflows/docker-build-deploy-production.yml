@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image && Deploy Production CI/CD
 
 on:
   push:
@@ -37,7 +37,7 @@ jobs:
           file: ./api-movie-project/prod.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-api-laravel:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -50,7 +50,7 @@ jobs:
           file: ./api-movie-project/nginx.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-laravel:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -63,7 +63,7 @@ jobs:
           file: ./server-m3u8/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-media-server:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -76,7 +76,7 @@ jobs:
           file: ./server-m3u8/nginx.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-media-server:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -89,7 +89,7 @@ jobs:
           file: ./movie-project/prod.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nextjs-fronted:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
@@ -101,3 +101,24 @@ jobs:
           && echo ${{ steps.docker_media_server_build.outputs.digest }} \
           && echo ${{ steps.docker_nginx_media_server_build.outputs.digest }} \
           && echo ${{ steps.docker_movie_nextjs_fontend.outputs.digest }}
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Pull new code
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && git pull'
+
+      - name: Down&Remove container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml down'
+
+      - name: re-build in server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml build --no-cache'
+
+      - name: Up container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml up -d'
