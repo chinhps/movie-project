@@ -1,30 +1,57 @@
-Project movie
+# MOVIE PROJECT
 
-Docker Backend:
-Linux
-MySQL
-PHP 8
-Nginx
+### Technical Stack
+- **Backend:** Laravel
+- **Frontend:** Next.js (Typescript), ChakraUI
+- **Server:** Nginx (API Gateway), Docker
+- **CI/CD:** Github Actions
+- **Crawl Data:** Python
 
-Docker Frontend
-Nodejs v22.0
+## How to use
+Create `.env.docker`
+```bash
+cp .env.docker.example .env.docker
+```
 
-CREATE .env.docker
+Generate auth secrec(AUTH_SECRET)
+```bash
+openssl rand -base64 32
+```
 
-Generate auth secret: openssl rand -base64 32
-
+### In developer 🛠
+```bash
 docker-compose --env-file .env.docker -f docker-compose.dev.yml up --build
+```
 
+### In production 🚀
+```bash
 docker-compose --env-file .env.docker -f docker-compose.prod.yml up --build
+```
+
+***
+
+### If you want to have data 🛢
+
+Use `db:seed` to make example data
+```bash
+docker exec -it [container_id_laravel] /bin/sh
+
+php artisan db:seed
+```
 
 
+Import your data
+```bash
 mysqldump -u [username] -p 
 --no-create-info 
 --order-by-primary 
---ignore-table=movie.migrations 
---ignore-table=movie.failed_jobs 
-movie > databackup.sql
+--ignore-table=[table].migrations 
+--ignore-table=[table].failed_jobs 
+[table] > [sql-file].sql
 
-docker cp backup.sql [container_id]:/backup.sql
-docker exec -it [container_id] /bin/bash
-mysql -u [username] -p [database_name] < /backup.sql
+docker cp [sql-file].sql [container_id]:/[sql-file].sql
+
+docker exec -it [container_id_mysql] /bin/bash
+
+mysql -u [username] -p [database_name] < /[sql-file].sql
+```
