@@ -36,7 +36,7 @@ function HeaderV2() {
           w="100%"
         >
           Không chỉ là một nền tảng học tập mà còn là nơi mang lại niềm vui và
-          động lực cho người dùng thông qua các bộ anime hấp dẫn.123
+          động lực cho người dùng thông qua các bộ anime hấp dẫn.1234
         </GradientText>
         <Magnet padding={50} disabled={false}>
           <Link href="/user-register">
