@@ -33,13 +33,15 @@ jobs:
         id: changes_api_movie_project
         run: |
           if git diff --quiet origin/main HEAD ./api-movie-project; then
-            echo "no changes" && echo "changed=false" >> $GITHUB_ENV;
+            echo "no changes"
+            echo "::set-output name=changed::false"
           else
-            echo "changes detected" && echo "changed=true" >> $GITHUB_ENV;
+            echo "changes detected"
+            echo "::set-output name=changed::true"
           fi
 
       - name: Build and push Docker movie-laravel-backend image
-        if: env.changed == 'true'
+        if: steps.changes_api_movie_project.outputs.changed == 'true'
         uses: docker/build-push-action@v6.7.0
         id: docker_laravel_build
         with:
@@ -53,7 +55,7 @@ jobs:
           # cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build and push Docker nginx-movie-laravel-backend image
-        if: env.changed == 'true'
+        if: steps.changes_api_movie_project.outputs.changed == 'true'
         uses: docker/build-push-action@v6.7.0
         id: docker_nginx_laravel_build
         with:
@@ -70,13 +72,15 @@ jobs:
         id: changes_docker_media_server_build
         run: |
           if git diff --quiet origin/main HEAD ./server-m3u8; then
-            echo "no changes" && echo "changed=false" >> $GITHUB_ENV;
+            echo "no changes"
+            echo "::set-output name=changed::false"
           else
-            echo "changes detected" && echo "changed=true" >> $GITHUB_ENV;
+            echo "changes detected"
+            echo "::set-output name=changed::true"
           fi
 
       - name: Build and push Docker movie-media-server image
-        if: env.changed == 'true'
+        if: steps.changes_docker_media_server_build.outputs.changed == 'true'
         uses: docker/build-push-action@v6.7.0
         id: docker_media_server_build
         with:
@@ -90,7 +94,7 @@ jobs:
           # cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build and push Docker nginx-media-server image
-        if: env.changed == 'true'
+        if: steps.changes_docker_media_server_build.outputs.changed == 'true'
         uses: docker/build-push-action@v6.7.0
         id: docker_nginx_media_server_build
         with:
@@ -107,13 +111,15 @@ jobs:
         id: changes_docker_movie_nextjs_frontend
         run: |
           if git diff --quiet origin/main HEAD ./movie-project; then
-            echo "no changes" && echo "changed=false" >> $GITHUB_ENV;
+            echo "no changes"
+            echo "::set-output name=changed::false"
           else
-            echo "changes detected" && echo "changed=true" >> $GITHUB_ENV;
+            echo "changes detected"
+            echo "::set-output name=changed::true"
           fi
 
       - name: Build and push Docker movie-nextjs-fronted image
-        if: env.changed == 'true'
+        if: steps.changes_docker_movie_nextjs_frontend.outputs.changed == 'true'
         uses: docker/build-push-action@v6.7.0
         id: docker_movie_nextjs_frontend
         with:
