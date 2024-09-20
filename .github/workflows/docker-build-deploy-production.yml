@@ -121,7 +121,7 @@ jobs:
       
       - name: Remove old images in group
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'docker rmi $(docker images --filter "label=group=<group_name>" -q)'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'images=$(docker images --filter "label=group=movie-image" -q) && [ -n "$images" ] && docker rmi $images || echo "No images found with label 'group=movie-image'"'
 
       - name: Re-build in server
         run: |
