@@ -6,6 +6,9 @@
 - **Server:** Nginx (API Gateway), Docker
 - **CI/CD:** Github Actions
 - **Crawl Data:** Python
+***
+
+**Live demo**: [Link](https://movie-demo.chinh.dev/)
 
 ## How to use
 Create `.env.docker`
