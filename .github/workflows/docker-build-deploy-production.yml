@@ -119,9 +119,13 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml down'
       
-      - name: Remove old images in group
+      # - name: Remove old images in group
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'images=$(docker images --filter "label=group=movie-image" -q) && [ -n "$images" ] && docker rmi $images || echo "No images found with label 'group=movie-image'"'
+      
+      - name: Pull new image in dockerhub
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'images=$(docker images --filter "label=group=movie-image" -q) && [ -n "$images" ] && docker rmi $images || echo "No images found with label 'group=movie-image'"'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'images=$(docker images --filter "label=group=movie-image" -q) && for image in $images; do image_name=$(docker inspect --format='{{.RepoTags}}' $image | tr -d '[]'); docker pull $image_name; done || echo "No images found with label 'group=movie-image'"'
 
       - name: Re-build in server
         run: |
