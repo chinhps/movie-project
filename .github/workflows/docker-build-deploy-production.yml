@@ -16,6 +16,10 @@ jobs:
       - name: Fetch main branch
         run: git fetch origin main
 
+      - name: Get previous commit
+        id: prev_commit
+        run: echo "::set-output name=commit::$(git rev-parse origin/main~1)"
+
       - name: Docker Login
         uses: docker/login-action@v3.3.0
         with:
@@ -37,7 +41,7 @@ jobs:
       - name: Check for changes in api-movie-project
         id: changes_api_movie_project
         run: |
-          if git diff --quiet origin/main HEAD ./api-movie-project; then
+          if git diff --quiet ${{ steps.prev_commit.outputs.commit }} HEAD ./api-movie-project; then
             echo "no changes"
             echo "::set-output name=changed::false"
           else
@@ -76,7 +80,7 @@ jobs:
       - name: Check for changes in server-m3u8
         id: changes_docker_media_server_build
         run: |
-          if git diff --quiet origin/main HEAD ./server-m3u8; then
+          if git diff --quiet ${{ steps.prev_commit.outputs.commit }} HEAD ./server-m3u8; then
             echo "no changes"
             echo "::set-output name=changed::false"
           else
@@ -115,7 +119,7 @@ jobs:
       - name: Check for changes in movie-project
         id: changes_docker_movie_nextjs_frontend
         run: |
-          if git diff --quiet origin/main HEAD ./movie-project; then
+          if git diff --quiet ${{ steps.prev_commit.outputs.commit }} HEAD ./movie-project; then
             echo "no changes"
             echo "::set-output name=changed::false"
           else
