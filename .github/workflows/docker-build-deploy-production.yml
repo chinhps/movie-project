@@ -32,7 +32,7 @@ jobs:
       - name: Check for changes in api-movie-project
         id: changes_api_movie_project
         run: |
-          if git diff --quiet HEAD^ HEAD ./api-movie-project; then
+          if git diff --quiet origin/main HEAD ./api-movie-project; then
             echo "no changes" && echo "changed=false" >> $GITHUB_ENV;
           else
             echo "changes detected" && echo "changed=true" >> $GITHUB_ENV;
@@ -69,7 +69,7 @@ jobs:
       - name: Check for changes in server-m3u8
         id: changes_docker_media_server_build
         run: |
-          if git diff --quiet HEAD^ HEAD ./server-m3u8; then
+          if git diff --quiet origin/main HEAD ./server-m3u8; then
             echo "no changes" && echo "changed=false" >> $GITHUB_ENV;
           else
             echo "changes detected" && echo "changed=true" >> $GITHUB_ENV;
@@ -106,12 +106,12 @@ jobs:
       - name: Check for changes in movie-project
         id: changes_docker_movie_nextjs_frontend
         run: |
-          if git diff --quiet HEAD^ HEAD ./movie-project; then
+          if git diff --quiet origin/main HEAD ./movie-project; then
             echo "no changes" && echo "changed=false" >> $GITHUB_ENV;
           else
             echo "changes detected" && echo "changed=true" >> $GITHUB_ENV;
           fi
-          
+
       - name: Build and push Docker movie-nextjs-fronted image
         if: env.changed == 'true'
         uses: docker/build-push-action@v6.7.0
