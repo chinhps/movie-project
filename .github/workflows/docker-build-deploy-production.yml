@@ -2,7 +2,13 @@ name: Docker Image && Deploy Production CI/CD
 
 on:
   push:
-    branches: ["production"]
+    paths-ignore:
+      - '!README.md'
+      - '!movies_erd.drawio'
+      - '!crawl-website/**'
+      - '!upload-video/**'
+    branches:
+      - "main"
 
 jobs:
   docker:
@@ -30,13 +36,13 @@ jobs:
         uses: docker/setup-buildx-action@v3.6.1
         id: buildx
 
-      # - name: Cache Docker layers
-      #   uses: actions/cache@v4.0.2
-      #   with:
-      #     path: /tmp/.buildx-cache
-      #     key: ${{ runner.os }}-buildx-${{ github.sha }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-buildx-
+      - name: Cache Docker layers
+        uses: actions/cache@v4.0.2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
       - name: Check for changes in api-movie-project
         id: changes_api_movie_project
@@ -60,8 +66,8 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-api-laravel:latest
-          # cache-from: type=local,src=/tmp/.buildx-cache
-          # cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build and push Docker nginx-movie-laravel-backend image
         if: steps.changes_api_movie_project.outputs.changed == 'true'
@@ -74,8 +80,8 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-laravel:latest
-          # cache-from: type=local,src=/tmp/.buildx-cache
-          # cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Check for changes in server-m3u8
         id: changes_docker_media_server_build
@@ -99,8 +105,8 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-media-server:latest
-          # cache-from: type=local,src=/tmp/.buildx-cache
-          # cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build and push Docker nginx-media-server image
         if: steps.changes_docker_media_server_build.outputs.changed == 'true'
@@ -113,8 +119,8 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nginx-media-server:latest
-          # cache-from: type=local,src=/tmp/.buildx-cache
-          # cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
           
       - name: Check for changes in movie-project
         id: changes_docker_movie_nextjs_frontend
@@ -138,8 +144,8 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nextjs-fronted:latest
-          # cache-from: type=local,src=/tmp/.buildx-cache
-          # cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Verify
         run: |
@@ -158,26 +164,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Pull new code
+      - name: Deploy
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && git pull'
-
-      - name: Down&Remove container
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml down'
-
-      # - name: Remove old images in group
-      #   run: |
-      #     ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'images=$(docker images --filter "label=group=movie-image" -q) && [ -n "$images" ] && docker rmi $images || echo "No images found with label 'group=movie-image'"'
-
-      - name: Pull new image in dockerhub
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'images=$(docker images --filter "label=group=movie-image" -q) && for image in $images; do image_name=$(docker inspect --format='{{.RepoTags}}' $image | tr -d '[]'); docker pull $image_name; done || echo "No images found with label 'group=movie-image'"'
-
-      - name: Re-build in server
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml build --no-cache'
-
-      - name: Up container
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} 'cd /home/admin/Websites/movie-project && docker-compose --env-file .env.docker -f docker-compose.prod.yml up -d'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} '/home/admin/Websites/deploy-movie.sh'
