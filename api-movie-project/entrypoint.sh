@@ -6,6 +6,6 @@ done
 
 php artisan key:generate
 
-php php artisan migrate --force
+php artisan migrate --force
 
 php-fpm

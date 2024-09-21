@@ -34,6 +34,7 @@ services:
       # - ./api-movie-project/vendor:/var/www/vendor
 
     environment:
+      - JWT_SECRET=${JWT_SECRET}
       - API_SERVER_IMAGE=${API_SERVER_IMAGE}
       - DB_HOST=mysql-movie
       - DB_PORT=3306

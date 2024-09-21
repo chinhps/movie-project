@@ -35,7 +35,7 @@ Route::prefix('m3u8/hls')->group(function () {
 });
 
 # ADMIN
-Route::middleware(['decryptToken:sanctum'])
+Route::middleware(['jwt.auth'])
     ->prefix('admin')
     ->group(function () {
         Route::prefix('categories')->group(function () {
@@ -72,7 +72,7 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
 });
 
-Route::middleware(['decryptToken:sanctum'])->prefix('user')->group(function () {
+Route::middleware(['jwt.auth'])->prefix('user')->group(function () {
     # Get infor current user
     Route::get('/infor', [AuthController::class, 'getCurrentInfo']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
@@ -87,7 +87,7 @@ Route::middleware(['decryptToken:sanctum'])->prefix('user')->group(function () {
     Route::get('notification', [NotificationController::class, 'list']);
 });
 
-Route::middleware(['decryptToken:sanctum'])->prefix('report')->group(function () {
+Route::middleware(['jwt.auth'])->prefix('report')->group(function () {
     # report comment
     Route::post('/comment',  [ReportController::class, 'comment']);
     # report movie
@@ -112,7 +112,7 @@ Route::prefix("movies")->group(function () {
     # history watch at client
     Route::post("histories-client", [MovieHistoryController::class, 'listClient']);
 
-    Route::middleware(['decryptToken:sanctum'])->group(function () {
+    Route::middleware(['jwt.auth'])->group(function () {
         # detail for user
         Route::get("detail-user/{slug}", [MovieController::class, 'movieDetail']);
         # history watch
@@ -129,7 +129,7 @@ Route::prefix("movies")->group(function () {
 Route::prefix("comments")->group(function () {
     Route::get("replies/{idComment}", [CommentController::class, 'replies']);
     Route::get("movie/{slug}", [CommentController::class, 'commentMovie']);
-    Route::middleware(['decryptToken:sanctum'])->group(function () {
+    Route::middleware(['jwt.auth'])->group(function () {
         Route::post("movie", [CommentController::class, 'addCommentMovie']);
     });
 });

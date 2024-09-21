@@ -4,14 +4,13 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BaseResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
-    public function logout(Request $request)
+    public function logout()
     {
         try {
-            $request->user()->currentAccessToken()->delete();
+            auth()->logout();
             return BaseResponse::data([
                 "msg" => "Đăng xuất thành công!"
             ]);
@@ -22,10 +21,10 @@ class LogoutController extends Controller
         }
     }
 
-    public function logoutAll(Request $request)
+    public function logoutAll()
     {
         try {
-            $request->user()->tokens()->delete();
+            auth()->logout();
             return BaseResponse::data([
                 "msg" => "Đăng xuất thành công!"
             ]);

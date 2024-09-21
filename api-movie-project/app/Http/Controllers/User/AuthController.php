@@ -15,8 +15,7 @@ class AuthController extends Controller
 {
     public function __construct(
         private UserInterface $userRepository,
-    ) {
-    }
+    ) {}
 
     public function getCurrentInfo(Request $request)
     {
@@ -68,7 +67,7 @@ class AuthController extends Controller
 
             DB::commit();
             return BaseResponse::data([
-                "token" => generateToken($user),
+                "token" => auth('api')->login($user),
                 "msg" => "Tạo tài thành công! Đang chuyển hướng...",
                 "user" => $this->user($user),
                 "status" => 200
@@ -84,7 +83,7 @@ class AuthController extends Controller
         $validated = $request->validated();
 
         # Login Fail
-        if (!Auth::attempt([
+        if (!$token = auth('api')->attempt([
             "username" => $validated['username'],
             "password" => $validated['password'],
             "login_type" => "account",
@@ -94,7 +93,7 @@ class AuthController extends Controller
 
         $user = Auth::user();
         return BaseResponse::data([
-            "token" => generateToken($user),
+            "token" => $token,
             "msg" => "Đăng nhập thành công! Đang chuyển hướng...",
             "user" => $this->user($user),
             "status" => 200
