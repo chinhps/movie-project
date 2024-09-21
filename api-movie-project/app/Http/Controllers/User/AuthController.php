@@ -19,22 +19,33 @@ class AuthController extends Controller
 
     public function getCurrentInfo(Request $request)
     {
-        $user = $request->user();
-        return BaseResponse::data($this->user($user));
+        /** @var \Tymon\JWTAuth\JWTGuard $auth */
+        $auth = auth('api');
+        $payload = $auth->payload();
+        $user = [
+            'providerId' => $payload->get('providerId'),
+            'name' => $payload->get('name'),
+            'username' => $payload->get('username'),
+            'level' => $payload->get('level'),
+            'role' => $payload->get('role'),
+            'created_at' => $payload->get('created_at'),
+            'avatar_url' => $payload->get('avatar_url')
+        ];
+        return BaseResponse::data($user);
     }
 
-    private function user(User $user)
-    {
-        return [
-            "providerId" => $user->provider_id,
-            "name" => $user->name,
-            "username" => $user->username,
-            "level" => $user->level,
-            "role" => $user->role,
-            "created_at" => $user->created_at,
-            "avatar_url" => $user->avatar_url
-        ];
-    }
+    // private function user(User $user)
+    // {
+    //     return [
+    //         "providerId" => $user->provider_id,
+    //         "name" => $user->name,
+    //         "username" => $user->username,
+    //         "level" => $user->level,
+    //         "role" => $user->role,
+    //         "created_at" => $user->created_at,
+    //         "avatar_url" => $user->avatar_url
+    //     ];
+    // }
 
     private function generateProviderId()
     {
@@ -92,10 +103,24 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+        $customClaims = [
+            'providerId' => $user->provider_id,
+            'name' => $user->name,
+            'username' => $user->username,
+            'level' => $user->level,
+            'role' => $user->role,
+            'created_at' => $user->created_at,
+            'avatar_url' => $user->avatar_url
+        ];
+        
+        /** @var \Tymon\JWTAuth\JWTGuard $auth */
+        $auth = auth('api');
+        $token = $auth->claims($customClaims)->fromUser($user);
+        
         return BaseResponse::data([
             "token" => $token,
             "msg" => "Đăng nhập thành công! Đang chuyển hướng...",
-            "user" => $this->user($user),
+            "user" => $customClaims,
             "status" => 200
         ]);
     }
