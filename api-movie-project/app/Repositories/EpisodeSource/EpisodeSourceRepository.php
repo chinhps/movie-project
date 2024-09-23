@@ -9,19 +9,19 @@ use Illuminate\Database\Eloquent\Model;
 class EpisodeSourceRepository implements EpisodeSourceInterface
 {
     public function __construct(
-        private Model $model = new MovieSource()
-    ) {
-    }
+        private Model $model = new MovieSource
+    ) {}
 
-    public function updateOrInsert(float|null $id, array $params, MovieEpisode $episode)
+    public function updateOrInsert(?float $id, array $params, MovieEpisode $episode)
     {
-        $model = new MovieSource();
+        $model = new MovieSource;
         if ($id) {
             $model = $this->model->find($id);
         }
         $model->fill($params);
         $model->movieEpisode()->associate($episode);
         $model->save();
+
         return $model;
     }
 }

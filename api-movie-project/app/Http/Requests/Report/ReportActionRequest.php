@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Report;
 
 use App\Http\Requests\BaseRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class ReportActionRequest extends BaseRequest
 {
@@ -23,9 +22,9 @@ class ReportActionRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "id" => "exists:movie_reports,id",
-            "status" => "in:pending,success,spam",
-            "report" => "nullable"
+            'id' => 'exists:movie_reports,id',
+            'status' => 'in:pending,success,spam',
+            'report' => 'nullable',
         ];
     }
 }

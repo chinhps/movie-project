@@ -17,9 +17,9 @@ class MovieSourceFactory extends Factory
     public function definition(): array
     {
         return [
-            "server_name" => fake()->randomElement(["POW", "TOK", "HYD", "GD"]),
-            "source_link" => "https://animehay.blog/pow.php?id=" . rand(61000, 62000),
-            "status" => fake()->randomElement(['on', 'off'])
+            'server_name' => fake()->randomElement(['POW', 'TOK', 'HYD', 'GD']),
+            'source_link' => 'https://animehay.blog/pow.php?id='.rand(61000, 62000),
+            'status' => fake()->randomElement(['on', 'off']),
         ];
     }
 }

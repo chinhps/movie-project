@@ -15,7 +15,7 @@ class EpisodeByMovieAdminResource extends BaseResource
     public function toArray(Request $request): array
     {
         return [
-            ...$this->movieEpisodes
+            ...$this->movieEpisodes,
         ];
     }
 }

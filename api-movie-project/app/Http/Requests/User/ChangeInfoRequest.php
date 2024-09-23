@@ -23,18 +23,18 @@ class ChangeInfoRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "avatar" => [new AvatarValidation],
-            "name" => "required|string|min:1|max:200",
-            "description" => "nullable|max:500"
+            'avatar' => [new AvatarValidation],
+            'name' => 'required|string|min:1|max:200',
+            'description' => 'nullable|max:500',
         ];
     }
 
     public function messages(): array
     {
         return [
-            "avatar.*" => "Ảnh đại diện của bạn không hợp lệ",
-            "name.*" => "Tên của bạn không phù hợp",
-            "description.max" => "Tiểu sử tối đa chỉ 500 ký tự"
+            'avatar.*' => 'Ảnh đại diện của bạn không hợp lệ',
+            'name.*' => 'Tên của bạn không phù hợp',
+            'description.max' => 'Tiểu sử tối đa chỉ 500 ký tự',
         ];
     }
 }

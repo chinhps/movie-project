@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('movie_reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("movie_id");
-            $table->foreign("movie_id")->references("id")->on("movies");
-            $table->text("description");
-            $table->enum("status", ["pending", "success", "spam"]);
+            $table->unsignedBigInteger('movie_id');
+            $table->foreign('movie_id')->references('id')->on('movies');
+            $table->text('description');
+            $table->enum('status', ['pending', 'success', 'spam']);
             $table->timestamps();
         });
     }

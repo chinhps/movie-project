@@ -21,12 +21,12 @@ class BaseResource extends JsonResource
     public function userCustom($user)
     {
         return [
-            "id" => $user->id,
-            "name" => $user->name,
-            "email" => $user->email,
-            "username" => $user->username,
-            "level" => $user->level,
-            "provider_id" => $user->provider_id,
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'username' => $user->username,
+            'level' => $user->level,
+            'provider_id' => $user->provider_id,
         ];
     }
 }
@@ -43,6 +43,6 @@ class CustomResourceCollection extends AnonymousResourceCollection
      */
     public function paginationInformation($request, $paginated, $default)
     {
-        return ["paginate" => Arr::only($default['meta'], ['current_page', 'total', 'last_page'])];
+        return ['paginate' => Arr::only($default['meta'], ['current_page', 'total', 'last_page'])];
     }
 }

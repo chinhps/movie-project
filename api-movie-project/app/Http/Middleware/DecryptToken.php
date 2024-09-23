@@ -10,8 +10,8 @@ class DecryptToken extends Middleware
 {
     public function handle($request, Closure $next, ...$guards)
     {
-        $token = str_replace('Bearer ', '', $request->header("Authorization"));
-        $request->headers->set('Authorization', 'Bearer ' . Crypto::decrypt($token, env('APP_KEY')));
+        $token = str_replace('Bearer ', '', $request->header('Authorization'));
+        $request->headers->set('Authorization', 'Bearer '.Crypto::decrypt($token, env('APP_KEY')));
         $result = parent::handle($request, $next, ...$guards);
 
         // $user = auth()->user();

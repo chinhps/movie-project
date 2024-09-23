@@ -25,17 +25,18 @@ class MovieUpsertAdminRequest extends BaseRequest
         $data = $this->all();
         $modifiedData = $this->mergeArrays(json_decode($data['dataDefault'], true), $data);
         $this->replace($modifiedData);
+
         return [
-            "id" => "nullable|exists:movies,id",
-            "movie_name" => "required|string",
-            "movie_name_other" => "nullable|string",
-            "release" => "required|string",
-            "status" => "boolean",
-            "categories.*" => "required|string", #|exists:categories,name",
-            "episodes_counter" => "nullable|numeric",
-            "description" => "required|string",
-            "banner_image.*" =>  ["nullable", new UrlOrFileImage],
-            "movie_image.*" =>  ["nullable", new UrlOrFileImage],
+            'id' => 'nullable|exists:movies,id',
+            'movie_name' => 'required|string',
+            'movie_name_other' => 'nullable|string',
+            'release' => 'required|string',
+            'status' => 'boolean',
+            'categories.*' => 'required|string', //|exists:categories,name",
+            'episodes_counter' => 'nullable|numeric',
+            'description' => 'required|string',
+            'banner_image.*' => ['nullable', new UrlOrFileImage],
+            'movie_image.*' => ['nullable', new UrlOrFileImage],
         ];
     }
 
@@ -46,7 +47,7 @@ class MovieUpsertAdminRequest extends BaseRequest
                 if (is_array($valueB) && is_array($arrayA[$key])) {
                     $arrayA[$key] = $this->mergeArrays($arrayA[$key], $valueB);
                 } else {
-                    if (gettype($arrayA[$key]) !== "boolean" && gettype($arrayA[$key]) !== "integer" && gettype($arrayA[$key]) !== "NULL") {
+                    if (gettype($arrayA[$key]) !== 'boolean' && gettype($arrayA[$key]) !== 'integer' && gettype($arrayA[$key]) !== 'NULL') {
                         $arrayA[$key] = $valueB;
                     }
                 }
@@ -54,6 +55,7 @@ class MovieUpsertAdminRequest extends BaseRequest
                 $arrayA[$key] = $valueB;
             }
         }
+
         return $arrayA;
     }
 }

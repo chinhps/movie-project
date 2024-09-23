@@ -18,7 +18,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\MakeRepository::class,
     ];
-    
 
     /**
      * Register the commands for the application.

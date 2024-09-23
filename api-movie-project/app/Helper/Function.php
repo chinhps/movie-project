@@ -11,7 +11,7 @@ use Illuminate\Pagination\Paginator;
 //     }
 // }
 
-if (!function_exists('RedisFormatPaginate')) {
+if (! function_exists('RedisFormatPaginate')) {
     function redisFormatPaginate(object $moviesArray)
     {
         return new LengthAwarePaginator(

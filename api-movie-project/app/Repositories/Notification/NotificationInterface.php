@@ -6,5 +6,5 @@ use App\Models\User;
 
 interface NotificationInterface
 {
-    public function list(User $user,float $number = 15);
+    public function list(User $user, float $number = 15);
 }

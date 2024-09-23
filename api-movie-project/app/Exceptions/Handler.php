@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
     {
         $this->renderable(function (AuthenticationException $e, $request) {
             if ($request->is('api/*')) {
-                return BaseResponse::msg("Bạn cần phải đăng nhập để thực hiện!", 401);
+                return BaseResponse::msg('Bạn cần phải đăng nhập để thực hiện!', 401);
             }
         });
         $this->reportable(function (Throwable $e) {

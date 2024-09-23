@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('movie_episodes', function (Blueprint $table) {
-            $table->string("episode_image")->nullable();
-            $table->float("views")->default(0);
+            $table->string('episode_image')->nullable();
+            $table->float('views')->default(0);
         });
     }
 

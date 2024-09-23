@@ -7,11 +7,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class PluginUpsertRequest extends FormRequest
 {
-
     public function __construct(
         private PluginInterface $pluginRepository
-    ) {
-    }
+    ) {}
 
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +26,8 @@ class PluginUpsertRequest extends FormRequest
      */
     public function rules(): array
     {
-        $idPlugin = $this->input("id");
-        $plugin = $this->pluginRepository->detail((int)$idPlugin);
+        $idPlugin = $this->input('id');
+        $plugin = $this->pluginRepository->detail((int) $idPlugin);
         $additionalRules = [];
 
         if (isset($plugin->form_public) && $plugin->form_public !== null) {
@@ -37,17 +35,18 @@ class PluginUpsertRequest extends FormRequest
             $additionalRules = array_merge($additionalRules, $this->extractInputRules($publicFormRules));
         }
 
-        return [...$additionalRules, "id" => "exists:plugins,id"];
+        return [...$additionalRules, 'id' => 'exists:plugins,id'];
     }
 
-    function extractInputRules($inputArray)
+    public function extractInputRules($inputArray)
     {
         $rules = [];
         foreach ($inputArray as $input) {
             if (isset($input['name'])) {
-                $rules["data." . $input['name']] = "required";
+                $rules['data.'.$input['name']] = 'required';
             }
         }
+
         return $rules;
     }
 }

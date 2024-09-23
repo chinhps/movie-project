@@ -23,9 +23,9 @@ class CommentReportRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "id" => "required|exists:comments,id",
-            "reason" => "required|array",
-            "reason.*" => [
+            'id' => 'required|exists:comments,id',
+            'reason' => 'required|array',
+            'reason.*' => [
                 'required',
                 Rule::in(['spam', 'trouble', 'other']),
             ],
@@ -35,8 +35,8 @@ class CommentReportRequest extends BaseRequest
     public function messages(): array
     {
         return [
-            "reason.*" => "Bạn cần phải chọn lý do!",
-            "id.*" => "Không tồn tại bình luận này nữa!"
+            'reason.*' => 'Bạn cần phải chọn lý do!',
+            'id.*' => 'Không tồn tại bình luận này nữa!',
         ];
     }
 }

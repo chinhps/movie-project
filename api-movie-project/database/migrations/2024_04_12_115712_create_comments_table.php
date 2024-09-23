@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("movie_id");
-            $table->foreign("movie_id")->references("id")->on("movies");
-            $table->unsignedBigInteger("user_id");
-            $table->foreign("user_id")->references("id")->on("users");
-            $table->text("message");
-            $table->enum("status", ["on", "off"]);
+            $table->unsignedBigInteger('movie_id');
+            $table->foreign('movie_id')->references('id')->on('movies');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->text('message');
+            $table->enum('status', ['on', 'off']);
             $table->timestamps();
         });
     }

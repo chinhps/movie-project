@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Redis;
 class MovieEpisodeRepository implements MovieEpisodeInterface
 {
     public function __construct(
-        private Model $model = new MovieEpisode()
+        private Model $model = new MovieEpisode
     ) {}
 
     public function moviesLatest(float $limit = 15)
@@ -23,7 +23,7 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
             ->with(['movie' => function ($query) {
                 $query->with('movieEpisodeLaster')
                     ->withCount(['movieEpisodes'])
-                    ->withAvg("movieRate", "rate");
+                    ->withAvg('movieRate', 'rate');
             }])
             ->paginate($limit);
     }
@@ -33,18 +33,18 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
         $cacheKey = "episode:watch:slug:$slug";
         $episode = Redis::get($cacheKey);
 
-        if (!$episode) {
+        if (! $episode) {
             $query = $this->model
                 ->where('slug', $slug)
                 ->where($filter)
                 ->with(['movieSources' => function ($query) {
-                    $query->where("status", "on");
+                    $query->where('status', 'on');
                 }, 'movie' => function ($query) {
                     $query->with(['movieEpisodes' => function ($query) {
                         $query->where('status', 'on');
                     }])
                         ->withCount('movieEpisodes')
-                        ->withAvg("movieRate", "rate");
+                        ->withAvg('movieRate', 'rate');
                 }, 'movieSubtitles', 'vocabulary']);
             $episode = $query->firstOrFail();
             Redis::set($cacheKey, json_encode($episode), 3600 * 12);
@@ -52,6 +52,7 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
         } else {
             $episode = json_decode($episode);
         }
+
         return $episode;
     }
 
@@ -59,14 +60,15 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
     {
         $query = $this->model->whereIn('slug', $array)->with(['movie' => function ($query) {
             $query->with('movieEpisodeLaster')
-                ->withAvg("movieRate", "rate");
+                ->withAvg('movieRate', 'rate');
         }])->paginate($limit);
+
         return $query;
     }
 
-    public function updateOrInsert(float|null $id, array $params, Movie $movie)
+    public function updateOrInsert(?float $id, array $params, Movie $movie)
     {
-        $model = new MovieEpisode();
+        $model = new MovieEpisode;
         if ($id) {
             $model = $this->model->find($id);
         }

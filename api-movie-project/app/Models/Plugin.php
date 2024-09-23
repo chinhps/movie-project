@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Plugin extends Model
 {
     use HasFactory;
-    protected $table = "plugins";
+
+    protected $table = 'plugins';
+
     protected $guarded = [];
 }

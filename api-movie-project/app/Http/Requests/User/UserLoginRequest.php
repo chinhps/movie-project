@@ -22,34 +22,34 @@ class UserLoginRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "username" => [
-                "bail",
+            'username' => [
+                'bail',
                 'required',
                 'min:5',
                 'max:255',
                 'alpha_num',
                 'exists:users',
             ],
-            "password" => [
-                "bail",
+            'password' => [
+                'bail',
                 'required',
                 'string',
                 'min:8',
-            ]
+            ],
         ];
     }
 
     public function messages(): array
     {
         return [
-            "username.required" => 'Bạn cần nhập Tài khoản',
-            "username.min" => 'Tài khoản quá ngắn 5 ký tự',
-            "username.max" => 'Tài khoản quá dài 255 ký tự',
-            "username.alpha_num" => 'Tên tài khoản phải là chữ và không có ký tự đặc biệt',
-            "username.exists" => 'Tài khoản không tồn tại',
-            "password.required" => 'Bạn cần nhập mật khẩu',
-            "password.string" => 'Mật khẩu của bạn phải là chuỗi',
-            "password.min" => 'Mật khẩu ít nhất phải 8 ký tự',
+            'username.required' => 'Bạn cần nhập Tài khoản',
+            'username.min' => 'Tài khoản quá ngắn 5 ký tự',
+            'username.max' => 'Tài khoản quá dài 255 ký tự',
+            'username.alpha_num' => 'Tên tài khoản phải là chữ và không có ký tự đặc biệt',
+            'username.exists' => 'Tài khoản không tồn tại',
+            'password.required' => 'Bạn cần nhập mật khẩu',
+            'password.string' => 'Mật khẩu của bạn phải là chuỗi',
+            'password.min' => 'Mật khẩu ít nhất phải 8 ký tự',
         ];
     }
 }

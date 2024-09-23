@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('movie_sources', function (Blueprint $table) {
-            $table->boolean("is_m3u8")->default(0);
+            $table->boolean('is_m3u8')->default(0);
         });
     }
 

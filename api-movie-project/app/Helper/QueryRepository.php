@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Builder;
 
-if (!function_exists('queryRepository')) {
+if (! function_exists('queryRepository')) {
     function queryRepository(Builder $model, array $filter)
     {
         if (isset($filter['query'])) {
@@ -23,14 +23,14 @@ if (!function_exists('queryRepository')) {
                 $filter['between']['column'],
                 [
                     $filter['between']['between'][0],
-                    $filter['between']['between'][1]
+                    $filter['between']['between'][1],
                 ]
             );
         }
-        if (!isset($filter['sort'])) {
+        if (! isset($filter['sort'])) {
             $model->orderBy('id', 'desc');
         }
 
         return $model;
-    };
+    }
 }

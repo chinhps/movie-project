@@ -15,11 +15,11 @@ class CategoryAdminResource extends BaseResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "slug" => $this->slug,
-            "description" => $this->description,
-            "movies_count" => $this->movies_count
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'description' => $this->description,
+            'movies_count' => $this->movies_count,
         ];
     }
 }

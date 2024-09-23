@@ -22,14 +22,14 @@ class MovieRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "slug" => "required|exists:movies,slug"
+            'slug' => 'required|exists:movies,slug',
         ];
     }
 
     public function messages(): array
     {
         return [
-            "slug.*" => "Lỗi liên quan đến slug"
+            'slug.*' => 'Lỗi liên quan đến slug',
         ];
     }
 }

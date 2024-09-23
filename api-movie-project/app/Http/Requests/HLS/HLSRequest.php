@@ -22,7 +22,7 @@ class HLSRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "link_m3u8" => "required|url",
+            'link_m3u8' => 'required|url',
         ];
     }
 }

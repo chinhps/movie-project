@@ -22,8 +22,7 @@ class UploadAvatarImgur implements ShouldQueue
         protected string $path,
         protected User $user,
         protected string $fileName
-    ) {
-    }
+    ) {}
 
     /**
      * Execute the job.
@@ -31,22 +30,22 @@ class UploadAvatarImgur implements ShouldQueue
     public function handle(): void
     {
         $fileContents = Storage::disk()->get($this->path);
-        # UPLOAD TO IMGUR
-        $client = new Client();
+        // UPLOAD TO IMGUR
+        $client = new Client;
         $headers = [
-            "Authorization" => "Client-ID " . env("API_KEY_IMGUR"),
-            "Accept"        => "application/json",
+            'Authorization' => 'Client-ID '.env('API_KEY_IMGUR'),
+            'Accept' => 'application/json',
         ];
 
-        $response = $client->request("POST", env("API_IMGUR_URL"), [
-            "headers" => $headers,
-            "multipart" => [
+        $response = $client->request('POST', env('API_IMGUR_URL'), [
+            'headers' => $headers,
+            'multipart' => [
                 [
-                    "name"     => "image",
-                    "contents" => $fileContents,
-                    "filename" => $this->fileName
+                    'name' => 'image',
+                    'contents' => $fileContents,
+                    'filename' => $this->fileName,
                 ],
-            ]
+            ],
         ])->getBody()->getContents();
 
         $data = json_decode((string) $response, true);

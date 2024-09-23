@@ -22,20 +22,20 @@ class ChangePasswordRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "current_password" => 'bail|required|min:8',
-            "password" => 'bail|required|min:8|max:255|confirmed',
+            'current_password' => 'bail|required|min:8',
+            'password' => 'bail|required|min:8|max:255|confirmed',
         ];
     }
 
     public function messages(): array
     {
         return [
-            "current_password.required" => 'Bạn cần nhập mật khẩu hiện tại',
-            "current_password.min" => 'Mật khẩu hiện tại ít nhất phải 8 ký tự',
-            "password.required" => 'Bạn cần nhập mật khẩu mới',
-            "password.min" => 'Mật khẩu ít nhất phải 8 ký tự',
-            "password.max" => 'Mật khẩu tối đa 255 ký tự',
-            "password.confirmed" => "Xác nhận lại mật khẩu không đúng!"
+            'current_password.required' => 'Bạn cần nhập mật khẩu hiện tại',
+            'current_password.min' => 'Mật khẩu hiện tại ít nhất phải 8 ký tự',
+            'password.required' => 'Bạn cần nhập mật khẩu mới',
+            'password.min' => 'Mật khẩu ít nhất phải 8 ký tự',
+            'password.max' => 'Mật khẩu tối đa 255 ký tự',
+            'password.confirmed' => 'Xác nhận lại mật khẩu không đúng!',
         ];
     }
 }

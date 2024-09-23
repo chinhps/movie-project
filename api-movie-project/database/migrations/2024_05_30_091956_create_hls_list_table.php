@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('hls_list', function (Blueprint $table) {
             $table->id();
-            $table->string("link_m3u8");
-            $table->string("slug")->unique();
-            $table->enum("status", ["on", "off"]);
+            $table->string('link_m3u8');
+            $table->string('slug')->unique();
+            $table->enum('status', ['on', 'off']);
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 class MakeRepository extends Command
 {
     protected $signature = 'make:repository {name}';
+
     protected $description = 'Create new repository';
 
     public function __construct()
@@ -25,12 +26,12 @@ class MakeRepository extends Command
             $nameBase = $files[count($files) - 1];
             $repositoryName = "{$nameBase}Repository";
 
-            $directoryPath = "";
+            $directoryPath = '';
             for ($i = 0; $i < count($files) - 1; $i++) {
-                $directoryPath .= $files[$i] . '/';
+                $directoryPath .= $files[$i].'/';
             }
 
-            if (!is_dir(app_path("Repositories/{$directoryPath}"))) {
+            if (! is_dir(app_path("Repositories/{$directoryPath}"))) {
                 mkdir(app_path("Repositories/{$directoryPath}"), 0755, true);
             }
 
@@ -45,6 +46,7 @@ class MakeRepository extends Command
 
         if (File::exists($repositoryPath)) {
             $this->error("Repository {$repositoryName} exists!");
+
             return;
         }
 

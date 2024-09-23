@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('asset_key')->unique();
             $table->string('asset_name')->nullable();
-            $table->json("asset_data");
-            $table->bigInteger("created_by")->nullable();
+            $table->json('asset_data');
+            $table->bigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

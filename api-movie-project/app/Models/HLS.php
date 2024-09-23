@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class HLS extends Model
 {
     use HasFactory;
-    protected $table = "hls_list";
+
+    protected $table = 'hls_list';
+
     protected $guarded = [];
 }

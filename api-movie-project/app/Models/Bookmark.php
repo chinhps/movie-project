@@ -9,15 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Bookmark extends Model
 {
     use HasFactory;
-    protected $table = "bookmarks";
+
+    protected $table = 'bookmarks';
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, "user_id");
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function movie(): BelongsTo
     {
-        return $this->belongsTo(Movie::class, "movie_id");
+        return $this->belongsTo(Movie::class, 'movie_id');
     }
 }

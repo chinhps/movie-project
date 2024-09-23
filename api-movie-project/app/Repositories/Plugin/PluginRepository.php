@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Redis;
 class PluginRepository implements PluginInterface
 {
     public function __construct(
-        private Model $model = new Plugin()
+        private Model $model = new Plugin
     ) {}
 
     public function getByKey(string $key)
@@ -17,9 +17,9 @@ class PluginRepository implements PluginInterface
         $cacheKey = "plugin:key:$key";
         $plugins = Redis::get($cacheKey);
 
-        if (!$plugins) {
+        if (! $plugins) {
             $data = $this->model->where('plugin_key', $key)->first();
-            if (!$data) {
+            if (! $data) {
                 return [];
             }
             $result = [];
@@ -30,6 +30,7 @@ class PluginRepository implements PluginInterface
         } else {
             $result = json_decode($plugins, true);
         }
+
         return $result;
     }
 
@@ -44,16 +45,20 @@ class PluginRepository implements PluginInterface
             return $this->model->get();
         }
         $query = $this->model->orderBy('id', 'desc');
+
         return $query->paginate($limit);
     }
 
-    public function updateOrInsert(float|null $id, array $params)
+    public function updateOrInsert(?float $id, array $params)
     {
-        if (!$id) return $this->model->create($params);
+        if (! $id) {
+            return $this->model->create($params);
+        }
 
         $data = $this->model->find($id);
         $data->fill($params);
         $data->save();
+
         return $data;
     }
 }

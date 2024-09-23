@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Episode;
 
 use App\Http\Requests\BaseRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class EpisodeUpsertAdminRequest extends BaseRequest
 {
@@ -23,15 +22,15 @@ class EpisodeUpsertAdminRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "idMovie" => "required|exists:movies,id",
-            "data.*.episode_name" => "required",
-            "data.*.episode_image" => "required",
-            "data.*.status" => "boolean",
-            "data.*.idEpisode" => "nullable|exists:movie_episodes,id",
-            "data.*.servers.*.status" => "boolean",
-            "data.*.servers.*.idSource" => "nullable|exists:movie_sources,id",
-            "data.*.servers.*.server_name" => "required",
-            "data.*.servers.*.server_source" => "required",
+            'idMovie' => 'required|exists:movies,id',
+            'data.*.episode_name' => 'required',
+            'data.*.episode_image' => 'required',
+            'data.*.status' => 'boolean',
+            'data.*.idEpisode' => 'nullable|exists:movie_episodes,id',
+            'data.*.servers.*.status' => 'boolean',
+            'data.*.servers.*.idSource' => 'nullable|exists:movie_sources,id',
+            'data.*.servers.*.server_name' => 'required',
+            'data.*.servers.*.server_source' => 'required',
         ];
     }
 }

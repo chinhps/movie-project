@@ -22,19 +22,19 @@ class CommentRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "message" => "required|max:450",
-            "slug" => "required|exists:movies,slug",
-            "parentId" => "nullable|exists:comments,id"
+            'message' => 'required|max:450',
+            'slug' => 'required|exists:movies,slug',
+            'parentId' => 'nullable|exists:comments,id',
         ];
     }
 
     public function messages(): array
     {
         return [
-            "message.required" => 'Bạn cần phải nhập bình luận gì đó',
-            "message.min" => 'Bạn bình luận hơi dài quá rồi :(',
-            "parentId.exists" => "Bình luận bạn đang trả lời không còn tồn tại!",
-            "slug.*" => "Lỗi liên quan đến slug"
+            'message.required' => 'Bạn cần phải nhập bình luận gì đó',
+            'message.min' => 'Bạn bình luận hơi dài quá rồi :(',
+            'parentId.exists' => 'Bình luận bạn đang trả lời không còn tồn tại!',
+            'slug.*' => 'Lỗi liên quan đến slug',
         ];
     }
 }

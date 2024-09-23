@@ -11,18 +11,17 @@ use Illuminate\Database\Eloquent\Model;
 class ReportRepository implements ReportInterface
 {
     public function __construct(
-        private Model $model = new MovieReport()
-    ) {
-    }
+        private Model $model = new MovieReport
+    ) {}
 
     public function commentList(float $limit = 15)
     {
-        return $this->model->with(["user", "reportable"])->where('reportable_type', "comment")->paginate($limit);
+        return $this->model->with(['user', 'reportable'])->where('reportable_type', 'comment')->paginate($limit);
     }
 
     public function movieList(float $limit = 15)
     {
-        return $this->model->with(["user", "reportable"])->where('reportable_type', "movie")->paginate($limit);
+        return $this->model->with(['user', 'reportable'])->where('reportable_type', 'movie')->paginate($limit);
     }
 
     public function detail(float $id)
@@ -32,20 +31,21 @@ class ReportRepository implements ReportInterface
 
     public function updateStatus(float $id, string $status)
     {
-        $data = $this->model->with(["user", "reportable"])->find($id);
+        $data = $this->model->with(['user', 'reportable'])->find($id);
         $data->status = $status;
         $data->save();
+
         return $data;
     }
 
     public function updateOrInsert(
-        float|null $id,
+        ?float $id,
         array $params,
         User $user,
         ?Movie $movie = null,
         ?Comment $comment = null
     ) {
-        $report = new MovieReport();
+        $report = new MovieReport;
         if ($id) {
             $report = $this->model->find($id);
         }
@@ -58,6 +58,7 @@ class ReportRepository implements ReportInterface
         if ($comment) {
             $comment->reports()->save($report);
         }
+
         return $report;
     }
 }

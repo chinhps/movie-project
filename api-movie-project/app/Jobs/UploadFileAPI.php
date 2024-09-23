@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -23,8 +22,7 @@ class UploadFileAPI implements ShouldQueue
         protected $tempFilePath,
         protected string $newName,
         protected string $oldName
-    ) {
-    }
+    ) {}
 
     /**
      * Execute the job.

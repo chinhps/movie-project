@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class MovieHistoryRepository implements MovieHistoryInterface
 {
     public function __construct(
-        private Model $model = new MovieHistory()
-    ) {
-    }
+        private Model $model = new MovieHistory
+    ) {}
 
     public function list(User $user, float $limit = 15)
     {
@@ -19,12 +18,12 @@ class MovieHistoryRepository implements MovieHistoryInterface
             ->where('user_id', $user->id)
             ->with(['movie' => function ($query) {
                 $query->with('movieEpisodeLaster')
-                    ->withAvg("movieRate", "rate");
+                    ->withAvg('movieRate', 'rate');
             }])
             ->paginate($limit);
     }
 
-    public function updateOrInsert(float|null $id, array $params)
+    public function updateOrInsert(?float $id, array $params)
     {
         return 123;
     }

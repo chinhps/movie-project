@@ -18,20 +18,20 @@ class EpisodeVocabularyFactory extends Factory
     {
         $vocabularySamples = [
             [
-                "vocabulary" => "cat",
-                "meaning" => "con mèo",
-                "part_of_speech" => "noun"
+                'vocabulary' => 'cat',
+                'meaning' => 'con mèo',
+                'part_of_speech' => 'noun',
             ],
             [
-                "vocabulary" => "word",
-                "meaning" => "từ ngữ",
-                "part_of_speech" => "noun"
+                'vocabulary' => 'word',
+                'meaning' => 'từ ngữ',
+                'part_of_speech' => 'noun',
             ],
         ];
 
         return [
-            "vocabulary_list" => json_encode($vocabularySamples),
-            "status" => fake()->randomElement(['on', 'off'])
+            'vocabulary_list' => json_encode($vocabularySamples),
+            'status' => fake()->randomElement(['on', 'off']),
         ];
     }
 }

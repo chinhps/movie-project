@@ -15,13 +15,13 @@ class PluginAdminResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "status" => $this->status,
-            "form_public" => json_decode($this->form_public, true),
-            "created_at" => $this->created_at,
-            "plugin_key" => $this->plugin_key,
-            "data_public" => json_decode($this->data_public, true),
+            'id' => $this->id,
+            'name' => $this->name,
+            'status' => $this->status,
+            'form_public' => json_decode($this->form_public, true),
+            'created_at' => $this->created_at,
+            'plugin_key' => $this->plugin_key,
+            'data_public' => json_decode($this->data_public, true),
         ];
     }
 }

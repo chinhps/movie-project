@@ -14,9 +14,9 @@ class MovieHistoryResource extends MovieResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "episode_name" => $this->episode_name,
-            "movie" => $this->custom($this->movie)
+            'id' => $this->id,
+            'episode_name' => $this->episode_name,
+            'movie' => $this->custom($this->movie),
         ];
     }
 }

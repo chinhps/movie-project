@@ -22,17 +22,17 @@ class CategoryUpsertRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "id" => "nullable|exists:categories,id",
-            "name" => "required",
-            "description" => "required"
+            'id' => 'nullable|exists:categories,id',
+            'name' => 'required',
+            'description' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            "name.required" => "Bạn cần nhập tên thể loại",
-            "description.required" => "Bạn cần nhập nội dung"
+            'name.required' => 'Bạn cần nhập tên thể loại',
+            'description.required' => 'Bạn cần nhập nội dung',
         ];
     }
 }

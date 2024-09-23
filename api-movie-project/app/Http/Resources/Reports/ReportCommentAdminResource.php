@@ -15,15 +15,15 @@ class ReportCommentAdminResource extends BaseResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "description" => json_decode($this->description, true),
-            "status" => $this->status,
-            "user" => $this->userCustom($this->user),
-            "comment" => [
-                "id" => $this->reportable->id,
-                "message" => $this->reportable->message,
-                "status" => $this->reportable->status,
-            ]
+            'id' => $this->id,
+            'description' => json_decode($this->description, true),
+            'status' => $this->status,
+            'user' => $this->userCustom($this->user),
+            'comment' => [
+                'id' => $this->reportable->id,
+                'message' => $this->reportable->message,
+                'status' => $this->reportable->status,
+            ],
         ];
     }
 }

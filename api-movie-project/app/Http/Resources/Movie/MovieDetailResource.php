@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class MovieDetailResource extends MovieResource
 {
-
     public function __construct(
         private $data,
     ) {}
@@ -25,20 +24,20 @@ class MovieDetailResource extends MovieResource
     {
         return [
             ...$this->custom($data),
-            "movie_episodes" => ($data->movieEpisodes ?? collect($data->movie_episodes))?->map(function ($episode) {
+            'movie_episodes' => ($data->movieEpisodes ?? collect($data->movie_episodes))?->map(function ($episode) {
                 return [
-                    "episode_name" => $episode->episode_name,
-                    "episode_image" => $episode->episode_image,
-                    "slug" => $episode->slug
+                    'episode_name' => $episode->episode_name,
+                    'episode_image' => $episode->episode_image,
+                    'slug' => $episode->slug,
                 ];
             }),
-            "categories" => collect($data->categories)?->map(function ($category) {
+            'categories' => collect($data->categories)?->map(function ($category) {
                 return [
-                    "name" => $category->name,
-                    "slug" => $category->slug
+                    'name' => $category->name,
+                    'slug' => $category->slug,
                 ];
             }),
-            "movie_rate_count" => $data->movie_rate_count
+            'movie_rate_count' => $data->movie_rate_count,
         ];
     }
 }

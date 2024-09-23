@@ -22,16 +22,16 @@ class MovieHistoryRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "data" => "array",
-            "data.*.slug" => "exists:movie_episodes,slug",
+            'data' => 'array',
+            'data.*.slug' => 'exists:movie_episodes,slug',
         ];
     }
 
     public function messages()
     {
         return [
-            "data" => "Dữ liệu phải dạng mảng",
-            "data.*.slug" => "Có tập phim không tồn tại",
+            'data' => 'Dữ liệu phải dạng mảng',
+            'data.*.slug' => 'Có tập phim không tồn tại',
         ];
     }
 }

@@ -9,16 +9,17 @@ use Illuminate\Support\Facades\Redis;
 class MovieRepository implements MovieInterface
 {
     public function __construct(
-        private Model $model = new Movie()
+        private Model $model = new Movie
     ) {}
 
     public function autoBannerMovie()
     {
         $query = $this->model
             ->with('movieEpisodeLaster')
-            ->withAvg("movieRate", "rate")
-            ->whereNotNull("banner_image")
-            ->orderBy("id", "desc");
+            ->withAvg('movieRate', 'rate')
+            ->whereNotNull('banner_image')
+            ->orderBy('id', 'desc');
+
         return $query->limit(5)->get();
     }
 
@@ -29,10 +30,10 @@ class MovieRepository implements MovieInterface
         $cacheKey = "movie:all:{$filter2}:page:$page";
         $movies = Redis::get($cacheKey);
 
-        if (!$movies) {
+        if (! $movies) {
             $query = $this->model
                 ->with('movieEpisodeLaster')
-                ->withAvg("movieRate", "rate");
+                ->withAvg('movieRate', 'rate');
 
             $query = queryRepository($query, $filter);
             $movies = $query->paginate($limit);
@@ -48,6 +49,7 @@ class MovieRepository implements MovieInterface
     public function detail(float $id)
     {
         $query = $this->model->where('id', $id)->with(['categories', 'movieEpisodes.movieSources']);
+
         return $query->firstOrFail();
     }
 
@@ -56,48 +58,52 @@ class MovieRepository implements MovieInterface
         $cacheKey = "movie:detail:$slug";
         $movie = Redis::get($cacheKey);
 
-        if (!$movie) {
+        if (! $movie) {
             $query = $this->model
-                ->where("slug", $slug)
+                ->where('slug', $slug)
                 ->with(['movieEpisodeLaster', 'categories', 'movieEpisodes' => function ($query) {
                     $query->where('status', 'on');
                 }])
                 ->withCount('movieRate')
-                ->withAvg("movieRate", "rate");
+                ->withAvg('movieRate', 'rate');
 
             $movie = $query->firstOrFail();
             Redis::set($cacheKey, json_encode($movie), 3600 * 12);
         } else {
             $movie = json_decode($movie);
         }
+
         return $movie;
     }
 
     public function getBySlug(string $slug)
     {
         $query = $this->model
-            ->where("slug", $slug)
+            ->where('slug', $slug)
             ->with(['movieEpisodeLaster'])
-            ->withAvg("movieRate", "rate");
+            ->withAvg('movieRate', 'rate');
+
         return $query->firstOrFail();
     }
 
     public function getListHistory(array $array, float $limit = 15)
     {
         $query = $this->model->whereIn('slug', $array)->with('movieEpisodeLaster')
-            ->withAvg("movieRate", "rate")->paginate($limit);
+            ->withAvg('movieRate', 'rate')->paginate($limit);
+
         return $query;
     }
 
-    public function updateOrInsert(float|null $id, array $params, array $categoryIds = [])
+    public function updateOrInsert(?float $id, array $params, array $categoryIds = [])
     {
-        $model = new Movie();
+        $model = new Movie;
         if ($id) {
             $model = $this->model->find($id);
         }
         $model->fill($params);
         $model->save();
         $model->categories()->sync($categoryIds);
+
         return $model;
     }
 }

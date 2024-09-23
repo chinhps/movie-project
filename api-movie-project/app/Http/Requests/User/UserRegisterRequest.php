@@ -22,9 +22,9 @@ class UserRegisterRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "username" => "bail|required|alpha_num|min:5|max:255|unique:users",
-            "password" => "bail|required|string|min:8|confirmed",
-            "email" => "nullable|email|unique:users"
+            'username' => 'bail|required|alpha_num|min:5|max:255|unique:users',
+            'password' => 'bail|required|string|min:8|confirmed',
+            'email' => 'nullable|email|unique:users',
         ];
     }
 

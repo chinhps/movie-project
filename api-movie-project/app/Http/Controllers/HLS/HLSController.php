@@ -12,15 +12,14 @@ use Illuminate\Support\Str;
 
 class HLSController extends Controller
 {
-
     public function __construct(
         private HLSInterface $HLSRepository
-    ) {
-    }
+    ) {}
 
     public function get($slug)
     {
         $data = $this->HLSRepository->detail($slug);
+
         return new HLSResource($data);
     }
 
@@ -32,17 +31,19 @@ class HLSController extends Controller
             DB::beginTransaction();
             $slug = Str::random(25);
             $this->HLSRepository->updateOrInsert(null, [
-                "link_m3u8" => $validated['link_m3u8'],
-                "status" => "on",
-                "slug" => $slug
+                'link_m3u8' => $validated['link_m3u8'],
+                'status' => 'on',
+                'slug' => $slug,
             ]);
             DB::commit();
+
             return BaseResponse::data([
-                "slug" => $slug,
-                "message" => "Tạo thành công!"
+                'slug' => $slug,
+                'message' => 'Tạo thành công!',
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return BaseResponse::msg($e->getMessage(), 422);
         }
     }

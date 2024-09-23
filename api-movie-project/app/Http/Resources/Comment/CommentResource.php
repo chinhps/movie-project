@@ -15,14 +15,14 @@ class CommentResource extends BaseResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "message" => $this->message,
-            "user" => [
-                "name" => $this->user->name,
-                "level" => $this->user->level,
+            'id' => $this->id,
+            'message' => $this->message,
+            'user' => [
+                'name' => $this->user->name,
+                'level' => $this->user->level,
             ],
-            "replies_count" => $this->replies_count,
-            "created_at" => $this->created_at
+            'replies_count' => $this->replies_count,
+            'created_at' => $this->created_at,
         ];
     }
 }

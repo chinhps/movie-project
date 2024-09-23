@@ -23,20 +23,20 @@ class MovieReportRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "reason" => "required|array",
-            "reason.*" => [
+            'reason' => 'required|array',
+            'reason.*' => [
                 'required',
                 Rule::in(['vietsub', 'wrong_episode', 'cantWatch']),
             ],
-            "slug" => "required|exists:movies,slug"
+            'slug' => 'required|exists:movies,slug',
         ];
     }
 
     public function messages(): array
     {
         return [
-            "reason.*" => 'Bạn cần phải chọn lý do!',
-            "slug.*" => "Lỗi liên quan đến slug"
+            'reason.*' => 'Bạn cần phải chọn lý do!',
+            'slug.*' => 'Lỗi liên quan đến slug',
         ];
     }
 }

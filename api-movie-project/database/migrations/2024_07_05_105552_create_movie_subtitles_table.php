@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('movie_subtitles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("movie_episode_id");
-            $table->foreign("movie_episode_id")->references("id")->on("movie_episodes");
-            $table->string("language_label", 25);
-            $table->string("language", 5);
-            $table->string("vtt_link");
+            $table->unsignedBigInteger('movie_episode_id');
+            $table->foreign('movie_episode_id')->references('id')->on('movie_episodes');
+            $table->string('language_label', 25);
+            $table->string('language', 5);
+            $table->string('vtt_link');
             $table->timestamps();
         });
     }

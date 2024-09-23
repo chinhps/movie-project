@@ -15,15 +15,15 @@ class ReportMovieAdminResource extends BaseResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "description" => json_decode($this->description, true),
-            "status" => $this->status,
-            "user" => $this->userCustom($this->user),
-            "movie" => [
-                "id" => $this->reportable->id,
-                "movie_name" => $this->reportable->movie_name,
-                "slug" => $this->reportable->slug,
-            ]
+            'id' => $this->id,
+            'description' => json_decode($this->description, true),
+            'status' => $this->status,
+            'user' => $this->userCustom($this->user),
+            'movie' => [
+                'id' => $this->reportable->id,
+                'movie_name' => $this->reportable->movie_name,
+                'slug' => $this->reportable->slug,
+            ],
         ];
     }
 }

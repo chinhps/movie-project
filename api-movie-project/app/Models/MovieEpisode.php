@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class MovieEpisode extends Model
 {
     use HasFactory;
-    protected $table = "movie_episodes";
+
+    protected $table = 'movie_episodes';
+
     protected $guarded = [];
 
     public function movie(): BelongsTo
     {
-        return $this->belongsTo(Movie::class, "movie_id");
+        return $this->belongsTo(Movie::class, 'movie_id');
     }
 
     public function movieSources(): HasMany
@@ -26,11 +28,11 @@ class MovieEpisode extends Model
 
     public function movieSubtitles(): HasMany
     {
-        return $this->hasMany(MovieSubtitle::class, "movie_episode_id");
+        return $this->hasMany(MovieSubtitle::class, 'movie_episode_id');
     }
 
     public function vocabulary(): HasOne
     {
-        return $this->hasOne(EpisodeVocabulary::class, "movie_episode_id");
+        return $this->hasOne(EpisodeVocabulary::class, 'movie_episode_id');
     }
 }

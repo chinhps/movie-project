@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-            $table->string("movie_name");
-            $table->string("movie_name_other");
-            $table->string("release");
-            $table->enum("status", ["on", "off"]);
-            $table->string("banner_image")->nullable();
-            $table->string("movie_image");
-            $table->text("description")->nullable();
+            $table->string('movie_name');
+            $table->string('movie_name_other');
+            $table->string('release');
+            $table->enum('status', ['on', 'off']);
+            $table->string('banner_image')->nullable();
+            $table->string('movie_image');
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
         });

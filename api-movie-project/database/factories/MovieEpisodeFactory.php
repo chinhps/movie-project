@@ -17,11 +17,11 @@ class MovieEpisodeFactory extends Factory
     public function definition(): array
     {
         return [
-            "episode_name" => fake()->name(),
-            "status" => fake()->randomElement(['on', 'off']),
-            "slug" => fake()->unique()->slug(5),
-            "episode_image" => fake()->imageUrl(400, 200),
-            "views" => rand(10000,999999),
+            'episode_name' => fake()->name(),
+            'status' => fake()->randomElement(['on', 'off']),
+            'slug' => fake()->unique()->slug(5),
+            'episode_image' => fake()->imageUrl(400, 200),
+            'views' => rand(10000, 999999),
         ];
     }
 }

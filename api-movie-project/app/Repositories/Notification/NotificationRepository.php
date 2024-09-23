@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class NotificationRepository implements NotificationInterface
 {
     public function __construct(
-        private Model $model = new Notification()
-    ) {
-    }
+        private Model $model = new Notification
+    ) {}
 
     public function list(User $user, float $number = 15)
     {

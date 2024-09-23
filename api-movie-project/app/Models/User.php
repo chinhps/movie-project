@@ -30,7 +30,7 @@ class User extends Authenticatable implements JWTSubject
         'provider_id',
         'role',
         'block',
-        'avatar_url'
+        'avatar_url',
     ];
 
     /**
@@ -54,32 +54,32 @@ class User extends Authenticatable implements JWTSubject
 
     public function notifications(): HasMany
     {
-        return $this->hasMany(Notification::class, "user_id");
+        return $this->hasMany(Notification::class, 'user_id');
     }
 
     public function bookmarks(): HasMany
     {
-        return $this->hasMany(Bookmark::class, "user_id");
+        return $this->hasMany(Bookmark::class, 'user_id');
     }
 
     public function movieHistories(): HasMany
     {
-        return $this->hasMany(MovieHistory::class, "user_id");
+        return $this->hasMany(MovieHistory::class, 'user_id');
     }
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class, "user_id");
+        return $this->hasMany(Comment::class, 'user_id');
     }
 
     public function movieRates(): HasMany
     {
-        return $this->hasMany(MovieRate::class, "user_id");
+        return $this->hasMany(MovieRate::class, 'user_id');
     }
 
     public function movies(): BelongsToMany
     {
-        return $this->belongsToMany(Movie::class, "bookmarks", "user_id", "movie_id");
+        return $this->belongsToMany(Movie::class, 'bookmarks', 'user_id', 'movie_id');
     }
 
     /**

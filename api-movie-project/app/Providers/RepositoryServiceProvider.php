@@ -12,8 +12,6 @@ use App\Repositories\EpisodeSource\EpisodeSourceInterface;
 use App\Repositories\EpisodeSource\EpisodeSourceRepository;
 use App\Repositories\HLS\HLSInterface;
 use App\Repositories\HLS\HLSRepository;
-use App\Repositories\Information\InformationInterface;
-use App\Repositories\Information\InformationRepository;
 use App\Repositories\Movie\MovieInterface;
 use App\Repositories\Movie\MovieRepository;
 use App\Repositories\MovieEpisode\MovieEpisodeInterface;

@@ -22,6 +22,6 @@ class UrlOrFileImage implements ValidationRule
             return;
         }
 
-        $fail(":attribute is not a valid image or URL.");
+        $fail(':attribute is not a valid image or URL.');
     }
 }

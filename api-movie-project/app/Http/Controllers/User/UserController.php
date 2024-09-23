@@ -14,12 +14,12 @@ class UserController extends Controller
 {
     public function __construct(
         private UserInterface $userRepository
-    ) {
-    }
+    ) {}
 
     public function userListAdmin()
     {
         $users = $this->userRepository->list([], 15);
+
         return UserAdminResource::collection($users);
     }
 
@@ -31,7 +31,7 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            # UPLOAD IMAGE
+            // UPLOAD IMAGE
             if ($validated['avatar'] !== 'undefined') {
                 uploadAvatar($validated['avatar'], $user);
             }
@@ -42,10 +42,11 @@ class UserController extends Controller
             );
             DB::commit();
 
-            return BaseResponse::msg("Chỉnh sửa thành công! Avatar sẽ tự động cập nhật sau!");
+            return BaseResponse::msg('Chỉnh sửa thành công! Avatar sẽ tự động cập nhật sau!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return BaseResponse::msg("Có lỗi đã xảy ra! Kiểm tra lại thông tin của bạn");
+
+            return BaseResponse::msg('Có lỗi đã xảy ra! Kiểm tra lại thông tin của bạn');
         }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Movie;
 
-use App\Http\Resources\BaseResource;
 use Illuminate\Http\Request;
 
 class MovieLatestResource extends MovieResource

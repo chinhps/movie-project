@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create("plugins", function (Blueprint $table) {
+        Schema::create('plugins', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->enum("status", ["ON", "OFF"]);
-            $table->json("form_public")->nullable();
-            $table->json("data_public")->nullable();
-            $table->string("plugin_key", 100);
-            $table->index("plugin_key");
+            $table->string('name');
+            $table->enum('status', ['ON', 'OFF']);
+            $table->json('form_public')->nullable();
+            $table->json('data_public')->nullable();
+            $table->string('plugin_key', 100);
+            $table->index('plugin_key');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists("plugins");
+        Schema::dropIfExists('plugins');
     }
 };

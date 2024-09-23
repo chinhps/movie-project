@@ -16,9 +16,9 @@ class MovieAdminResource extends BaseResource
     {
         return [
             ...parent::toArray($request),
-            "comments_counter" => count($this->comments),
-            "report_counter" => count($this->reports),
-            "episoded_counter" => count($this->movieEpisodes)
+            'comments_counter' => count($this->comments),
+            'report_counter' => count($this->reports),
+            'episoded_counter' => count($this->movieEpisodes),
         ];
     }
 }

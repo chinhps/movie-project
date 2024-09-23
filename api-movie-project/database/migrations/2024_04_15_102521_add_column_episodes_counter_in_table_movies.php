@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('movies', function (Blueprint $table) {
-            $table->float("episodes_counter")->nullable();
+            $table->float('episodes_counter')->nullable();
         });
     }
 

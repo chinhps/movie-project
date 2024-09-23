@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('episode_vocabularies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("movie_episode_id");
-            $table->foreign("movie_episode_id")->references("id")->on("movie_episodes");
-            $table->json("vocabulary_list");
-            $table->enum("status", ["on", "off"]);
+            $table->unsignedBigInteger('movie_episode_id');
+            $table->foreign('movie_episode_id')->references('id')->on('movie_episodes');
+            $table->json('vocabulary_list');
+            $table->enum('status', ['on', 'off']);
             $table->timestamps();
         });
     }

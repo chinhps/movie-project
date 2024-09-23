@@ -13,7 +13,6 @@ use App\Repositories\Comment\CommentInterface;
 use App\Repositories\Movie\MovieInterface;
 use App\Repositories\Report\ReportInterface;
 use App\Repositories\User\UserRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -24,18 +23,19 @@ class ReportController extends Controller
         private MovieInterface $movieRepository,
         private CommentInterface $commentRepository,
         private UserRepository $userRepository
-    ) {
-    }
+    ) {}
 
     public function commentList()
     {
         $data = $this->reportRepository->commentList();
+
         return ReportCommentAdminResource::collection($data);
     }
 
     public function movieList()
     {
         $data = $this->reportRepository->movieList();
+
         return ReportMovieAdminResource::collection($data);
     }
 
@@ -44,19 +44,19 @@ class ReportController extends Controller
         $validated = $request->validated();
         try {
             DB::beginTransaction();
-            # change status
+            // change status
             $report = $this->reportRepository->updateStatus($validated['id'], $validated['status']);
 
-            # report
+            // report
             if (isset($validated['report'])) {
                 foreach ($validated['report'] as $reason) {
                     switch ($reason) {
-                        case "hidden":
-                            # hidden comment
+                        case 'hidden':
+                            // hidden comment
                             $this->commentRepository->statusComment($report->reportable, 'off');
                             break;
-                        case "block":
-                            # block user
+                        case 'block':
+                            // block user
                             $this->userRepository->blockUser($report->user, true);
                             break;
                         default:
@@ -66,9 +66,11 @@ class ReportController extends Controller
             }
 
             DB::commit();
-            return BaseResponse::msg("Cập nhật trạng thái thành công!");
+
+            return BaseResponse::msg('Cập nhật trạng thái thành công!');
         } catch (\Exception $e) {
             DB::rollBack();
+
             return BaseResponse::msg($e->getMessage(), 413);
         }
     }
@@ -82,14 +84,16 @@ class ReportController extends Controller
         try {
             DB::beginTransaction();
             $this->reportRepository->updateOrInsert(null, [
-                "description" => json_encode($validated["reason"]),
-                "status" => "success",
+                'description' => json_encode($validated['reason']),
+                'status' => 'success',
             ], $user, comment: $comment);
             DB::commit();
-            return BaseResponse::msg("Cảm ơn bạn đã báo cáo! Chúng tôi sẽ xử lý sớm nhất!");
+
+            return BaseResponse::msg('Cảm ơn bạn đã báo cáo! Chúng tôi sẽ xử lý sớm nhất!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return BaseResponse::msg("Có lỗi xảy ra trong khi báo cáo!", 413);
+
+            return BaseResponse::msg('Có lỗi xảy ra trong khi báo cáo!', 413);
         }
     }
 
@@ -102,14 +106,16 @@ class ReportController extends Controller
         try {
             DB::beginTransaction();
             $this->reportRepository->updateOrInsert(null, [
-                "description" => json_encode($validated["reason"]),
-                "status" => "success",
+                'description' => json_encode($validated['reason']),
+                'status' => 'success',
             ], $user, movie: $movie);
             DB::commit();
-            return BaseResponse::msg("Cảm ơn bạn đã báo cáo! Chúng tôi sẽ xử lý sớm nhất!");
+
+            return BaseResponse::msg('Cảm ơn bạn đã báo cáo! Chúng tôi sẽ xử lý sớm nhất!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return BaseResponse::msg("Có lỗi xảy ra trong khi báo cáo!", 413);
+
+            return BaseResponse::msg('Có lỗi xảy ra trong khi báo cáo!', 413);
         }
     }
 }

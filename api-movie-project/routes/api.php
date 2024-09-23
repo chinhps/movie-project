@@ -15,7 +15,6 @@ use App\Http\Controllers\Statistical\StatisticalController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\User\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,13 +27,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-# CREATE M3U8
+// CREATE M3U8
 Route::prefix('m3u8/hls')->group(function () {
     Route::get('/{slug}', [HLSController::class, 'get']);
     Route::post('/create-hls', [HLSController::class, 'create']);
 });
 
-# ADMIN
+// ADMIN
 Route::middleware(['jwt.auth'])
     ->prefix('admin')
     ->group(function () {
@@ -66,84 +65,84 @@ Route::middleware(['jwt.auth'])
         Route::get('users', [UserController::class, 'userListAdmin']);
     });
 
-# AUTH
+// AUTH
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
 });
 
 Route::middleware(['jwt.auth'])->prefix('user')->group(function () {
-    # Get infor current user
+    // Get infor current user
     Route::get('/infor', [AuthController::class, 'getCurrentInfo']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
     Route::post('change-info', [UserController::class, 'changeInfo']);
-    # Logout
+    // Logout
     Route::prefix('logout')->group(function () {
-        # Logout current device
-        Route::post('/',  [LogoutController::class, 'logout']);
-        # Logout all device
-        Route::post('/all',  [LogoutController::class, 'logoutAll']);
+        // Logout current device
+        Route::post('/', [LogoutController::class, 'logout']);
+        // Logout all device
+        Route::post('/all', [LogoutController::class, 'logoutAll']);
     });
     Route::get('notification', [NotificationController::class, 'list']);
 });
 
 Route::middleware(['jwt.auth'])->prefix('report')->group(function () {
-    # report comment
-    Route::post('/comment',  [ReportController::class, 'comment']);
-    # report movie
-    Route::post('/movie',  [ReportController::class, 'movie']);
+    // report comment
+    Route::post('/comment', [ReportController::class, 'comment']);
+    // report movie
+    Route::post('/movie', [ReportController::class, 'movie']);
 });
 
-Route::prefix("movies")->group(function () {
-    Route::get("/", [MovieController::class, 'movies']);
-    Route::get("latest", [MovieController::class, 'moviesLatest']);
-    Route::get("ranking", [MovieController::class, 'moviesRanking']);
+Route::prefix('movies')->group(function () {
+    Route::get('/', [MovieController::class, 'movies']);
+    Route::get('latest', [MovieController::class, 'moviesLatest']);
+    Route::get('ranking', [MovieController::class, 'moviesRanking']);
 
-    Route::get("detail/{slug}", [MovieController::class, 'movieDetail']);
-    Route::get("category/{slug}", [MovieController::class, 'movieByCategory']);
+    Route::get('detail/{slug}', [MovieController::class, 'movieDetail']);
+    Route::get('category/{slug}', [MovieController::class, 'movieByCategory']);
 
-    # bookmark for client
-    Route::put("bookmarks-client", [BookmarkController::class, 'listClient']);
+    // bookmark for client
+    Route::put('bookmarks-client', [BookmarkController::class, 'listClient']);
 
-    Route::prefix("episode")->group(function () {
-        Route::get("{slug}", [EpisodeController::class, 'episodeWatch']);
+    Route::prefix('episode')->group(function () {
+        Route::get('{slug}', [EpisodeController::class, 'episodeWatch']);
     });
 
-    # history watch at client
-    Route::post("histories-client", [MovieHistoryController::class, 'listClient']);
+    // history watch at client
+    Route::post('histories-client', [MovieHistoryController::class, 'listClient']);
 
     Route::middleware(['jwt.auth'])->group(function () {
-        # detail for user
-        Route::get("detail-user/{slug}", [MovieController::class, 'movieDetail']);
-        # history watch
-        Route::get("histories-account", [MovieHistoryController::class, 'listAccount']);
-        # bookmark for user
-        Route::prefix("bookmarks")->group(function () {
-            Route::get("/", [BookmarkController::class, 'list']);
-            Route::put("/", [BookmarkController::class, 'toggle']);
+        // detail for user
+        Route::get('detail-user/{slug}', [MovieController::class, 'movieDetail']);
+        // history watch
+        Route::get('histories-account', [MovieHistoryController::class, 'listAccount']);
+        // bookmark for user
+        Route::prefix('bookmarks')->group(function () {
+            Route::get('/', [BookmarkController::class, 'list']);
+            Route::put('/', [BookmarkController::class, 'toggle']);
             // Route::delete("/", [BookmarkController::class, 'remove']);
         });
     });
 });
 
-Route::prefix("comments")->group(function () {
-    Route::get("replies/{idComment}", [CommentController::class, 'replies']);
-    Route::get("movie/{slug}", [CommentController::class, 'commentMovie']);
+Route::prefix('comments')->group(function () {
+    Route::get('replies/{idComment}', [CommentController::class, 'replies']);
+    Route::get('movie/{slug}', [CommentController::class, 'commentMovie']);
     Route::middleware(['jwt.auth'])->group(function () {
-        Route::post("movie", [CommentController::class, 'addCommentMovie']);
+        Route::post('movie', [CommentController::class, 'addCommentMovie']);
     });
 });
 
-Route::prefix("categories")->group(function () {
-    Route::get("/", [CategoryController::class, 'list']);
-    Route::get("{slug}", [CategoryController::class, 'detail']);
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'list']);
+    Route::get('{slug}', [CategoryController::class, 'detail']);
 });
 
-Route::prefix("plugins")->group(function () {
+Route::prefix('plugins')->group(function () {
     Route::get('/infor', [PluginController::class, 'infor']);
 });
 
-Route::prefix("proxy")->group(function () {
+Route::prefix('proxy')->group(function () {
     Route::get('/get', [ProxyController::class, 'get']);
     Route::post('/convert', [ProxyController::class, 'convert']);
 });

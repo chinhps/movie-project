@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class UserRepository implements UserInterface
 {
     public function __construct(
-        private Model $model = new User()
-    ) {
-    }
+        private Model $model = new User
+    ) {}
 
     public function exists(array $conditions = [])
     {
@@ -23,6 +22,7 @@ class UserRepository implements UserInterface
     {
         $user->name = $fullName;
         $user->save();
+
         return $user;
     }
 
@@ -30,19 +30,22 @@ class UserRepository implements UserInterface
     {
         $user->block = $block ? 1 : 0;
         $user->save();
+
         return $user;
     }
 
-    public function updateOrInsert(float|null $id, array $params)
+    public function updateOrInsert(?float $id, array $params)
     {
-        $user = new User();
+        $user = new User;
         if ($id) {
             $user = User::find($id);
             $user->update($params);
+
             return $user;
         }
         $user->fill($params);
         $user->save();
+
         return $user;
     }
 
@@ -50,6 +53,7 @@ class UserRepository implements UserInterface
     {
         $query = $this->model->withCount('comments');
         $query = queryRepository($query, $filter);
+
         return $query->paginate($limit);
     }
 }

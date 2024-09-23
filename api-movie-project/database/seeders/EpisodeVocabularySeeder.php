@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\EpisodeVocabulary;
 use App\Models\MovieEpisode;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class EpisodeVocabularySeeder extends Seeder
@@ -18,7 +17,7 @@ class EpisodeVocabularySeeder extends Seeder
 
         $episodes->each(function ($episode) {
             EpisodeVocabulary::factory()->create([
-                "movie_episode_id" => $episode->id,
+                'movie_episode_id' => $episode->id,
             ]);
         });
     }

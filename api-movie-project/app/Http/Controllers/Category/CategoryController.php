@@ -13,11 +13,9 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-
     public function __construct(
         private CategoryInterface $categoryRepository
-    ) {
-    }
+    ) {}
 
     public function list()
     {
@@ -29,16 +27,18 @@ class CategoryController extends Controller
         return new CategoryResource($this->categoryRepository->getBySlug($slug));
     }
 
-    # ADMIN
+    // ADMIN
     public function categoryListAdmin()
     {
         $categories = $this->categoryRepository->list([], 15);
+
         return CategoryAdminResource::collection($categories);
     }
 
     public function categoryDetailAdmin($id)
     {
         $category = $this->categoryRepository->detail($id);
+
         return new CategoryAdminResource($category);
     }
 
@@ -48,15 +48,17 @@ class CategoryController extends Controller
 
         try {
             DB::beginTransaction();
-            $this->categoryRepository->updateOrInsert($validated["id"] ?? null, [
-                "name" => $validated['name'],
-                "description" => $validated['description'],
-                "slug" => Str::slug($validated['name'])
+            $this->categoryRepository->updateOrInsert($validated['id'] ?? null, [
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'slug' => Str::slug($validated['name']),
             ]);
             DB::commit();
-            return BaseResponse::msg("Thao tác thành công!");
+
+            return BaseResponse::msg('Thao tác thành công!');
         } catch (\Exception $e) {
             DB::rollBack();
+
             return BaseResponse::msg($e->getMessage(), 422);
         }
     }

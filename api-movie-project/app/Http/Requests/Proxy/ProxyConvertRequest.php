@@ -22,8 +22,8 @@ class ProxyConvertRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "m3u8_link" => "required|url",
-            "header_custom" => ["required", "array"]
+            'm3u8_link' => 'required|url',
+            'header_custom' => ['required', 'array'],
         ];
     }
 }

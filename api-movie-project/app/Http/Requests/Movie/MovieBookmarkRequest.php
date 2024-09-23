@@ -22,8 +22,8 @@ class MovieBookmarkRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "data" => "array",
-            "data.*.slug" => "required|string",
+            'data' => 'array',
+            'data.*.slug' => 'required|string',
             // "data.*.slug" => "exists:movies,slug",
         ];
     }
@@ -31,7 +31,7 @@ class MovieBookmarkRequest extends BaseRequest
     public function messages()
     {
         return [
-            "data" => "Dữ liệu phải dạng mảng",
+            'data' => 'Dữ liệu phải dạng mảng',
             // "data.*.slug" => "Có tập phim không tồn tại",
         ];
     }

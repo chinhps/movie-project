@@ -15,7 +15,7 @@ class MovieHistoryAccountResource extends MovieResource
     {
         return [
             ...$this->custom($this->movie),
-            "created_at" => $this->created_at
+            'created_at' => $this->created_at,
         ];
     }
 }

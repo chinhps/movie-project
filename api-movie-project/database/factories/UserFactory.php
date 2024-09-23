@@ -23,14 +23,14 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'username' => fake()->unique()->userName(),
             'email_verified_at' => now(),
-            'password' => Hash::make("chinhdeptrai012"),
+            'password' => Hash::make('chinhdeptrai012'),
             'remember_token' => Str::random(10),
             'status' => fake()->randomElement(['active', 'inactive']),
             'level' => rand(1, 500),
-            'login_type' => "account",
+            'login_type' => 'account',
             'provider_id' => fake()->unique()->numberBetween(1000000000, 9999999999),
             'block' => rand(0, 1),
-            "avatar_url" => fake()->imageUrl(200, 200),
+            'avatar_url' => fake()->imageUrl(200, 200),
         ];
     }
 

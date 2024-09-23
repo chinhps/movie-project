@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\{BaseResponse, Controller};
-use App\Http\Requests\User\{ChangePasswordRequest, UserLoginRequest, UserRegisterRequest};
+use App\Http\Controllers\BaseResponse;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\User\ChangePasswordRequest;
+use App\Http\Requests\User\UserLoginRequest;
+use App\Http\Requests\User\UserRegisterRequest;
 use App\Models\User;
 use App\Repositories\User\UserInterface;
 use Illuminate\Http\Request;
@@ -29,8 +32,9 @@ class AuthController extends Controller
             'level' => $payload->get('level'),
             'role' => $payload->get('role'),
             'created_at' => $payload->get('created_at'),
-            'avatar_url' => $payload->get('avatar_url')
+            'avatar_url' => $payload->get('avatar_url'),
         ];
+
         return BaseResponse::data($user);
     }
 
@@ -50,11 +54,12 @@ class AuthController extends Controller
     private function generateProviderId()
     {
         do {
-            $providerId = rand(11111, 99999) . time();
+            $providerId = rand(11111, 99999).time();
         } while ($this->userRepository->exists([
             ['provider_id', $providerId],
-            ['login_type', 'account']
+            ['login_type', 'account'],
         ]));
+
         return $providerId;
     }
 
@@ -65,27 +70,29 @@ class AuthController extends Controller
         DB::beginTransaction();
         try {
             $user = $this->userRepository->updateOrInsert(null, [
-                "name" => $validated['username'],
-                "username" => $validated['username'],
-                "password" => Hash::make($validated['password']),
-                "provider_id" => $this->generateProviderId(),
-                "login_type" => "account",
-                "status" => "inactive",
-                "level" => 1,
-                "email" => $validated['email'] ?? null,
-                "block" => 0
+                'name' => $validated['username'],
+                'username' => $validated['username'],
+                'password' => Hash::make($validated['password']),
+                'provider_id' => $this->generateProviderId(),
+                'login_type' => 'account',
+                'status' => 'inactive',
+                'level' => 1,
+                'email' => $validated['email'] ?? null,
+                'block' => 0,
             ]);
 
             DB::commit();
+
             return BaseResponse::data([
-                "token" => auth('api')->login($user),
-                "msg" => "Tạo tài thành công! Đang chuyển hướng...",
-                "user" => $this->user($user),
-                "status" => 200
+                'token' => auth('api')->login($user),
+                'msg' => 'Tạo tài thành công! Đang chuyển hướng...',
+                'user' => $this->user($user),
+                'status' => 200,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return BaseResponse::msg("Tạo tài khoản thất bại! Liên hệ admin để được hỗ trợ", 500);
+
+            return BaseResponse::msg('Tạo tài khoản thất bại! Liên hệ admin để được hỗ trợ', 500);
         }
     }
 
@@ -93,13 +100,13 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
 
-        # Login Fail
-        if (!$token = auth('api')->attempt([
-            "username" => $validated['username'],
-            "password" => $validated['password'],
-            "login_type" => "account",
+        // Login Fail
+        if (! $token = auth('api')->attempt([
+            'username' => $validated['username'],
+            'password' => $validated['password'],
+            'login_type' => 'account',
         ])) {
-            return BaseResponse::msg("Mật khẩu không đúng! Vui lòng kiểm tra lại", 400);
+            return BaseResponse::msg('Mật khẩu không đúng! Vui lòng kiểm tra lại', 400);
         }
 
         $user = Auth::user();
@@ -110,18 +117,18 @@ class AuthController extends Controller
             'level' => $user->level,
             'role' => $user->role,
             'created_at' => $user->created_at,
-            'avatar_url' => $user->avatar_url
+            'avatar_url' => $user->avatar_url,
         ];
-        
+
         /** @var \Tymon\JWTAuth\JWTGuard $auth */
         $auth = auth('api');
         $token = $auth->claims($customClaims)->fromUser($user);
-        
+
         return BaseResponse::data([
-            "token" => $token,
-            "msg" => "Đăng nhập thành công! Đang chuyển hướng...",
-            "user" => $customClaims,
-            "status" => 200
+            'token' => $token,
+            'msg' => 'Đăng nhập thành công! Đang chuyển hướng...',
+            'user' => $customClaims,
+            'status' => 200,
         ]);
     }
 
@@ -130,21 +137,23 @@ class AuthController extends Controller
         $validated = $request->validated();
         $user = $request->user();
 
-        if (!Hash::check($validated["current_password"], $user->password)) {
-            return BaseResponse::data(["msg" => "Mật khẩu cũ của bạn không khớp"], 400);
+        if (! Hash::check($validated['current_password'], $user->password)) {
+            return BaseResponse::data(['msg' => 'Mật khẩu cũ của bạn không khớp'], 400);
         }
 
         DB::beginTransaction();
         try {
             $user = $this->userRepository->updateOrInsert($user->id, [
-                "password" => Hash::make($validated['password']),
+                'password' => Hash::make($validated['password']),
             ]);
 
             DB::commit();
-            return BaseResponse::data(["msg" => "Đổi mật khẩu thành công!"], 200);
+
+            return BaseResponse::data(['msg' => 'Đổi mật khẩu thành công!'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            return BaseResponse::data(["msg" => "Tạo tài khoản thất bại! Liên hệ admin để được hỗ trợ"], 400);
+
+            return BaseResponse::data(['msg' => 'Tạo tài khoản thất bại! Liên hệ admin để được hỗ trợ'], 400);
         }
     }
 }

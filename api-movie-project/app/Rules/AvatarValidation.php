@@ -4,7 +4,6 @@ namespace App\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Http\UploadedFile;
 
 class AvatarValidation implements ValidationRule
 {
@@ -23,6 +22,6 @@ class AvatarValidation implements ValidationRule
             return;
         }
 
-        $fail(":attribute is not avatar");
+        $fail(':attribute is not avatar');
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('website_info', function (Blueprint $table) {
-            $table->text("asset_data")->change();
+            $table->text('asset_data')->change();
         });
     }
 

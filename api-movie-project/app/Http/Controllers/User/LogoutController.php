@@ -11,12 +11,13 @@ class LogoutController extends Controller
     {
         try {
             auth()->logout();
+
             return BaseResponse::data([
-                "msg" => "Đăng xuất thành công!"
+                'msg' => 'Đăng xuất thành công!',
             ]);
         } catch (\Exception) {
             return BaseResponse::data([
-                "msg" => "Đăng xuất thất bại!"
+                'msg' => 'Đăng xuất thất bại!',
             ], 500);
         }
     }
@@ -25,12 +26,13 @@ class LogoutController extends Controller
     {
         try {
             auth()->logout();
+
             return BaseResponse::data([
-                "msg" => "Đăng xuất thành công!"
+                'msg' => 'Đăng xuất thành công!',
             ]);
         } catch (\Exception) {
             return BaseResponse::data([
-                "msg" => "Đăng xuất thất bại!"
+                'msg' => 'Đăng xuất thất bại!',
             ], 500);
         }
     }

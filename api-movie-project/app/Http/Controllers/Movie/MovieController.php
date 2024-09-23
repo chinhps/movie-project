@@ -14,24 +14,23 @@ use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Movie\MovieInterface;
 use App\Repositories\MovieEpisode\MovieEpisodeInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class MovieController extends Controller
 {
-
     public function __construct(
         private MovieInterface $movieRepository,
         private MovieEpisodeInterface $movieEpisodeRepository,
         private CategoryInterface $categoryRepository
     ) {}
 
-    # ADMIN
+    // ADMIN
     public function movieListAdmin()
     {
         $query = [];
-        $movies = $this->movieRepository->list(["sort", "query" => $query], 25);
+        $movies = $this->movieRepository->list(['sort', 'query' => $query], 25);
+
         return MovieAdminResource::collection($movies);
     }
 
@@ -57,25 +56,27 @@ class MovieController extends Controller
             $categoryIdss = $this->categoryRepository->listIn($validated['categories'])
                 ->toArray();
 
-            $movie = $this->movieRepository->updateOrInsert($validated["id"] ?? null, [
-                "movie_name" => $validated["movie_name"],
-                "movie_name_other" => $validated["movie_name_other"],
-                "release" => $validated["release"],
-                "status" => $validated["status"] ? "on" : "off",
-                "banner_image" => $urlBanner,
-                "movie_image" => $urlThumb,
-                "description" => $validated["description"],
-                "slug" => Str::slug($validated["movie_name"]),
-                "parent_id" => null,
-                "episodes_counter" => $validated["episodes_counter"],
-                "views" => 0
+            $movie = $this->movieRepository->updateOrInsert($validated['id'] ?? null, [
+                'movie_name' => $validated['movie_name'],
+                'movie_name_other' => $validated['movie_name_other'],
+                'release' => $validated['release'],
+                'status' => $validated['status'] ? 'on' : 'off',
+                'banner_image' => $urlBanner,
+                'movie_image' => $urlThumb,
+                'description' => $validated['description'],
+                'slug' => Str::slug($validated['movie_name']),
+                'parent_id' => null,
+                'episodes_counter' => $validated['episodes_counter'],
+                'views' => 0,
             ], $categoryIdss);
 
             DB::commit();
+
             // return BaseResponse::msg("Thao tác thành công!");
-            return BaseResponse::data(["id" => $movie->id, "msg" => "Thao tác thành công!"], 200);
+            return BaseResponse::data(['id' => $movie->id, 'msg' => 'Thao tác thành công!'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return BaseResponse::msg($e->getMessage(), 422);
         }
     }
@@ -83,45 +84,51 @@ class MovieController extends Controller
     public function movieDetailAdmin($id)
     {
         $movie = $this->movieRepository->detail($id);
+
         return new MovieDetailAdminResource($movie);
     }
 
     public function movies(Request $request)
     {
-        $nameMovie = $request->input("name");
+        $nameMovie = $request->input('name');
         $query = [];
 
         if ($nameMovie) {
-            $query[] = ["movie_name", "like", "%$nameMovie%"];
+            $query[] = ['movie_name', 'like', "%$nameMovie%"];
         }
 
-        $movies = $this->movieRepository->list(["sort", "query" => $query], 25);
+        $movies = $this->movieRepository->list(['sort', 'query' => $query], 25);
+
         return MovieResource::collection($movies);
     }
 
     public function moviesLatest()
     {
         $movies = $this->movieEpisodeRepository->moviesLatest();
+
         return MovieLatestResource::collection($movies);
     }
 
     public function moviesRanking()
     {
         $movies = $this->movieRepository->list([
-            "sort" => [["views", "desc"]]
+            'sort' => [['views', 'desc']],
         ], 10);
+
         return MovieResource::collection($movies);
     }
 
     public function movieDetail($slug)
     {
         $movie = $this->movieRepository->getFullBySlug($slug);
+
         return new MovieDetailResource($movie);
     }
 
     public function movieByCategory($slugCategory)
     {
-        $movies = $this->movieRepository->list(["category_slug" => $slugCategory], 25);
+        $movies = $this->movieRepository->list(['category_slug' => $slugCategory], 25);
+
         return MovieResource::collection($movies);
     }
 }

@@ -6,5 +6,5 @@ use App\Models\MovieEpisode;
 
 interface EpisodeSourceInterface
 {
-    public function updateOrInsert(float|null $id, array $params, MovieEpisode $episode);
+    public function updateOrInsert(?float $id, array $params, MovieEpisode $episode);
 }

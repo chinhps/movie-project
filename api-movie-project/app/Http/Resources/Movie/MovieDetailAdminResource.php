@@ -16,9 +16,9 @@ class MovieDetailAdminResource extends BaseResource
     {
         return [
             ...parent::toArray($request),
-            "banner_image" => [$this->banner_image],
-            "movie_image" => [$this->movie_image],
-            "categories" => $this->categories->pluck('name')
+            'banner_image' => [$this->banner_image],
+            'movie_image' => [$this->movie_image],
+            'categories' => $this->categories->pluck('name'),
         ];
     }
 }

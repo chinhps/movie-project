@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('status', ["active", "inactive"])->default("inactive");
-            $table->integer("level");
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
+            $table->integer('level');
             $table->rememberToken();
             $table->timestamps();
         });
