@@ -21,14 +21,14 @@ class EpisodeDetailResource extends MovieResource
             "views" => $this->views,
             "created_at" => $this->created_at,
             "slug" => $this->slug,
-            "movie_sources" => $this->movieSources->map(function ($source) {
+            "movie_sources" => ($this->movieSources ?? collect($this->movie_sources))->map(function ($source) {
                 return [
                     "server_name" => $source->server_name,
                     "source_link" => $this->replaceDefault($source->source_link),
                     "is_m3u8" => $source->is_m3u8 === 1,
                 ];
             }),
-            "subtitles" => $this->movieSubtitles->map(function ($subtitle) {
+            "subtitles" => ($this->movieSubtitles ?? collect($this->movie_subtitles))->map(function ($subtitle) {
                 return [
                     "language_label" => $subtitle->language_label,
                     "language" => $subtitle->language,
@@ -40,7 +40,8 @@ class EpisodeDetailResource extends MovieResource
         ];
     }
 
-    private function replaceDefault($input) {
+    private function replaceDefault($input)
+    {
         $prefix = "default";
         $replacement = env("API_SERVER_IMAGE");
         if (strpos($input, $prefix) === 0) {
@@ -53,7 +54,7 @@ class EpisodeDetailResource extends MovieResource
     {
         return [
             ...$this->custom($this->movie),
-            "movie_episodes" => $this->movie->movieEpisodes->map(function ($episode) {
+            "movie_episodes" => ($this->movie->movieEpisodes ?? collect($this->movie->movie_episodes))->map(function ($episode) {
                 return [
                     "episode_name" => $episode->episode_name,
                     "episode_image" => $episode->episode_image,

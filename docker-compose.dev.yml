@@ -13,6 +13,16 @@ services:
     networks:
       - movie_network
 
+  redis-movie-laravel:
+    build:
+      context: ./api-movie-project
+      dockerfile: redis.Dockerfile
+    container_name: redis-movie-laravel-container
+    volumes:
+      - ./api-movie-project/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+    - movie_network
+
   movie-laravel-backend:
     container_name: movie-laravel-backend-container
     build:
@@ -34,6 +44,8 @@ services:
       # - ./api-movie-project/vendor:/var/www/vendor
 
     environment:
+      - REDIS_HOST=redis-movie-laravel
+      - REDIS_PORT=6379
       - JWT_SECRET=${JWT_SECRET}
       - API_SERVER_IMAGE=${API_SERVER_IMAGE}
       - DB_HOST=mysql-movie
@@ -43,9 +55,7 @@ services:
       - DB_PASSWORD=Chinh@12345
     depends_on:
       - mysql-movie
-    # command: sh -c "while ! nc -z mysql-movie 3306; do sleep 2; done; php artisan migrate && php-fpm"
-    # ports:
-    #   - 9000:9000
+      - redis-movie-laravel
     networks:
       - movie_network
 

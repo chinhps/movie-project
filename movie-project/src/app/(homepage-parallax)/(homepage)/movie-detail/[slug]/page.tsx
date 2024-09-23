@@ -117,7 +117,7 @@ export default async function MovieDetailPage({
             <Flex gap={4}>
               <Text as="b">Trạng thái</Text>{" "}
               {movieDetail.data.episodes_counter <=
-              movieDetail.data.movie_episodes_count
+              (movieDetail.data.movie_episodes?.length ?? 0)
                 ? "Đã hoàn thành"
                 : "Đang thực hiện"}
             </Flex>

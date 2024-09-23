@@ -31,12 +31,12 @@ class MovieResource extends BaseResource
             "views" => $data->views,
             "slug" => $data->slug,
             "episodes_counter" => $data->episodes_counter,
-            "movie_episodes_count" => $data->movie_episodes_count,
+            // "movie_episodes_count" => $data->movie_episodes_count,
             "movie_rate_avg_rate" => round($data->movie_rate_avg_rate, 1),
             "movie_episode_laster" => [
-                "episode_name" => $data->movieEpisodeLaster?->episode_name,
-                "slug" => $data->movieEpisodeLaster?->slug
+                "episode_name" => $data->movieEpisodeLaster?->episode_name ?? $data->movie_episode_laster?->episode_name ?? "",
+                "slug" => $data->movieEpisodeLaster?->slug ?? $data->movie_episode_laster?->slug ?? ""
             ]
         ];
-    }
+    } 
 }

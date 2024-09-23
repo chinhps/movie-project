@@ -14,26 +14,26 @@ import { FiChevronDown, FiChevronUp, FiGrid, FiMenu, FiX } from "react-icons/fi"
 import "./navbar.scss";
 import Link from "next/link";
 
-const handleClose = () => {
-  (document.querySelector("#dropbox") as HTMLInputElement).checked = false;
-};
+// const handleClose = () => {
+//   (document.querySelector("#dropbox") as HTMLInputElement).checked = false;
+// };
 
 export default function NavbarCategory() {
   const [isOpenCategory, setIsOpenCategory] = useState(false);
 
-  let handleCloseCategory = useClickOutside(() => {
-    setIsOpenCategory(false);
-    handleClose();
-  }, isOpenCategory);
+  // let handleCloseCategory = useClickOutside(() => {
+  //   setIsOpenCategory(false);
+  //   handleClose();
+  // }, isOpenCategory);
 
-  useEffect(() => {
-    handleCloseCategory.domNodeRef.current =
-      document.querySelector("#dropdown-menu");
-  }, [handleCloseCategory.domNodeRef]);
+  // useEffect(() => {
+  //   handleCloseCategory.domNodeRef.current =
+  //     document.querySelector("#dropdown-menu");
+  // }, [handleCloseCategory.domNodeRef]);
 
   return (
     <>
-      <IconButton
+      {/* <IconButton
         as="label"
         htmlFor="dropbox"
         icon={!isOpenCategory ? <FiGrid /> : <FiX />}
@@ -54,7 +54,7 @@ export default function NavbarCategory() {
         onClick={() => setIsOpenCategory((prev) => !prev)}
       >
         Thể loại
-      </Button>
+      </Button> */}
     </>
   );
 }
@@ -76,7 +76,7 @@ export function CategoryItem({ text, href }: { text: string; href: string }) {
         display="block"
         py={4}
         scroll={true}
-        onClick={handleClose}
+        // onClick={handleClose}
       >
         {text}
       </Box>

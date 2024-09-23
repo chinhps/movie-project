@@ -4,21 +4,29 @@ namespace App\Repositories\Category;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class CategoryRepository implements CategoryInterface
 {
     public function __construct(
         private Model $model = new Category()
-    ) {
-    }
+    ) {}
 
     public function list(array $filter = [], float $limit = 15)
     {
         if ($limit == 0) {
-            return $this->model->get();
+            $cacheKey = "category:all";
+            $categories = Redis::get($cacheKey);
+            if (!$categories) {
+                $categories = $this->model->get();
+                Redis::set($cacheKey, json_encode($categories), 3600 * 12);
+            } else {
+                $categories = json_decode($categories);
+            }
+            return $categories;
         }
-        $query = $this->model->withCount(["movies"])->orderBy('id', 'desc');
-        return $query->paginate($limit);
+        $movies = $this->model->withCount(["movies"])->orderBy('id', 'desc');
+        return $movies;
     }
 
     public function listIn(array $filter = [])

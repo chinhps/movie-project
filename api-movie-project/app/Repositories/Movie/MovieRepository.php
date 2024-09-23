@@ -4,13 +4,13 @@ namespace App\Repositories\Movie;
 
 use App\Models\Movie;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class MovieRepository implements MovieInterface
 {
     public function __construct(
         private Model $model = new Movie()
-    ) {
-    }
+    ) {}
 
     public function autoBannerMovie()
     {
@@ -24,13 +24,25 @@ class MovieRepository implements MovieInterface
 
     public function list(array $filter = [], float $limit = 15)
     {
-        $query = $this->model
-            ->with('movieEpisodeLaster')
-            ->withAvg("movieRate", "rate");
+        $page = request()->input('page', 1);
+        $filter2 = json_encode($filter);
+        $cacheKey = "movie:all:{$filter2}:page:$page";
+        $movies = Redis::get($cacheKey);
 
-        $query = queryRepository($query, $filter);
+        if (!$movies) {
+            $query = $this->model
+                ->with('movieEpisodeLaster')
+                ->withAvg("movieRate", "rate");
 
-        return $query->paginate($limit);
+            $query = queryRepository($query, $filter);
+            $movies = $query->paginate($limit);
+            Redis::set($cacheKey, json_encode($movies), 3600 * 12);
+        } else {
+            $moviesArray = json_decode($movies);
+            $movies = redisFormatPaginate($moviesArray);
+        }
+
+        return $movies;
     }
 
     public function detail(float $id)
@@ -41,15 +53,24 @@ class MovieRepository implements MovieInterface
 
     public function getFullBySlug(string $slug)
     {
-        $query = $this->model
-            ->where("slug", $slug)
-            ->with(['movieEpisodeLaster', 'categories', 'movieEpisodes' => function ($query) {
-                $query->where('status', 'on');
-            }])
-            ->withCount('movieRate')
-            ->withAvg("movieRate", "rate");
+        $cacheKey = "movie:detail:$slug";
+        $movie = Redis::get($cacheKey);
 
-        return $query->firstOrFail();
+        if (!$movie) {
+            $query = $this->model
+                ->where("slug", $slug)
+                ->with(['movieEpisodeLaster', 'categories', 'movieEpisodes' => function ($query) {
+                    $query->where('status', 'on');
+                }])
+                ->withCount('movieRate')
+                ->withAvg("movieRate", "rate");
+
+            $movie = $query->firstOrFail();
+            Redis::set($cacheKey, json_encode($movie), 3600 * 12);
+        } else {
+            $movie = json_decode($movie);
+        }
+        return $movie;
     }
 
     public function getBySlug(string $slug)

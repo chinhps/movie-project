@@ -6,13 +6,13 @@ use App\Models\Movie;
 use App\Models\MovieEpisode;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class MovieEpisodeRepository implements MovieEpisodeInterface
 {
     public function __construct(
         private Model $model = new MovieEpisode()
-    ) {
-    }
+    ) {}
 
     public function moviesLatest(float $limit = 15)
     {
@@ -30,19 +30,29 @@ class MovieEpisodeRepository implements MovieEpisodeInterface
 
     public function getBySlug($slug, array $filter = [])
     {
-        $query = $this->model
-            ->where('slug', $slug)
-            ->where($filter)
-            ->with(['movieSources' => function ($query) {
-                $query->where("status", "on");
-            }, 'movie' => function ($query) {
-                $query->with(['movieEpisodes' => function ($query) {
-                    $query->where('status', 'on');
-                }])
-                    ->withCount('movieEpisodes')
-                    ->withAvg("movieRate", "rate");
-            }, 'movieSubtitles', 'vocabulary']);
-        return $query->firstOrFail();
+        $cacheKey = "episode:watch:slug:$slug";
+        $episode = Redis::get($cacheKey);
+
+        if (!$episode) {
+            $query = $this->model
+                ->where('slug', $slug)
+                ->where($filter)
+                ->with(['movieSources' => function ($query) {
+                    $query->where("status", "on");
+                }, 'movie' => function ($query) {
+                    $query->with(['movieEpisodes' => function ($query) {
+                        $query->where('status', 'on');
+                    }])
+                        ->withCount('movieEpisodes')
+                        ->withAvg("movieRate", "rate");
+                }, 'movieSubtitles', 'vocabulary']);
+            $episode = $query->firstOrFail();
+            Redis::set($cacheKey, json_encode($episode), 3600 * 12);
+
+        } else {
+            $episode = json_decode($episode);
+        }
+        return $episode;
     }
 
     public function getListHistory(array $array, float $limit = 15)

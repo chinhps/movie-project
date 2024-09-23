@@ -9,8 +9,7 @@ class MovieDetailResource extends MovieResource
 
     public function __construct(
         private $data,
-    ) {
-    }
+    ) {}
 
     /**
      * Transform the resource into an array.
@@ -26,14 +25,14 @@ class MovieDetailResource extends MovieResource
     {
         return [
             ...$this->custom($data),
-            "movie_episodes" => $data->movieEpisodes?->map(function ($episode) {
+            "movie_episodes" => ($data->movieEpisodes ?? collect($data->movie_episodes))?->map(function ($episode) {
                 return [
                     "episode_name" => $episode->episode_name,
                     "episode_image" => $episode->episode_image,
                     "slug" => $episode->slug
                 ];
             }),
-            "categories" => $data->categories?->map(function ($category) {
+            "categories" => collect($data->categories)?->map(function ($category) {
                 return [
                     "name" => $category->name,
                     "slug" => $category->slug

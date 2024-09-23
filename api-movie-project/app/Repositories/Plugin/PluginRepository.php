@@ -4,23 +4,31 @@ namespace App\Repositories\Plugin;
 
 use App\Models\Plugin;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class PluginRepository implements PluginInterface
 {
     public function __construct(
         private Model $model = new Plugin()
-    ) {
-    }
+    ) {}
 
     public function getByKey(string $key)
     {
-        $data = $this->model->where('plugin_key', $key)->first();
-        if (!$data) {
-            return [];
-        }
-        $result = [];
-        foreach (json_decode($data->data_public, true) as $item) {
-            $result[$item['key']] = $item['value'];
+        $cacheKey = "plugin:key:$key";
+        $plugins = Redis::get($cacheKey);
+
+        if (!$plugins) {
+            $data = $this->model->where('plugin_key', $key)->first();
+            if (!$data) {
+                return [];
+            }
+            $result = [];
+            foreach (json_decode($data->data_public, true) as $item) {
+                $result[$item['key']] = $item['value'];
+            }
+            Redis::set($cacheKey, json_encode($result), 3600 * 12);
+        } else {
+            $result = json_decode($plugins, true);
         }
         return $result;
     }

@@ -10,7 +10,7 @@ export interface IMovieResponse {
     views: number,
     slug: string,
     episodes_counter: number,
-    movie_episodes_count: number,
+    // movie_episodes_count: number,
     movie_rate_avg_rate: null | number,
     movie_episode_laster?: IEpisode,
     movie_episodes?: Array<IEpisode>,
