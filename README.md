@@ -1,8 +1,8 @@
 # MOVIE PROJECT
 
 ### Technical Stack
-- **Backend:** Laravel
-- **Frontend:** Next.js (Typescript), ChakraUI
+- **Backend:** Laravel, Redis, Mysql
+- **Frontend:** Next.js (Typescript), Tanstack Query, ChakraUI
 - **Server:** Nginx (API Gateway), Docker
 - **CI/CD:** Github Actions
 - **Crawl Data:** Python
