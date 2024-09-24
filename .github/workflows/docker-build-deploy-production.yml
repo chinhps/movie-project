@@ -43,6 +43,31 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
+      
+      - name: Check for changes in video-proxy-service
+        id: changes_docker_nestjs_build
+        run: |
+          if git diff --quiet ${{ steps.prev_commit.outputs.commit }} HEAD ./video-proxy-service; then
+            echo "no changes"
+            echo "::set-output name=changed::false"
+          else
+            echo "changes detected"
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Build and push Docker nestjs-video-proxy-service image
+        if: steps.changes_docker_nestjs_build.outputs.changed == 'true'
+        uses: docker/build-push-action@v6.7.0
+        id: docker_nestjs_build
+        with:
+          context: ./video-proxy-service
+          file: ./video-proxy-service/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKER_USERNAME }}/nestjs-video-proxy-service:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Check for changes in api-movie-project
         id: changes_api_movie_project
@@ -153,7 +178,9 @@ jobs:
           && echo ${{ steps.docker_nginx_laravel_build.outputs.digest }} \
           && echo ${{ steps.docker_media_server_build.outputs.digest }} \
           && echo ${{ steps.docker_nginx_media_server_build.outputs.digest }} \
-          && echo ${{ steps.docker_movie_nextjs_frontend.outputs.digest }}
+          && echo ${{ steps.docker_movie_nextjs_frontend.outputs.digest }} \
+          && echo ${{ steps.docker_nestjs_build.outputs.digest }}
+
 
   prebuild-container:
     runs-on: ubuntu-latest

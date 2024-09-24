@@ -1,7 +1,7 @@
 # MOVIE PROJECT
 
 ### Technical Stack
-- **Backend:** Laravel, Redis, Mysql
+- **Backend:** Laravel, Redis, Mysql, NestJS
 - **Frontend:** Next.js (Typescript), Tanstack Query, ChakraUI
 - **Server:** Nginx (API Gateway), Docker
 - **CI/CD:** Github Actions

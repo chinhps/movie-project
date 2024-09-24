@@ -1,4 +1,4 @@
-services:    
+services:
   mysql-movie:
     image: mysql:8.0
     container_name: mysql-movie-container
@@ -13,6 +13,19 @@ services:
     networks:
       - movie_network
 
+  nestjs-video-proxy-service:
+    build:
+      context: ./video-proxy-service
+      dockerfile: Dockerfile
+    container_name: nestjs-video-proxy-service-container
+    environment:
+      - PORT=5050
+      - KEY_CRYPTO=${KEY_CRYPTO}
+    networks:
+      - movie_network
+    ports:
+      - 5050:5050
+
   redis-movie-laravel:
     build:
       context: ./api-movie-project
@@ -21,7 +34,7 @@ services:
     volumes:
       - ./api-movie-project/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
-    - movie_network
+      - movie_network
 
   movie-laravel-backend:
     container_name: movie-laravel-backend-container
