@@ -14,6 +14,17 @@ services:
       - mysql-movie-production-volume-config:/etc/mysql
     networks:
       - movie_network
+      
+  nestjs-video-proxy-service:
+    image: chinhps/nestjs-video-proxy-service:latest
+    container_name: nestjs-video-proxy-service-container
+    environment:
+      - PORT=5050
+      - KEY_CRYPTO=${KEY_CRYPTO}
+    ports:
+      - 5050:5050
+    networks:
+      - movie_network
 
   movie-laravel-backend:
     container_name: movie-laravel-backend-container
