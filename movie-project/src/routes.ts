@@ -1,27 +1,20 @@
-export const publicRoutes = [
-    "/"
-];
+export const publicRoutes = ["/"];
 
-export const authRoutes = [
-    "/user-login",
-    "/user-register"
-];
+export const authRoutes = ["/user-login", "/user-register"];
 
 export const userRoutes = [
-    "/user",
-    // "/watch-history"    
-]
+  "/user",
+  // "/watch-history"
+];
 
-export const adminRoutes = [
-    "/admin",
-]
+export const adminRoutes = ["/admin"];
 
 /*
-* Don't proteched api login because api for login
-*/
+ * Don't proteched api login because api for login
+ */
 export const apiAuthPrefix = "/api/auth";
 
 /*
-* Url after user login
-*/
-export const DEFAULT_URL_LOGIN_REDIRECT = "http://localhost:3000/";
+ * Url after user login
+ */
+export const DEFAULT_URL_LOGIN_REDIRECT = process.env.APP_URL;
