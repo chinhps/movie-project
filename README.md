@@ -2,6 +2,7 @@
 
 ### Technical Stack
 - **Backend:** Laravel, Redis, Mysql, NestJS
+- **Testing(Backend):** PHPunit, Laravel Pint
 - **Frontend:** Next.js (Typescript), Tanstack Query, ChakraUI
 - **Server:** Nginx (API Gateway), Docker
 - **CI/CD:** Github Actions
