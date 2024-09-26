@@ -3,59 +3,66 @@
 namespace App\Repositories\Category;
 
 use App\Models\Category;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Redis;
 
 class CategoryRepository implements CategoryInterface
 {
     public function __construct(
-        private Model $model = new Category
+        private Category $model
     ) {}
 
-    public function list(array $filter = [], float $limit = 15)
+    public function listAll()
     {
-        if ($limit == 0) {
-            $cacheKey = 'category:all';
-            $categories = Redis::get($cacheKey);
-            if (! $categories) {
-                $categories = $this->model->get();
-                Redis::set($cacheKey, json_encode($categories), 3600 * 12);
-            } else {
-                $categories = json_decode($categories);
-            }
-
-            return $categories;
+        $cacheKey = 'category:all';
+        $categories = Redis::get($cacheKey);
+        if (! $categories) {
+            $categories = $this->model->get();
+            Redis::set($cacheKey, json_encode($categories), 3600 * 12);
+        } else {
+            $categories = collect(json_decode($categories));
         }
-        $movies = $this->model->withCount(['movies'])->orderBy('id', 'desc');
 
-        return $movies;
+        return $categories;
     }
 
-    public function listIn(array $filter = [])
+    /**
+     * @return LengthAwarePaginator<Category>
+     */
+    public function list(array $filter = [], float $limit = 15): LengthAwarePaginator
     {
-        return $this->model->whereIn('name', $filter)->pluck('id');
+        $categories = $this->model->withCount(['movies'])->orderBy('id', 'desc');
+
+        return $categories->paginate($limit);
     }
 
-    public function getBySlug($slug)
+    public function listIn(array $filter = []): array
+    {
+        return $this->model->whereIn('name', $filter)->pluck('id')->toArray();
+    }
+
+    public function getBySlug($slug): Category
     {
         return $this->model->where('slug', $slug)->firstOrFail();
     }
 
-    public function updateOrInsert(?float $id, array $params)
+    public function updateOrInsert(?float $id, array $params): Category
     {
-        $model = new Category;
-        if ($id) {
-            $model = $this->model->find($id);
-        }
-        $model->fill($params);
-        $model->save();
+        $model = $this->model->updateOrCreate([
+            'id' => $id,
+        ], $params);
 
         return $model;
     }
 
-    public function detail(float $id)
+    public function detail(float $id): Category
     {
         $model = $this->model->find($id);
+        if (! $model) {
+            throw new ModelNotFoundException('Category not found');
+        }
 
         return $model;
     }

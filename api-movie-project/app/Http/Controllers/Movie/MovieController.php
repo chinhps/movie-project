@@ -53,8 +53,7 @@ class MovieController extends Controller
         try {
             DB::beginTransaction();
 
-            $categoryIdss = $this->categoryRepository->listIn($validated['categories'])
-                ->toArray();
+            $categoryIdss = $this->categoryRepository->listIn($validated['categories']);
 
             $movie = $this->movieRepository->updateOrInsert($validated['id'] ?? null, [
                 'movie_name' => $validated['movie_name'],

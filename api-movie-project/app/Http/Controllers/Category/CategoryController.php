@@ -19,7 +19,7 @@ class CategoryController extends Controller
 
     public function list()
     {
-        return CategoryResource::collection($this->categoryRepository->list([], 0));
+        return CategoryResource::collection($this->categoryRepository->listAll());
     }
 
     public function detail($slug)

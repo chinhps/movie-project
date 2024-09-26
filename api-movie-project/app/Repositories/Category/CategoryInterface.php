@@ -13,4 +13,6 @@ interface CategoryInterface
     public function updateOrInsert(?float $id, array $params);
 
     public function listIn(array $filter = []);
+
+    public function listAll();
 }
