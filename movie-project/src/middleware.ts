@@ -2,7 +2,6 @@ import authConfig from "@/auth.config";
 import NextAuth from "next-auth";
 
 import {
-    DEFAULT_URL_LOGIN_REDIRECT,
     adminRoutes,
     apiAuthPrefix,
     authRoutes,
