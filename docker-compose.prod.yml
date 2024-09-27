@@ -1,4 +1,4 @@
-services:    
+services:
   mysql-movie:
     image: mysql:8.0
     container_name: mysql-movie-container
@@ -14,7 +14,7 @@ services:
       - mysql-movie-production-volume-config:/etc/mysql
     networks:
       - movie_network
-      
+
   nestjs-video-proxy-service:
     image: chinhps/nestjs-video-proxy-service:latest
     container_name: nestjs-video-proxy-service-container
@@ -26,12 +26,23 @@ services:
     networks:
       - movie_network
 
+  redis-movie-laravel:
+    image: redis:7.4.0-alpine
+    container_name: redis-movie-laravel-container
+    volumes:
+      - ./api-movie-project/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - movie_network
+
   movie-laravel-backend:
     container_name: movie-laravel-backend-container
     image: chinhps/movie-api-laravel:latest
     env_file:
       - .env.docker
     environment:
+      - REDIS_HOST=redis-movie-laravel
+      - REDIS_PORT=6379
+      - JWT_SECRET=${JWT_SECRET}
       - APP_ENV=production
       - APP_DEBUG=false
       - APP_URL=${NEXT_PUBLIC_API_BACKEND}
@@ -43,6 +54,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - mysql-movie
+      - redis-movie-laravel
     networks:
       - movie_network
 

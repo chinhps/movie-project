@@ -15,7 +15,7 @@ const logout = async () => {
     } catch (error) {
         return { message: "Thất bại khi đăng xuất" }
     } finally {
-        redirect(DEFAULT_URL_LOGIN_REDIRECT);
+        DEFAULT_URL_LOGIN_REDIRECT && redirect(DEFAULT_URL_LOGIN_REDIRECT);
     }
 }
 
