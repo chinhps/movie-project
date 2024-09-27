@@ -9,9 +9,14 @@ RUN apk update && apk add --no-cache \
     unzip \
     git \
     curl \
-    libzip-dev
+    libzip-dev \
+    autoconf \
+    g++ \
+    make
 
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
 # COMPOSER INSTALL
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
