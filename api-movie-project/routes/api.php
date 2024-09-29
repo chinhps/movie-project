@@ -142,7 +142,7 @@ Route::prefix('plugins')->group(function () {
     Route::get('/infor', [PluginController::class, 'infor']);
 });
 
-Route::prefix('proxy')->group(function () {
-    Route::get('/get', [ProxyController::class, 'get']);
-    Route::post('/convert', [ProxyController::class, 'convert']);
-});
+// Route::prefix('proxy')->group(function () {
+//     Route::get('/get', [ProxyController::class, 'get']);
+//     Route::post('/convert', [ProxyController::class, 'convert']);
+// });

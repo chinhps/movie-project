@@ -38,23 +38,23 @@ class AuthController extends Controller
         return BaseResponse::data($user);
     }
 
-    // private function user(User $user)
-    // {
-    //     return [
-    //         "providerId" => $user->provider_id,
-    //         "name" => $user->name,
-    //         "username" => $user->username,
-    //         "level" => $user->level,
-    //         "role" => $user->role,
-    //         "created_at" => $user->created_at,
-    //         "avatar_url" => $user->avatar_url
-    //     ];
-    // }
+    private function user($user)
+    {
+        return [
+            "providerId" => $user->provider_id,
+            "name" => $user->name,
+            "username" => $user->username,
+            "level" => $user->level,
+            "role" => $user->role,
+            "created_at" => $user->created_at,
+            "avatar_url" => $user->avatar_url
+        ];
+    }
 
     private function generateProviderId()
     {
         do {
-            $providerId = rand(11111, 99999).time();
+            $providerId = rand(11111, 99999) . time();
         } while ($this->userRepository->exists([
             ['provider_id', $providerId],
             ['login_type', 'account'],
@@ -80,18 +80,23 @@ class AuthController extends Controller
                 'email' => $validated['email'] ?? null,
                 'block' => 0,
             ]);
+            
+            $customClaims = $this->user($user);
+
+            /** @var \Tymon\JWTAuth\JWTGuard $auth */
+            $auth = auth('api');
+            $token = $auth->claims($customClaims)->fromUser($user);
 
             DB::commit();
 
             return BaseResponse::data([
-                'token' => auth('api')->login($user),
+                'token' => $token,
                 'msg' => 'Tạo tài thành công! Đang chuyển hướng...',
-                'user' => $this->user($user),
+                'user' => $customClaims,
                 'status' => 200,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-
             return BaseResponse::msg('Tạo tài khoản thất bại! Liên hệ admin để được hỗ trợ', 500);
         }
     }
@@ -110,15 +115,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        $customClaims = [
-            'providerId' => $user->provider_id,
-            'name' => $user->name,
-            'username' => $user->username,
-            'level' => $user->level,
-            'role' => $user->role,
-            'created_at' => $user->created_at,
-            'avatar_url' => $user->avatar_url,
-        ];
+        $customClaims = $this->user($user);
 
         /** @var \Tymon\JWTAuth\JWTGuard $auth */
         $auth = auth('api');
