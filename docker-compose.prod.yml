@@ -29,8 +29,8 @@ services:
   redis-movie-laravel:
     image: redis:7.4.0-alpine
     container_name: redis-movie-laravel-container
-    volumes:
-      - ./api-movie-project/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    # volumes:
+    #   - ./api-movie-project/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - movie_network
 
@@ -61,8 +61,8 @@ services:
   nginx-movie-laravel-backend:
     container_name: nginx-movie-laravel-backend-container
     image: chinhps/movie-nginx-laravel:latest
-    volumes:
-      - ./api-movie-project/nginx/conf.d:/etc/nginx/conf.d
+    # volumes:
+    #   - ./api-movie-project/nginx/conf.d:/etc/nginx/conf.d
     ports:
       - 8000:80
     depends_on:
