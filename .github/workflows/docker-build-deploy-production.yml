@@ -202,4 +202,4 @@ jobs:
       
       - name: Deploy
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} '/home/chinhdev/websites/deploy-movie.sh'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} '/home/chinhdev/websites/deploy-movie.sh' 
