@@ -199,6 +199,7 @@ jobs:
       - name: SCP docker-compose
         run: |
           scp -o StrictHostKeyChecking=no ./docker-compose.prod.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }}:/home/chinhdev/websites/movie-demo.chinh.dev
+      
       - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} '/home/chinhdev/websites/deploy-movie.sh'
