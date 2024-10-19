@@ -2,6 +2,7 @@ services:
   mysql-movie:
     image: mysql:8.0
     container_name: mysql-movie-container
+    restart: always
     ports:
       - 3308:3306
     env_file:
@@ -18,6 +19,7 @@ services:
   nestjs-video-proxy-service:
     image: chinhps/nestjs-video-proxy-service:latest
     container_name: nestjs-video-proxy-service-container
+    restart: always
     environment:
       - PORT=5050
       - KEY_CRYPTO=${KEY_CRYPTO}
@@ -29,6 +31,7 @@ services:
   redis-movie-laravel:
     image: redis:7.4.0-alpine
     container_name: redis-movie-laravel-container
+    restart: always
     # volumes:
     #   - ./api-movie-project/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
@@ -37,6 +40,7 @@ services:
   movie-laravel-backend:
     container_name: movie-laravel-backend-container
     image: chinhps/movie-api-laravel:latest
+    restart: always
     env_file:
       - .env.docker
     environment:
@@ -61,6 +65,7 @@ services:
   nginx-movie-laravel-backend:
     container_name: nginx-movie-laravel-backend-container
     image: chinhps/movie-nginx-laravel:latest
+    restart: always
     # volumes:
     #   - ./api-movie-project/nginx/conf.d:/etc/nginx/conf.d
     ports:
@@ -73,6 +78,7 @@ services:
   media-server:
     container_name: media-server-container
     image: chinhps/movie-media-server:latest
+    restart: always
     volumes:
       - ./server-m3u8/uploads:/var/www/uploads
       - ./server-m3u8/uploads-images:/var/www/uploads-images
@@ -82,6 +88,7 @@ services:
   nginx-media-server:
     container_name: nginx-media-server-container
     image: chinhps/movie-nginx-media-server:latest
+    restart: always
     volumes:
       - ./server-m3u8/uploads:/var/www/uploads
       - ./server-m3u8/uploads-images:/var/www/uploads-images
@@ -95,6 +102,7 @@ services:
   movie-nextjs-fronted:
     container_name: movie-nextjs-fronted-container
     image: chinhps/movie-nextjs-fronted:latest
+    restart: always
     env_file:
       - .env.docker
     depends_on:
